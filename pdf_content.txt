@@ -1,0 +1,143 @@
+﻿=== TRANG 1 ===
+INT.7.18 ΓÇö ─Éß╗ü kiß╗âm tra thß╗▒c h├ánh Buß╗òi 4ΓÇô5 
+ 
+TR╞»ß╗£NG ─Éß║áI Hß╗îC PH├Ü XU├éN 
+KHOA C├öNG NGHß╗å TH├öNG TIN 
+─Éß╗Ç KIß╗éM TRA THß╗░C H├ÇNH 
+Hß╗îC PHß║ªN: WEB FRONTEND N├éNG CAO (INT.7.18) 
+JSX n├óng cao ┬╖ Props ┬╖ State 
+Thß╗¥i gian l├ám b├ái 
+60 ph├║t 
+H├¼nh thß╗⌐c 
+Thß╗▒c h├ánh c├í nh├ón tr├¬n m├íy, nß╗Öp qua GitHub 
+Thang ─æiß╗âm 
+10 
+Dß╗▒ ├ín 
+phu-xuan-react (hoß║╖c sandbox ri├¬ng nß║┐u ch╞░a khß╗ƒi tß║ío) 
+Chuß║⌐n ─æß║ºu ra 
+CLO1, CLO3, CLO6 
+─É╞░ß╗úc sß╗¡ dß╗Ñng t├ái liß╗çu 
+C├│ ΓÇö t├ái liß╗çu giß║Ñy/slide c├í nh├ón. Kh├┤ng sß╗¡ dß╗Ñng c├┤ng cß╗Ñ AI sinh m├ú 
+ 
+Trang 1 / 4 
+
+=== TRANG 2 ===
+INT.7.18 ΓÇö ─Éß╗ü kiß╗âm tra thß╗▒c h├ánh Buß╗òi 4ΓÇô5 
+H╞░ß╗¢ng dß║½n l├ám b├ái 
+ΓÜá∩╕Å ─Éß╗ìc kß╗╣ tr╞░ß╗¢c khi bß║»t ─æß║ºu 
+ΓÇó L├ám b├ái c├í nh├ón, kh├┤ng trao ─æß╗òi m├ú nguß╗ôn vß╗¢i sinh vi├¬n kh├íc 
+ΓÇó Kh├┤ng sß╗¡ dß╗Ñng ChatGPT, Claude, Copilot hay bß║Ñt kß╗│ c├┤ng cß╗Ñ AI sinh m├ú n├áo trong l├║c l├ám b├ái ΓÇö vi phß║ím 
+bß╗ï coi l├á gian lß║¡n (li├¬n quan CLO6) 
+ΓÇó ─É╞░ß╗úc ph├⌐p xem lß║íi slide, gi├ío ├ín, t├ái liß╗çu lab ─æ├ú hß╗ìc ß╗ƒ Buß╗òi 4 v├á Buß╗òi 5 
+ΓÇó Nß║┐u hß║┐t giß╗¥ m├á ch╞░a ho├án th├ánh, vß║½n commit v├á nß╗Öp phß║ºn ─æ├ú l├ám ─æß╗â ─æ╞░ß╗úc chß║Ñm ─æiß╗âm tß╗½ng phß║ºn 
+ΓÇó ─Éß║╖t t├¬n nh├ính Git: kiemtra-buoi4-5/<hß╗ì-t├¬n-kh├┤ng-dß║Ñu> 
+ 
+─Éß╗ü b├ái: ß╗¿ng dß╗Ñng Thß╗▒c ─æ╞ín ß║¿m thß╗▒c Huß║┐ 
+Huß║┐ nß╗òi tiß║┐ng vß╗¢i nß╗ün ß║⌐m thß╗▒c phong ph├║. H├úy x├óy dß╗▒ng mß╗Öt trang web nhß╗Å hiß╗ân thß╗ï thß╗▒c ─æ╞ín c├íc m├│n ─ân 
+─æß║╖c tr╞░ng cß╗ºa Huß║┐, cho ph├⌐p ng╞░ß╗¥i d├╣ng xem th├┤ng tin tß╗½ng m├│n v├á ─æ├ính dß║Ñu m├│n y├¬u th├¡ch. Ho├án th├ánh 
+lß║ºn l╞░ß╗út 6 y├¬u cß║ºu d╞░ß╗¢i ─æ├óy ΓÇö c├│ thß╗â l├ám trong c├╣ng mß╗Öt file App.jsx nß║┐u muß╗æn tiß║┐t kiß╗çm thß╗¥i gian, 
+nh╞░ng khuyß║┐n kh├¡ch t├ích th├ánh c├íc component ri├¬ng theo ─æ├║ng quy ╞░ß╗¢c ─æ├ú hß╗ìc. 
+ 
+C├óu 1 ΓÇö Dß╗» liß╗çu mß║½u (1,0 ─æiß╗âm) 
+Tß║ío file src/data/menu.js, xuß║Ñt ra mß╗Öt mß║úng ─æß║╖t t├¬n menuItems, gß╗ôm ├¡t nhß║Ñt 5 m├│n ─ân. Mß╗ùi m├│n l├á mß╗Öt 
+object c├│ ─æß╗º c├íc tr╞░ß╗¥ng: 
+ΓùÅΓÇï id: sß╗æ nguy├¬n, duy nhß║Ñt cho tß╗½ng m├│n 
+ΓùÅΓÇï name: t├¬n m├│n ─ân (v├¡ dß╗Ñ: "B├║n b├▓ Huß║┐") 
+ΓùÅΓÇï price: gi├í tiß╗ün, kiß╗âu sß╗æ (v├¡ dß╗Ñ: 35000) 
+ΓùÅΓÇï description: m├┤ tß║ú ngß║»n vß╗ü m├│n ─ân 
+ΓùÅΓÇï isSpicy: kiß╗âu boolean ΓÇö true nß║┐u m├│n cay, false nß║┐u kh├┤ng cay 
+ 
+C├óu 2 ΓÇö Th├ánh phß║ºn MenuItem hiß╗ân thß╗ï Props (2,0 ─æiß╗âm) 
+Tß║ío component MenuItem nhß║¡n v├áo 4 props: name, price, description, isSpicy (d├╣ng c├║ ph├íp 
+destructuring). Component hiß╗ân thß╗ï: 
+ΓùÅΓÇï T├¬n m├│n ─ân 
+ΓùÅΓÇï M├┤ tß║ú ngß║»n 
+ΓùÅΓÇï Gi├í tiß╗ün ─æ├ú ─æß╗ïnh dß║íng c├│ dß║Ñu chß║Ñm ng─ân c├ích h├áng ngh├¼n, k├¿m ─æ╞ín vß╗ï ΓÇ£─æΓÇ¥ (v├¡ dß╗Ñ: 35.000─æ) ΓÇö gß╗úi ├╜ 
+d├╣ng price.toLocaleString('vi-VN') 
+ 
+C├óu 3 ΓÇö Kß║┐t xuß║Ñt c├│ ─æiß╗üu kiß╗çn (1,5 ─æiß╗âm) 
+Trong MenuItem, nß║┐u isSpicy bß║▒ng true th├¼ hiß╗ân thß╗ï th├¬m nh├ún ΓÇ£≡ƒî╢ M├│n cayΓÇ¥; nß║┐u isSpicy bß║▒ng false th├¼ 
+kh├┤ng hiß╗ân thß╗ï g├¼ th├¬m. Kh├┤ng ─æ╞░ß╗úc hiß╗ân thß╗ï nh├ún rß╗ùng hay chß╗» ΓÇ£undefinedΓÇ¥/ΓÇ£falseΓÇ¥ ra giao diß╗çn. 
+Trang 2 / 4 
+
+=== TRANG 3 ===
+INT.7.18 ΓÇö ─Éß╗ü kiß╗âm tra thß╗▒c h├ánh Buß╗òi 4ΓÇô5 
+ 
+C├óu 4 ΓÇö Kß║┐t xuß║Ñt danh s├ích bß║▒ng Props (1,5 ─æiß╗âm) 
+Tß║ío component MenuList nhß║¡n props items (mß║úng m├│n ─ân). D├╣ng map() ─æß╗â render ─æß╗º danh s├ích bß║▒ng 
+nhiß╗üu <MenuItem />, mß╗ùi thß║╗ c├│ thuß╗Öc t├¡nh key hß╗úp lß╗ç v├á duy nhß║Ñt (kh├┤ng ─æ╞░ß╗úc d├╣ng chß╗ë sß╗æ index cß╗ºa 
+mß║úng v├¼ dß╗» liß╗çu ─æ├ú c├│ sß║╡n id). 
+ 
+C├óu 5 ΓÇö Trß║íng th├íi y├¬u th├¡ch bß║▒ng State (2,0 ─æiß╗âm) 
+Mß╗ùi MenuItem tß╗▒ quß║ún l├╜ mß╗Öt state boolean isFavorite (khß╗ƒi tß║ío false) bß║▒ng useState. Th├¬m mß╗Öt n├║t bß║Ñm: 
+khi bß║Ñm, ─æß╗òi trß║íng th├íi isFavorite (tß╗½ true th├ánh false hoß║╖c ng╞░ß╗úc lß║íi); giao diß╗çn phß║úi thay ─æß╗òi r├╡ rß╗çt theo 
+trß║íng th├íi (v├¡ dß╗Ñ ─æß╗òi chß╗» tr├¬n n├║t, ─æß╗òi icon ΓÖí/ΓÖÑ, hoß║╖c ─æß╗òi m├áu). Trß║íng th├íi y├¬u th├¡ch cß╗ºa tß╗½ng m├│n phß║úi 
+─æß╗Öc lß║¡p vß╗¢i c├íc m├│n kh├íc. 
+ 
+C├óu 6 ΓÇö N├óng State l├¬n & Luß╗ông dß╗» liß╗çu mß╗Öt chiß╗üu (2,0 ─æiß╗âm) 
+ß╗₧ component cha (App), th├¬m mß╗Öt d├▓ng chß╗» hiß╗ân thß╗ï tß╗òng sß╗æ m├│n ─æang ─æ╞░ß╗úc y├¬u th├¡ch, dß║íng ΓÇ£Sß╗æ m├│n ─æ├ú 
+y├¬u th├¡ch: n/5ΓÇ¥. ─Éß╗â l├ám ─æ╞░ß╗úc c├óu n├áy, KH├öNG ─æß║╖t state ─æß║┐m tß╗òng b├¬n trong MenuItem ΓÇö phß║úi ─æß║╖t state 
+─æß║┐m (hoß║╖c state danh s├ích id y├¬u th├¡ch) tß║íi App, sau ─æ├│ truyß╗ün xuß╗æng MenuItem mß╗Öt h├ám callback qua 
+props (v├¡ dß╗Ñ onToggleFavorite) ─æß╗â mß╗ùi MenuItem gß╗ìi lß║íi h├ám n├áy mß╗ùi khi ng╞░ß╗¥i d├╣ng bß║Ñm n├║t y├¬u th├¡ch, 
+─æ├║ng theo nguy├¬n tß║»c luß╗ông dß╗» liß╗çu mß╗Öt chiß╗üu ─æ├ú hß╗ìc. 
+ 
+Y├¬u cß║ºu kß╗╣ thuß║¡t & r├áng buß╗Öc 
+ΓùÅΓÇï Chß╗ë d├╣ng JSX + React thuß║ºn (function component, useState). Ch╞░a y├¬u cß║ºu v├á ch╞░a ─æ╞░ß╗úc d├╣ng 
+TypeScript, useEffect, hay th╞░ viß╗çn UI ngo├ái. 
+ΓùÅΓÇï ß╗¿ng dß╗Ñng phß║úi chß║íy ─æ╞░ß╗úc bß║▒ng npm run dev, kh├┤ng c├│ lß╗ùi m├áu ─æß╗Å trong console tr├¼nh duyß╗çt. 
+ΓùÅΓÇï T├¬n biß║┐n, t├¬n h├ám, t├¬n component ─æß║╖t r├╡ ngh─⌐a, theo ─æ├║ng quy ╞░ß╗¢c PascalCase cho component, 
+camelCase cho biß║┐n/h├ám. 
+ΓùÅΓÇï Kh├┤ng bß║»t buß╗Öc phß║úi viß║┐t CSS ─æß║╣p ΓÇö phß║ºn chß║Ñm ─æiß╗âm tß║¡p trung v├áo ─æ├║ng logic Props/State, kh├┤ng 
+chß║Ñm thß║⌐m mß╗╣ giao diß╗çn. 
+ 
+Biß╗âu ─æiß╗âm chß║Ñm b├ái 
+C├óu 
+Ti├¬u ch├¡ 
+─Éiß╗âm 
+1 
+Mß║úng menuItems c├│ ΓëÑ 5 phß║ºn tß╗¡, ─æß╗º 5 tr╞░ß╗¥ng ─æ├║ng kiß╗âu dß╗» liß╗çu 
+1,0 
+2 
+MenuItem nhß║¡n ─æ├║ng 4 props qua destructuring; hiß╗ân thß╗ï ─æß╗º t├¬n, m├┤ tß║ú; gi├í 
+tiß╗ün ─æß╗ïnh dß║íng ─æ├║ng 
+2,0 
+3 
+Nh├ún ΓÇ£≡ƒî╢ M├│n cayΓÇ¥ chß╗ë hiß╗çn khi isSpicy = true, kh├┤ng lß╗Ö gi├í trß╗ï r├íc khi false 
+1,5 
+Trang 3 / 4 
+
+=== TRANG 4 ===
+INT.7.18 ΓÇö ─Éß╗ü kiß╗âm tra thß╗▒c h├ánh Buß╗òi 4ΓÇô5 
+C├óu 
+Ti├¬u ch├¡ 
+─Éiß╗âm 
+4 
+MenuList d├╣ng map() render ─æß╗º sß╗æ l╞░ß╗úng m├│n; key hß╗úp lß╗ç, duy nhß║Ñt, kh├┤ng 
+d├╣ng index 
+1,5 
+5 
+useState khai b├ío ─æ├║ng; n├║t bß║Ñm ─æß╗òi state; giao diß╗çn ─æß╗òi theo ─æ├║ng trß║íng 
+th├íi; c├íc m├│n ─æß╗Öc lß║¡p nhau 
+2,0 
+6 
+State ─æß║┐m ─æß║╖t ─æ├║ng ß╗ƒ App (kh├┤ng ─æß║╖t sai chß╗ù ß╗ƒ MenuItem); callback truyß╗ün 
+qua props hoß║ít ─æß╗Öng ─æ├║ng; sß╗æ ─æß║┐m hiß╗ân thß╗ï ch├¡nh x├íc 
+2,0 
+ 
+≡ƒôî Ghi ch├║ khi chß║Ñm 
+ΓÇó C├óu 6 chß╗ë chß║Ñm ─æiß╗âm nß║┐u C├óu 5 ─æ├ú ─æ├║ng c╞í chß║┐ useState ΓÇö nß║┐u C├óu 5 sai ho├án to├án, C├óu 6 chß║Ñm tß╗æi ─æa 
+1,0/2,0 dß╗▒a tr├¬n hiß╗âu ─æ├║ng ├╜ t╞░ß╗ƒng n├óng state l├¬n 
+ΓÇó Sinh vi├¬n ─æß║╖t state ─æß║┐m ß╗ƒ ─æ├║ng App nh╞░ng ─æß║┐m sai sß╗æ l╞░ß╗úng (v├¡ dß╗Ñ ─æß║┐m lu├┤n t─âng, kh├┤ng giß║úm khi bß╗Å 
+y├¬u th├¡ch) ΓåÆ trß╗½ 0,5 ─æiß╗âm cß╗ºa C├óu 6 
+ΓÇó Lß╗ùi thiß║┐u key ß╗ƒ C├óu 4 nh╞░ng c├│ d├╣ng key={index} ΓåÆ cho 0,75/1,5 (hiß╗âu ─æ├║ng kh├íi niß╗çm nh╞░ng ch╞░a ─æ├║ng 
+thß╗▒c h├ánh tß╗æt nhß║Ñt) 
+ 
+H╞░ß╗¢ng dß║½n nß╗Öp b├ái 
+1.ΓÇï Kiß╗âm tra lß║íi ß╗⌐ng dß╗Ñng chß║íy ─æ├║ng bß║▒ng npm run dev tr╞░ß╗¢c khi nß╗Öp. 
+2.ΓÇï git add . v├á git commit -m "Kiß╗âm tra Buß╗òi 4-5: Thß╗▒c ─æ╞ín ß║⌐m thß╗▒c Huß║┐". 
+3.ΓÇï ─Éß║⌐y code l├¬n nh├ính kiemtra-buoi4-5/<hß╗ì-t├¬n-kh├┤ng-dß║Ñu>. 
+4.ΓÇï Nß╗Öp ─æ╞░ß╗¥ng dß║½n repository (hoß║╖c Pull Request) v├áo form nß╗Öp b├ái cß╗ºa lß╗¢p ─æ├║ng thß╗¥i gian quy ─æß╗ïnh. 
+ 
+ 
+Trang 4 / 4 
+
