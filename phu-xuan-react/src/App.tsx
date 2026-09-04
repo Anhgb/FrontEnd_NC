@@ -1,26 +1,32 @@
-// Nhập thành phần Header vừa tạo
-import Header from './components/Header'
-import WelcomeBanner from './components/WelcomeBanner'
-import PostCard from './components/PostCard'
-import Footer from './components/Footer'
-
+import { useState } from 'react';
+import MenuList from './components/MenuList';
+import { menuItems } from './data/menu';
 
 function App() {
-  return (
-    // Fragment <> </> cho phép trả về nhiều thẻ ngang cấp
-    // mà không cần bọc trong <div> thừa
-    <>
-      <Header />
-      <main>
-        <WelcomeBanner />
-        {/* PostCard hiển thị một bài viết mẫu */}
-        {/* Buổi 5 sẽ dùng props để truyền dữ liệu thay vì hardcode */}
-        <PostCard />
-      </main>
-      <Footer />
-    </>
-  )
-}
- 
-export default App
+  const [favoriteIds, setFavoriteIds] = useState(new Set());
 
+  function handleToggleFavorite(id, nextFav) {
+    setFavoriteIds((prev) => {
+      const next = new Set(prev);
+      if (nextFav) {
+        next.add(id);
+      } else {
+        next.delete(id);
+      }
+      return next;
+    });
+  }
+
+  return (
+    <div className="app">
+      <h1>🍜 Thực đơn Ẩm thực Huế</h1>
+      <p className="favorite-count">
+        Số món đã yêu thích: <strong>{favoriteIds.size}/{menuItems.length}</strong>
+      </p>
+
+      <MenuList items={menuItems} onToggleFavorite={handleToggleFavorite} />
+    </div>
+  );
+}
+
+export default App;
