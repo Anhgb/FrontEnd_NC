@@ -1,5 +1,24 @@
 {
   "devDependencies": {
     "prettier": "^3.9.6"
-  }
+  },
+  "name": "fe_nck22",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anhgb/FrontEnd_NC.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Anhgb/FrontEnd_NC/issues"
+  },
+  "homepage": "https://github.com/Anhgb/FrontEnd_NC#readme"
 }
