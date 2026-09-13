@@ -1,0 +1,386 @@
+TRƯỜNG ĐẠI HỌC PHÚ XUÂN
+KHOA CÔNG NGHỆ THÔNG TIN
+HƯỚNG DẪN THỰC HÀNH
+HỌC PHẦN: WEB FRONTEND NÂNG CAO (INT.7.18)
+BÀI 5 — PROPS VÀ STATE
+5 Lab thực hành lồng ghép tính năng thực tế từ Google Maps, Airbnb, TripAdvisor, Shopee
+Dự án
+phu-xuan-react
+Công nghệ
+React 18 + Vite (JSX thuần, chưa dùng TypeScript)
+Mã học phần
+INT.7.18 — Trường Đại học Phú Xuân
+Chủ đề dữ liệu
+Địa điểm tham quan tại Huế (Đại Nội, Chợ Đông Ba, Cầu Tràng Tiền...)
+Cơ cấu
+Lab 1 – 3: thực hành tại lớp (60 phút)   |   Lab 4 – 5: bài tập về nhà
+Mục tiêu thực hành Buổi 5
+Sau 5 Lab của buổi thực hành này, sinh viên sẽ:
+• Tạo được thành phần nhận dữ liệu qua Props và render danh sách từ mảng dữ liệu thật
+• Sử dụng useState để lưu và cập nhật trạng thái nội bộ của từng thành phần
+• Xây dựng được 3 tính năng tương tác quen thuộc: nút yêu thích, bộ lọc danh mục, đánh giá sao
+• Xây dựng được bộ đếm số lượng theo mô hình giỏ hàng thương mại điện tử
+• Hiểu được các thành phần thực hành hôm nay có thể tái sử dụng trực tiếp cho đồ án cuối kỳ (đặc biệt nhóm chọn đề tài đặt vé tham quan, đặt phòng, đặt món)
+Yêu cầu trước khi bắt đầu
+⚠️ Checklist trước khi vào Lab
+• Dự án phu-xuan-react đã chạy được bằng npm run dev (từ Buổi 1–2)
+• Đã hoàn thành TodoList ở Buổi 5 lý thuyết (thành thạo props và useState cơ bản)
+• Đã tạo nhánh Git mới: feature/buoi5-lab-thuc-hanh
+• Đã có thư mục src/data/ để chứa dữ liệu mẫu, và src/components/ để chứa các thành phần
+LAB 1 — Danh sách địa điểm tham quan
+⏱ Thời gian: 20 phút    🎯 Mục tiêu: Tạo component nhận Props và render danh sách từ mảng dữ liệu    🌐 Lấy cảm hứng từ: Trang danh sách địa điểm của Google Maps / Airbnb
+Hầu hết ứng dụng du lịch (Google Maps, Airbnb, Traveloka, TripAdvisor) đều có một màn hình cốt lõi: danh sách các "thẻ" (card) hiển thị địa điểm/phòng/tour, mỗi thẻ có ảnh, tên, mô tả ngắn, điểm đánh giá. Ở Lab này, chúng ta xây dựng đúng mô hình đó cho danh sách địa điểm tham quan tại Huế.
+Bước 1 — Tạo file dữ liệu mẫu
+JS — src/data/attractions.js
+export const attractions = [
+  {
+    id: 1,
+    name: 'Đại Nội Huế',
+    category: 'Di tích',
+    description: 'Quần thể di tích cung đình triều Nguyễn, di sản văn hoá thế giới UNESCO.',
+    rating: 4.7,
+  },
+  {
+    id: 2,
+    name: 'Chợ Đông Ba',
+    category: 'Chợ',
+    description: 'Khu chợ truyền thống sầm uất bậc nhất Huế, nơi mua đặc sản và quà lưu niệm.',
+    rating: 4.3,
+  },
+  {
+    id: 3,
+    name: 'Cầu Tràng Tiền',
+    category: 'Cầu',
+    description: 'Cây cầu biểu tượng bắc qua sông Hương, đẹp nhất về đêm khi lên đèn đổi màu.',
+    rating: 4.6,
+  },
+  {
+    id: 4,
+    name: 'Lăng Khải Định',
+    category: 'Di tích',
+    description: 'Lăng tẩm có kiến trúc pha trộn Á - Âu độc đáo nhất trong hệ thống lăng tẩm Huế.',
+    rating: 4.5,
+  },
+  {
+    id: 5,
+    name: 'Ẩm thực đường Nguyễn Sinh Cung',
+    category: 'Ẩm thực',
+    description: 'Khu phố ẩm thực với bún bò, bánh khoái, chè Huế đúng vị địa phương.',
+    rating: 4.4,
+  },
+];
+Bước 2 — Tạo thành phần AttractionCard nhận Props
+JSX — src/components/AttractionCard.jsx
+function AttractionCard({ name, category, description, rating }) {
+  return (
+    <div className="attraction-card">
+      <div className="attraction-card__badge">{category}</div>
+      <h3>{name}</h3>
+      <p>{description}</p>
+      <span className="attraction-card__rating">⭐ {rating}</span>
+    </div>
+  );
+}
+export default AttractionCard;
+Bước 3 — Tạo thành phần AttractionList render danh sách
+JSX — src/components/AttractionList.jsx
+import AttractionCard from './AttractionCard';
+function AttractionList({ attractions }) {
+  return (
+    <div className="attraction-list">
+      {attractions.map((item) => (
+        <AttractionCard
+          key={item.id}
+          name={item.name}
+          category={item.category}
+          description={item.description}
+          rating={item.rating}
+        />
+      ))}
+    </div>
+  );
+}
+export default AttractionList;
+Bước 4 — Sử dụng trong App
+JSX — src/App.jsx
+import AttractionList from './components/AttractionList';
+import { attractions } from './data/attractions';
+function App() {
+  return (
+    <div className="app">
+      <h1>Khám phá Huế</h1>
+      <AttractionList attractions={attractions} />
+    </div>
+  );
+}
+export default App;
+$ npm run dev
+  VITE ready in 280 ms
+  ➜  Local: http://localhost:5173/
+# Giao diện hiển thị 5 thẻ địa điểm, mỗi thẻ có nhãn danh mục,
+# tên, mô tả và điểm đánh giá dạng ⭐ 4.7
+✓ CHECKPOINT — Lab 1 hoàn thành khi:
+• AttractionCard nhận đủ 4 props: name, category, description, rating
+• AttractionList dùng map() để render đúng 5 thẻ từ mảng attractions
+• Không có cảnh báo thiếu key trong console trình duyệt
+• Sửa dữ liệu trong attractions.js (ví dụ thêm địa điểm thứ 6) thì giao diện tự cập nhật mà không cần sửa AttractionCard hay AttractionList
+Vấn đề gặp phải
+Nguyên nhân có thể
+Cách khắc phục
+Thẻ không hiển thị gì cả
+Quên export default hoặc quên import component
+Kiểm tra lại dòng export default và import ở đúng đường dẫn file
+Lỗi "Cannot read properties of undefined (reading 'map')"
+Truyền sai tên props attractions ở App hoặc quên truyền
+Kiểm tra tên props ở AttractionList và ở App phải khớp nhau
+LAB 2 — Nút yêu thích địa điểm
+⏱ Thời gian: 20 phút    🎯 Mục tiêu: Dùng useState để lưu trạng thái yêu thích riêng cho từng thẻ    🌐 Lấy cảm hứng từ: Nút "Lưu" của Google Maps / biểu tượng trái tim của TripAdvisor
+Trên Google Maps, mỗi địa điểm đều có nút "Lưu" hình ngôi sao hoặc trái tim — bấm vào để đánh dấu địa điểm yêu thích, bấm lại để bỏ đánh dấu. Đây là ví dụ kinh điển của State: mỗi thẻ tự quản lý trạng thái yêu thích của riêng nó, không liên quan gì đến các thẻ khác.
+Bước 1 — Thêm state isFavorite vào AttractionCard
+JSX — cập nhật src/components/AttractionCard.jsx
+import { useState } from 'react';
+function AttractionCard({ name, category, description, rating }) {
+  const [isFavorite, setIsFavorite] = useState(false);
+  function handleToggleFavorite() {
+    setIsFavorite((prev) => !prev);
+  }
+  return (
+    <div className="attraction-card">
+      <button
+        className="attraction-card__favorite"
+        onClick={handleToggleFavorite}
+      >
+        {isFavorite ? '♥ Đã lưu' : '♡ Lưu địa điểm'}
+      </button>
+      <div className="attraction-card__badge">{category}</div>
+      <h3>{name}</h3>
+      <p>{description}</p>
+      <span className="attraction-card__rating">⭐ {rating}</span>
+    </div>
+  );
+}
+export default AttractionCard;
+Bước 2 — Đổi màu nút khi đã yêu thích
+Dùng biểu thức điều kiện ngay trong className để đổi style động theo state, giống hiệu ứng "trái tim đỏ" khi đã lưu:
+<button
+  className={`attraction-card__favorite ${isFavorite ? 'is-active' : ''}`}
+  onClick={handleToggleFavorite}
+>
+  {isFavorite ? '♥ Đã lưu' : '♡ Lưu địa điểm'}
+</button>
+💡 Vì sao mỗi thẻ có state riêng?
+• Mỗi lần AttractionList gọi <AttractionCard />, React tạo ra một "bản thể" (instance) độc lập của component đó.
+• useState bên trong mỗi bản thể hoàn toàn tách biệt — bấm yêu thích thẻ Đại Nội Huế sẽ không ảnh hưởng đến state của thẻ Chợ Đông Ba.
+• Đây là lý do vì sao ta không cần một mảng "danh sách yêu thích" phức tạp ở component cha cho tính năng đơn giản này.
+✓ CHECKPOINT — Lab 2 hoàn thành khi:
+• Mỗi thẻ có nút yêu thích hoạt động độc lập với các thẻ khác
+• Bấm nút đổi được cả nội dung chữ (♡ → ♥) và class CSS (is-active)
+• Bấm lại lần nữa quay về trạng thái ban đầu
+Vấn đề gặp phải
+Nguyên nhân có thể
+Cách khắc phục
+Bấm một thẻ thì tất cả các thẻ đều đổi trạng thái
+State isFavorite bị khai báo ở component cha (AttractionList) thay vì trong AttractionCard
+Đảm bảo useState nằm bên trong chính AttractionCard, không phải ở AttractionList
+Bấm nút không có phản ứng gì
+Quên gọi hàm setIsFavorite hoặc gán nhầm giá trị tĩnh
+Kiểm tra lại handleToggleFavorite có gọi setIsFavorite(prev => !prev)
+LAB 3 — Bộ lọc theo danh mục
+⏱ Thời gian: 20 phút    🎯 Mục tiêu: Dùng state ở component cha để lọc danh sách hiển thị    🌐 Lấy cảm hứng từ: Thanh tab lọc danh mục của Shopee / Foody / Traveloka
+Các sàn thương mại điện tử và ứng dụng du lịch luôn có thanh tab lọc phía trên danh sách (Tất cả / Điện tử / Thời trang..., hay Tất cả / Nhà hàng / Khách sạn...). Lab này xây dựng đúng cơ chế đó: state lưu danh mục đang chọn nằm ở component cha (App), và danh sách con chỉ hiển thị những gì khớp với danh mục đó.
+Bước 1 — Lấy danh sách danh mục duy nhất từ dữ liệu
+JSX — cập nhật src/App.jsx
+import { useState } from 'react';
+import AttractionList from './components/AttractionList';
+import { attractions } from './data/attractions';
+function App() {
+  const [selectedCategory, setSelectedCategory] = useState('Tất cả');
+  const categories = [
+    'Tất cả',
+    ...new Set(attractions.map((item) => item.category)),
+  ];
+  const filteredAttractions =
+    selectedCategory === 'Tất cả'
+      ? attractions
+      : attractions.filter((item) => item.category === selectedCategory);
+  return (
+    <div className="app">
+      <h1>Khám phá Huế</h1>
+      <AttractionList attractions={filteredAttractions} />
+    </div>
+  );
+}
+export default App;
+Bước 2 — Tạo thành phần CategoryTabs
+JSX — src/components/CategoryTabs.jsx
+function CategoryTabs({ categories, selectedCategory, onSelectCategory }) {
+  return (
+    <div className="category-tabs">
+      {categories.map((category) => (
+        <button
+          key={category}
+          className={category === selectedCategory ? 'is-active' : ''}
+          onClick={() => onSelectCategory(category)}
+        >
+          {category}
+        </button>
+      ))}
+    </div>
+  );
+}
+export default CategoryTabs;
+Bước 3 — Kết nối CategoryTabs với App
+import CategoryTabs from './components/CategoryTabs';
+// bên trong App, thêm vào trước AttractionList:
+<CategoryTabs
+  categories={categories}
+  selectedCategory={selectedCategory}
+  onSelectCategory={setSelectedCategory}
+/>
+<AttractionList attractions={filteredAttractions} />
+💡 Vì sao state lọc phải đặt ở App, không đặt ở CategoryTabs?
+• Cả CategoryTabs (để tô đậm tab đang chọn) và AttractionList (để biết lọc gì) đều cần biết selectedCategory.
+• Nguyên tắc "nâng state lên" (lifting state up) đã học ở phần lý thuyết: state dùng chung phải đặt ở thành phần cha gần nhất của tất cả các nơi cần dùng nó.
+• CategoryTabs chỉ nhận selectedCategory qua props và gọi lại onSelectCategory khi người dùng bấm — đúng luồng dữ liệu một chiều.
+✓ CHECKPOINT — Lab 3 hoàn thành khi:
+• Thanh tab hiển thị đủ: Tất cả, Di tích, Chợ, Cầu, Ẩm thực
+• Bấm vào một tab thì chỉ những địa điểm đúng danh mục đó còn hiển thị
+• Tab đang được chọn có style nổi bật (class is-active) khác các tab còn lại
+• Bấm "Tất cả" hiển thị lại đủ toàn bộ 5 địa điểm
+Vấn đề gặp phải
+Nguyên nhân có thể
+Cách khắc phục
+Bấm tab không lọc được gì
+Quên truyền onSelectCategory hoặc quên gọi setSelectedCategory
+Kiểm tra CategoryTabs có nhận đủ 3 props và gọi đúng hàm khi onClick
+Danh sách danh mục bị lặp lại
+Dùng attractions.map() lấy category nhưng không loại trùng
+Dùng new Set(...) để loại các category trùng nhau trước khi hiển thị
+Kết thúc phần thực hành tại lớp
+Đến đây, các bạn đã hoàn thành 3 Lab tại lớp: danh sách địa điểm bằng Props (Lab 1), nút yêu thích bằng State cục bộ (Lab 2), và bộ lọc danh mục bằng State dùng chung ở component cha (Lab 3). Hai Lab còn lại dưới đây là bài tập về nhà, tiếp tục dùng chung bộ dữ liệu attractions.js đã có.
+LAB 4 — Đánh giá bằng sao (Bài tập về nhà)
+⏱ Thời gian: 30–40 phút (làm ở nhà)    🎯 Mục tiêu: Xây dựng thành phần đánh giá sao có thể chọn số sao bằng cách bấm chuột    🌐 Lấy cảm hứng từ: Hệ thống đánh giá sao của TripAdvisor / Google Reviews / Shopee
+TripAdvisor và Google Reviews đều cho phép người dùng chấm điểm địa điểm bằng cách bấm vào số sao mong muốn (1 đến 5 sao). Lab này yêu cầu các bạn tự xây dựng thành phần StarRating theo đúng cơ chế đó, áp dụng vào từng thẻ AttractionCard.
+Yêu cầu chi tiết
+Tạo thành phần mới src/components/StarRating.jsx, có state riêng userRating (khởi tạo bằng 0).
+Component hiển thị 5 ký hiệu sao (★ hoặc ☆) render bằng cách lặp qua mảng [1, 2, 3, 4, 5].
+Khi người dùng bấm vào sao thứ n, tất cả các sao từ 1 đến n phải chuyển thành ★ (đã tô), các sao còn lại là ☆ (chưa tô).
+Hiển thị thêm dòng chữ bên dưới, ví dụ: "Bạn đã đánh giá: 4/5 sao", cập nhật theo state userRating.
+Đặt <StarRating /> bên trong AttractionCard, ngay dưới phần mô tả.
+Gợi ý khung code — src/components/StarRating.jsx
+import { useState } from 'react';
+function StarRating() {
+  const [userRating, setUserRating] = useState(0);
+  const stars = [1, 2, 3, 4, 5];
+  return (
+    <div className="star-rating">
+      {stars.map((starValue) => (
+        <span
+          key={starValue}
+          className="star"
+          onClick={() => setUserRating(starValue)}
+        >
+          {/* Gợi ý: dùng biểu thức điều kiện so sánh
+             starValue <= userRating để chọn ★ hoặc ☆ */}
+        </span>
+      ))}
+      <p>Bạn đã đánh giá: {userRating}/5 sao</p>
+    </div>
+  );
+}
+export default StarRating;
+💡 Gợi ý cách tô sao theo giá trị đã chọn
+• So sánh starValue <= userRating: nếu đúng thì hiển thị ★ (đã tô), nếu sai thì hiển thị ☆ (chưa tô).
+• Có thể viết: {starValue <= userRating ? '★' : '☆'} ngay bên trong thẻ <span>.
+• Đây chính là kỹ thuật kết xuất có điều kiện (conditional rendering) đã học ở Buổi 4, kết hợp với State của Buổi 5.
+✓ CHECKPOINT — Lab 4 hoàn thành khi:
+• StarRating hiển thị đúng 5 sao ban đầu đều ở trạng thái chưa tô (☆)
+• Bấm vào sao thứ 4 thì đúng 4 sao đầu chuyển thành ★, sao thứ 5 vẫn là ☆
+• Dòng chữ "Bạn đã đánh giá: n/5 sao" cập nhật đúng theo số sao vừa bấm
+• Mỗi thẻ AttractionCard có StarRating hoạt động độc lập với các thẻ khác (giống cơ chế Lab 2)
+LAB 5 — Bộ đếm số lượng vé tham quan (Bài tập về nhà)
+⏱ Thời gian: 30–40 phút (làm ở nhà)    🎯 Mục tiêu: Xây dựng bộ đếm số lượng có kiểm soát giới hạn, tính tổng tiền tự động    🌐 Lấy cảm hứng từ: Bộ đếm số lượng sản phẩm trong giỏ hàng Shopee / Tiki / Traveloka khi đặt vé
+Khi đặt vé tham quan hoặc đặt mua sản phẩm trên các sàn thương mại điện tử, luôn có một bộ đếm số lượng dạng [ − ] [ số lượng ] [ + ], không cho phép giảm dưới 1 và thường giới hạn số lượng tối đa. Lab này yêu cầu xây dựng đúng thành phần đó cho tính năng "Đặt vé tham quan", đồng thời tự tính tổng tiền theo số lượng — kỹ năng sẽ dùng lại trực tiếp nếu nhóm chọn đề tài đồ án liên quan đến đặt vé, đặt phòng, hay đặt món ăn.
+Yêu cầu chi tiết
+Tạo thành phần mới src/components/TicketCounter.jsx, nhận vào props price (đơn giá vé, ví dụ 150000).
+Component có state quantity, khởi tạo bằng 1.
+Có 2 nút [ − ] và [ + ] để giảm/tăng quantity. Nút [ − ] không được cho phép giảm xuống dưới 1. Nút [ + ] không được cho phép tăng quá 10.
+Hiển thị số lượng hiện tại ở giữa 2 nút.
+Tính và hiển thị tổng tiền = price × quantity, định dạng có dấu chấm ngăn cách hàng nghìn (gợi ý dùng toLocaleString('vi-VN')).
+Đặt <TicketCounter price={150000} /> vào bên trong AttractionCard của địa điểm Đại Nội Huế (địa điểm có bán vé thực tế).
+Gợi ý khung code — src/components/TicketCounter.jsx
+import { useState } from 'react';
+function TicketCounter({ price }) {
+  const [quantity, setQuantity] = useState(1);
+  function handleDecrease() {
+    // Gợi ý: dùng Math.max(1, ...) để chặn không cho xuống dưới 1
+  }
+  function handleIncrease() {
+    // Gợi ý: dùng Math.min(10, ...) để chặn không cho vượt quá 10
+  }
+  const totalPrice = price * quantity;
+  return (
+    <div className="ticket-counter">
+      <button onClick={handleDecrease}>−</button>
+      <span>{quantity}</span>
+      <button onClick={handleIncrease}>+</button>
+      <p>Tổng tiền: {totalPrice.toLocaleString('vi-VN')} đ</p>
+    </div>
+  );
+}
+export default TicketCounter;
+💡 Gợi ý dùng Math.max / Math.min để giới hạn giá trị
+• setQuantity((prev) => Math.max(1, prev - 1)) — đảm bảo kết quả không bao giờ nhỏ hơn 1.
+• setQuantity((prev) => Math.min(10, prev + 1)) — đảm bảo kết quả không bao giờ lớn hơn 10.
+• Đây là kỹ thuật rất phổ biến khi xử lý input số lượng trong các ứng dụng thương mại điện tử thực tế.
+✓ CHECKPOINT — Lab 5 hoàn thành khi:
+• Số lượng ban đầu là 1, không thể bấm [ − ] để xuống 0 hoặc số âm
+• Không thể bấm [ + ] để vượt quá 10
+• Tổng tiền hiển thị đúng và tự cập nhật mỗi khi số lượng thay đổi
+• Tổng tiền hiển thị có định dạng dấu chấm ngăn cách hàng nghìn (ví dụ 450.000 đ)
+Bảng test case tự kiểm tra
+Test case
+Thao tác kiểm tra
+Kết quả mong đợi
+TC1
+Tải lại trang lần đầu
+Hiển thị đủ 5 thẻ địa điểm, chưa có thẻ nào được đánh dấu yêu thích
+TC2
+Bấm nút yêu thích ở thẻ Cầu Tràng Tiền
+Chỉ thẻ Cầu Tràng Tiền đổi trạng thái, các thẻ khác giữ nguyên
+TC3
+Bấm tab "Di tích"
+Chỉ còn Đại Nội Huế và Lăng Khải Định hiển thị
+TC4
+Bấm tab "Tất cả" sau khi đã lọc
+Hiển thị lại đủ 5 địa điểm
+TC5
+Bấm sao thứ 3 trong StarRating của một thẻ
+3 sao đầu tô đậm, dòng chữ hiện "3/5 sao"
+TC6
+Bấm [ − ] liên tục trong TicketCounter khi số lượng = 1
+Số lượng giữ nguyên ở 1, không xuống 0 hoặc âm
+TC7
+Bấm [ + ] liên tục trong TicketCounter đến khi số lượng = 10
+Số lượng dừng lại ở 10, không vượt quá
+Bảng tự đánh giá cuối buổi
+Kỹ năng
+Chưa
+Cơ bản
+Thành thạo
+Render danh sách từ mảng dữ liệu bằng Props (Lab 1)
+Dùng State cục bộ cho từng thẻ độc lập (Lab 2)
+Nâng State lên component cha để lọc dữ liệu (Lab 3)
+Kết xuất có điều kiện kết hợp với State (Lab 4)
+Giới hạn giá trị State bằng Math.max / Math.min (Lab 5)
+Tóm tắt những gì đã học trong buổi thực hành
+Props giúp một component (như AttractionCard) tái sử dụng được cho nhiều dữ liệu khác nhau (Lab 1).
+State cục bộ giúp mỗi thành phần con tự quản lý trạng thái riêng, độc lập với các thành phần cùng loại khác (Lab 2, Lab 4, Lab 5).
+Khi nhiều thành phần cần dùng chung một trạng thái, phải nâng state lên thành phần cha gần nhất và truyền xuống qua props + callback (Lab 3).
+Các tính năng tưởng chừng phức tạp trên ứng dụng thật (nút yêu thích, bộ lọc, đánh giá sao, bộ đếm giỏ hàng) đều được xây dựng chỉ từ hai khối kiến thức nền tảng: Props và State.
+Hướng dẫn nộp bài qua GitHub
+Kiểm tra lại toàn bộ 5 Lab chạy đúng bằng npm run dev trước khi nộp.
+Chạy git add . và git commit -m "Buổi 5: hoàn thành 5 lab Props và State".
+Đẩy code lên nhánh đã tạo: git push origin feature/buoi5-lab-thuc-hanh.
+Tạo Pull Request trên GitHub, mô tả ngắn gọn các thành phần đã xây dựng (AttractionCard, AttractionList, CategoryTabs, StarRating, TicketCounter).
+Dán đường dẫn Pull Request vào form nộp bài trên hệ thống của lớp trước hạn quy định.

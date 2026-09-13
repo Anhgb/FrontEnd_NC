@@ -1,7 +1,5 @@
 import MenuItem from './MenuItem';
 
-// Câu 4 — MenuList nhận props items, dùng map() render danh sách MenuItem
-// key dùng item.id (không dùng index)
 function MenuList({ items, onToggleFavorite }) {
   return (
     <div className="menu-list">

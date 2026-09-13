@@ -1,0 +1,1185 @@
+ĐẠI HỌC PHÚ XUÂN
+KHOA CÔNG NGHỆ THÔNG TIN
+HƯỚNG DẪN THỰC HÀNH · INT.7.18 — WEB FRONTEND NÂNG CAO
+QUẢN LÝ SỰ KIỆN TRONG REACT
+Bài 7 — BỘ XỬ LÝ SỰ KIỆN, TRUYỀN THAM SỐ, LAN TRUYỀN & HÀNH VI MẶC ĐỊNH
+Dự án phu-xuan-react  ·
+MỤC TIÊU THỰC HÀNH Bài 7
+Bản đồ Bài thực hành
+YÊU CẦU TRƯỚC KHI BẮT ĐẦU
+Chuẩn bị (5 phút)
+Bước 1    Tạo nhánh làm việc của Bài
+Bước 2    Tạo thư mục cho Bài 7
+Toàn bộ component của Bài này đặt trong một thư mục riêng để không lẫn với các Bài trước.
+Người dùng Windows PowerShell có thể tạo từng thư mục bằng chuột trong VS Code, hoặc chạy mkdir src/components/Bài7 (các thư mục đã có sẵn sẽ báo lỗi "already exists" — bỏ qua được).
+Bước 3    Tạo hai file dữ liệu mẫu
+Bước 4    Tạo file CSS của Bài
+File này định nghĩa sẵn các class dùng trong 5 lab, để sinh viên tập trung vào logic sự kiện. Sao chép nguyên văn.
+Bước 5    Tạo trang Bài 7 và hiển thị trong App
+Trang Bài7Page là nơi gắn các component của từng lab. Ban đầu trang chỉ có tiêu đề; sau mỗi lab ta thêm một dòng import và một thẻ component.
+Thời gian: 15 phút   |   Hình thức: Tại lớp   |   Mục tiêu: viết handler đúng cách và đọc được đối tượng sự kiện
+Bước 1    Viết nút bấm có bộ đếm
+Tạo file ThuSuKien.jsx với phiên bản tối giản: một nút, một state đếm, một hàm xử lý.
+Gắn vào trang: mở Bài7Page.jsx, thêm dòng import và thẻ component.
+Bước 2    Cố tình gây lỗi: gọi hàm thay vì truyền hàm
+Thêm cặp ngoặc tròn sau tên hàm, lưu file và quan sát trình duyệt:
+Bước 3    Thêm thẻ địa danh và nhật ký sự kiện
+Viết lại toàn bộ file theo phiên bản hoàn chỉnh dưới đây. Nhật ký lưu tối đa 5 dòng gần nhất; mỗi dòng có id riêng lấy từ useRef (đã học ở Bài 6) để làm key ổn định, thay vì dùng chỉ số mảng.
+Bước 4    Quan sát target và currentTarget
+Bấm lần lượt vào chữ "Lăng Tự Đức", chữ "Lăng tẩm", và khoảng trống giữa hai chữ (bên trong khung viền đứt). Đọc nhật ký.
+Kết luận rút ra: currentTarget luôn là DIV — phần tử gắn onClick; còn target thay đổi theo vị trí bấm. Đây là lý do ở Lab 2 ta đọc data-* qua currentTarget.
+Thời gian: 20 phút   |   Hình thức: Tại lớp   |   Mục tiêu: để component con báo sự kiện lên component cha giữ state
+Bước 1    Viết component con TheDiaDanh
+Component con không giữ state. Nó nhận ba props: dữ liệu diaDanh, cờ dangChon, và hàm onChon. Khi ô đánh dấu thay đổi, nó gọi onChon(diaDanh.id) để báo lên cha.
+Bước 2    Viết component cha — phiên bản chỉ chọn/bỏ chọn
+Cha giữ state dsDaChon (mảng id) và định nghĩa handleChon. Chú ý: truyền onChon={handleChon} — truyền hàm, không có ngoặc tròn.
+Gắn <DanhSachDiaDanh /> vào Bài7Page (thêm import tương tự Lab 1), rồi bấm chọn vài địa danh.
+Bước 3    Quan sát luồng dữ liệu bằng React DevTools
+Mở DevTools (F12) → tab Components → chọn DanhSachDiaDanh. Ở khung bên phải thấy mục hooks → State: [].
+Bấm chọn Chùa Thiên Mụ. State đổi thành [2].
+Chọn một TheDiaDanh trong cây component. Khung props thấy dangChon: true và onChon: f handleChon() — đây chính là hàm của cha được truyền xuống.
+Nhận xét: component con không có mục hooks nào — nó hoàn toàn được điều khiển bởi cha.
+Bước 4    Thêm bộ lọc theo loại bằng data-*, nút chọn tất cả và dòng lộ trình
+Cập nhật file thành phiên bản hoàn chỉnh. Ba điểm mới cần chú ý khi gõ lại:
+Cách 3 (thuộc tính data): mọi nút lọc dùng chung một hàm handleLocLoai, đọc loại từ e.currentTarget.dataset.loai.
+Giá trị suy ra: dsHienThi được tính ngay khi render từ loaiDangLoc, không tạo thêm state.
+Hàm cập nhật khi thêm nhiều phần tử: handleChonTatCa chỉ thêm các id chưa có, giữ nguyên thứ tự chọn trước đó.
+Thời gian: 20 phút   |   Hình thức: Tại lớp (hoàn thành BTVN 1)   |   Mục tiêu: kiểm soát lan truyền sự kiện và cập nhật state an toàn
+Yêu cầu nghiệp vụ: lưới thẻ địa danh; bấm vào thẻ thì mở/đóng phần mô tả; trong thẻ có nút "Yêu thích" và "Chia sẻ" — bấm hai nút này không được mở mô tả. Phía trên lưới có dòng thống kê số lượt tương tác trong khu vực.
+Bước 1    Viết thẻ phiên bản chưa chặn lan truyền và quan sát lỗi
+Viết tiếp component cha KhamPhaDiaDanh (Bước 3 bên dưới, sao chép nguyên văn), gắn vào Bài7Page, rồi bấm nút "Yêu thích" trên thẻ Chùa Thiên Mụ.
+Nguyên nhân: sự kiện click nổi bọt từ <button> lên <article>, nên onXem cũng chạy.
+Bước 2    Chặn lan truyền và thêm nút Chia sẻ
+Viết lại thẻ theo phiên bản hoàn chỉnh. Mỗi nút con gọi e.stopPropagation() ở dòng đầu hàm xử lý. Nút "Chia sẻ" dùng navigator.clipboard — một API bất đồng bộ, nên hàm xử lý khai báo async.
+Bước 3    Viết component cha có pha bắt
+Cha giữ ba state: thẻ đang mở, danh sách yêu thích, số lượt tương tác. Chú ý onClickCapture trên <section>: nó chạy ở pha bắt, trước mọi handler bên trong, và không bị stopPropagation của thẻ con chặn — nên đếm được cả cú bấm vào nút Yêu thích.
+Bước 4    Sửa lỗi "+3 lượt thích chỉ tăng 1"
+Tạo component đếm lượt thích, cố tình viết theo cách sai trước:
+Trước khi sửa, trả lời bằng lời: vì sao Console in giá trị cũ? (Gợi ý: state là ảnh chụp của lần render; ba lời gọi đều là setLuotThich(0 + 1).) Sau đó viết lại bằng hàm cập nhật:
+Gắn cả KhamPhaDiaDanh và LuotThichMonAn vào Bài7Page.
+Thời gian: 40 phút   |   Hình thức: Ở nhà (BTVN 2)   |   Mục tiêu: xây dựng ô tìm kiếm dùng thoải mái bằng bàn phím
+Bước 1    Quan sát hành vi mặc định của biểu mẫu
+Tạo file tạm thời với biểu mẫu chưa chặn hành vi mặc định, gắn vào trang, gõ "bún" rồi nhấn Enter.
+Trình duyệt thực hiện hành vi mặc định của <form>: gửi dữ liệu và tải lại trang. Trong ứng dụng một trang, ta phải chặn hành vi này bằng e.preventDefault().
+Bước 2    Viết biểu mẫu hoàn chỉnh
+Phiên bản hoàn chỉnh bổ sung bốn kỹ thuật, mỗi kỹ thuật ứng với một dòng chú thích trong mã:
+e.preventDefault() trong handleSubmit — Enter trong ô nhập tự gửi biểu mẫu, không cần bắt phím Enter riêng.
+onKeyDown bắt phím Esc để xoá từ khoá, bỏ qua khi e.nativeEvent.isComposing (đang gõ dấu bằng bộ gõ có gạch chân).
+onFocus/onBlur để hiện/ẩn khung gợi ý từ khoá; bấm gợi ý là truyền tham số bằng hàm mũi tên.
+onMouseDown={(e) => e.preventDefault()} trên nút gợi ý — chặn việc ô nhập mất tiêu điểm, nếu không onBlur sẽ ẩn khung gợi ý trước khi onClick kịp chạy.
+Bước 3    Viết component cha hiển thị kết quả
+Cha giữ từ khoá đã gửi (không phải từ khoá đang gõ) và lọc danh sách ngay khi render. Để ý onTimKiem={setTuKhoaDaTim}: có thể truyền thẳng hàm set state xuống con khi con chỉ cần báo một giá trị.
+Gắn <TimMonAnHue /> vào Bài7Page và chạy kịch bản kiểm tra:
+Bước 4    Kiểm tra với bộ gõ tiếng Việt
+Bật bộ gõ tiếng Việt (Unikey/EVKey trên Windows, bộ gõ Telex có sẵn trên macOS).
+Gõ "chè" bằng Telex (chef), nhấn Enter ngay khi chữ còn đang được gạch chân (nếu bộ gõ có gạch chân).
+Kỳ vọng: lần Enter đầu chỉ chốt chữ, lần Enter thứ hai mới gửi tìm kiếm. Tương tự, Esc khi đang gạch chân chỉ huỷ chữ đang gõ, không xoá cả ô.
+Ghi kết quả thực tế vào bảng test case cuối tài liệu. Nhiều bộ gõ trên Windows không dùng gạch chân — khi đó hai lần Enter không khác nhau, đó là hành vi bình thường.
+Thời gian: 45 phút   |   Hình thức: Ở nhà (BONUS)   |   Mục tiêu: kết hợp nhiều nhóm sự kiện trong một tính năng hoàn chỉnh
+Bước 1    Viết hàm thuần di chuyển phần tử
+Tách logic sắp xếp thành hàm thuần đặt ngoài component: không đụng tới state, luôn trả về mảng mới, dễ thử nghiệm độc lập trong Console.
+Bước 2    Nắm bốn sự kiện kéo thả trước khi viết
+Bước 3    Viết component hoàn chỉnh
+Ngoài kéo thả, component có thêm: phím tắt Alt + mũi tên (mỗi dòng có tabIndex={0} để nhận tiêu điểm), nút Xoá từng món, và vùng aria-live="polite" để trình đọc màn hình đọc thông báo sau mỗi thay đổi.
+Bước 4    Gắn vào trang và kiểm tra
+Gắn <MonAnYeuThich /> vào Bài7Page. Lúc này trang có đủ 6 component; so sánh với file hoàn chỉnh:
+NHIỆM VỤ ĐỒ ÁN NHÓM (BTVN 3)
+Mỗi nhóm chọn một màn hình trong đề tài của mình có nhiều tương tác nhất, bổ sung hoặc chỉnh sửa để có ít nhất ba nhóm sự kiện khác nhau (ví dụ chuột, bàn phím, biểu mẫu, kéo thả, tiêu điểm). Nhiệm vụ này đo CLO3 — lựa chọn mẫu thiết kế phù hợp — nên phần quan trọng nhất là cột lý do.
+Mẫu bảng sự kiện — dán vào mô tả Pull Request của nhóm
+Nhánh của nhóm: feature/Bài7-su-kien-<ma-nhom> trên kho đồ án; mỗi thành viên có ít nhất một commit.
+Kèm 1 ảnh chụp màn hình hoặc ảnh động (GIF) minh hoạ tương tác trong Pull Request.
+BONUS — Đo hiệu quả của useCallback + React.memo bằng Profiler
+Bài này nối kiến thức Bài 6 với Lab 2. Mục tiêu: chứng minh bằng số liệu rằng khi bấm chọn một địa danh, chỉ thẻ bị đổi mới render lại.
+DevTools → tab Profiler → biểu tượng bánh răng → bật Highlight updates when components render.
+Bấm Ghi (chấm tròn), chọn Đại Nội Huế, dừng ghi. Ghi lại số TheDiaDanh được render trong lần commit.
+Lần lượt thử ba cấu hình: không memo; có memo nhưng không useCallback; có cả hai. Chụp ảnh ba kết quả vào Pull Request và giải thích sự khác nhau.
+Kết quả mong đợi: chỉ cấu hình thứ ba cho thấy duy nhất một thẻ render lại. Ở cấu hình thứ hai, memo vô tác dụng vì handleChon là hàm mới sau mỗi lần render của cha.
+BẢNG TEST CASE TỰ KIỂM TRA
+Thực hiện từng thao tác, ghi kết quả thực tế. Mọi dòng phải "Đạt" trước khi tạo Pull Request.
+Ghi chú cho giảng viên: mã nguồn mẫu kèm bộ kiểm thử tự động (Vitest + Testing Library) cho các test case 1–10, 12–13; có thể dùng để chấm nhanh bài nộp sau khi học Bài 19.
+BẢNG TỰ ĐÁNH GIÁ Bài 7
+HƯỚNG DẪN NỘP BÀI QUA GITHUB
+Đảm bảo đang ở nhánh feature/Bài7-su-kien: git branch hiển thị dấu * trước tên nhánh này.
+Chạy npm run dev, thực hiện lại bảng test case, Console không còn lỗi đỏ hay cảnh báo về key.
+Chạy npm run build để chắc chắn dự án build được — giảng viên sẽ clone về và build.
+Kiểm tra lịch sử: git log --oneline có tối thiểu các commit Lab 1, Lab 2, Lab 3 (và Lab 4, Lab 5 nếu làm).
+Đẩy lên kho: git push -u origin feature/Bài7-su-kien.
+Trên GitHub, tạo Pull Request về main, gắn nhãn Bài-7, điền mô tả theo mẫu dưới đây.
+PREVIEW Bài 8 — BIỂU MẪU CÓ KIỂM SOÁT
+— Hết hướng dẫn thực hành Bài 7 —
+Thời lượng thực hành | 60 phút tại lớp (chuẩn bị + Lab 1–3) · Lab 4–5 và nhiệm vụ đồ án làm ở nhà
+Yêu cầu đầu vào | Đã học lý thuyết Bài 7; dự án phu-xuan-react chạy được ở trạng thái cuối Bài 6
+Môi trường | VS Code + Node.js LTS; Chrome/Edge có React Developer Tools; hoặc CodeSandbox
+Chủ đề dữ liệu | Địa danh Huế (Đại Nội, Chùa Thiên Mụ, Lăng Tự Đức…) và món ăn Huế (bún bò, cơm hến, bánh bèo…)
+Nộp bài | Nhánh feature/Bài7-su-kien → Pull Request về main, gắn nhãn Bài-7
+Kiểm chứng mã nguồn | Toàn bộ mã trong tài liệu đã được build và chạy thử trên React 19.3 + Vite 8, kèm bộ kiểm thử tự động cho 5 lab
+
+Sau Bài thực hành, sinh viên sẽ:
+1. Viết đúng bộ xử lý sự kiện, tự tay gây ra và sửa lỗi "gọi hàm thay vì truyền hàm", đọc được e.target và e.currentTarget.
+2. Xây dựng danh sách chọn nhiều địa danh: truyền tham số bằng hàm mũi tên, bằng data-*, và truyền bộ xử lý từ cha xuống con qua props.
+3. Xử lý thẻ có nút lồng nhau bằng stopPropagation, ghi nhận tương tác bằng pha bắt onClickCapture, sửa lỗi cập nhật state bằng hàm cập nhật.
+4. Xây dựng ô tìm kiếm hoạt động bằng bàn phím: gửi bằng Enter qua onSubmit, xoá bằng Esc, không lỗi khi gõ tiếng Việt có dấu.
+5. Xây dựng danh sách sắp xếp bằng kéo thả, có phương án bàn phím và thông báo cho trình đọc màn hình.
+6. Áp dụng ít nhất ba nhóm sự kiện vào màn hình của đồ án nhóm và giải thích được lựa chọn thiết kế (minh chứng CLO3).
+
+Lab | Hình thức | Thời gian | Sản phẩm | Lý thuyết liên quan
+Chuẩn bị | Tại lớp | 5 phút | Nhánh Git, thư mục, dữ liệu mẫu, trang Bài7Page | —
+Lab 1 | Tại lớp | 15 phút | ThuSuKien.jsx — nút, thẻ, nhật ký sự kiện | Mục VI
+Lab 2 | Tại lớp | 20 phút | TheDiaDanh.jsx, DanhSachDiaDanh.jsx — chọn nhiều, lọc theo loại | Mục VII, VIII
+Lab 3 | Tại lớp | 20 phút | TheDiaDanhMoRong.jsx, KhamPhaDiaDanh.jsx, LuotThichMonAn.jsx (= BTVN 1) | Mục IX.1–IX.6
+Lab 4 | Ở nhà | 40 phút | FormTimMonAn.jsx, TimMonAnHue.jsx (= BTVN 2) | Mục VI.6, IX.5
+Lab 5 | Ở nhà | 45 phút | MonAnYeuThich.jsx — kéo thả + bàn phím (= BONUS) | Mục IX.8
+Đồ án | Ở nhà | 60 phút | Bảng sự kiện trong Pull Request của nhóm (= BTVN 3) | Mục X, XII
+
+Kiểm tra trước khi vào Lab 1 — thiếu một mục là sẽ tắc ở giữa Bài
+✓  Pull Request feature/Bài6-hook-nang-cao đã được merge vào main.
+✓  npm run dev chạy được, mở http://localhost:5173 thấy trang của Bài 6, Console không có lỗi đỏ.
+✓  Trình duyệt đã cài React Developer Tools (thấy tab Components và Profiler trong DevTools).
+✓  Đã đọc mục V–IX của tài liệu lý thuyết Bài 7.
+
+Terminal — thư mục gốc dự án phu-xuan-react
+git checkout main
+git pull
+git checkout -b feature/Bài7-su-kien
+
+Kết quả mong đợi
+Already up to date.
+Switched to a new branch 'feature/Bài7-su-kien'
+
+Terminal (Git Bash / macOS / Linux)
+mkdir -p src/components/Bài7 src/data src/pages src/styles
+
+JavaScript — src/data/diaDanhHue.js
+// Dữ liệu mẫu địa danh Huế dùng cho Bài 7
+export const DS_DIA_DANH = [
+  { id: 1, ten: 'Đại Nội Huế', loai: 'Di tích',
+    moTa: 'Quần thể cung điện của triều Nguyễn bên bờ Bắc sông Hương.' },
+  { id: 2, ten: 'Chùa Thiên Mụ', loai: 'Chùa',
+    moTa: 'Ngôi chùa cổ với tháp Phước Duyên nhìn ra sông Hương.' },
+  { id: 3, ten: 'Lăng Tự Đức', loai: 'Lăng tẩm',
+    moTa: 'Khu lăng giữa rừng thông và hồ sen yên tĩnh.' },
+  { id: 4, ten: 'Lăng Khải Định', loai: 'Lăng tẩm',
+    moTa: 'Nổi tiếng với nghệ thuật khảm sành sứ, kết hợp kiến trúc Á – Âu.' },
+  { id: 5, ten: 'Cầu Tràng Tiền', loai: 'Công trình',
+    moTa: 'Cây cầu thép bắc qua sông Hương, biểu tượng của thành phố.' },
+  { id: 6, ten: 'Chợ Đông Ba', loai: 'Chợ',
+    moTa: 'Khu chợ lớn và lâu đời, thiên đường ẩm thực Huế.' },
+];
+
+JavaScript — src/data/monAnHue.js
+// Dữ liệu mẫu món ăn Huế (giá chỉ mang tính minh hoạ)
+export const DS_MON_AN = [
+  { id: 'bun-bo', ten: 'Bún bò Huế', gia: 45000 },
+  { id: 'com-hen', ten: 'Cơm hến', gia: 20000 },
+  { id: 'banh-beo', ten: 'Bánh bèo', gia: 30000 },
+  { id: 'banh-khoai', ten: 'Bánh khoái', gia: 35000 },
+  { id: 'banh-loc', ten: 'Bánh lọc', gia: 30000 },
+  { id: 'che-hue', ten: 'Chè Huế', gia: 15000 },
+  { id: 'nem-lui', ten: 'Nem lụi', gia: 40000 },
+];
+
+CSS — src/styles/Bài7.css
+/* Bảng màu Ocean-depth dùng chung của khoá học */
+:root { --navy: #1b2a4a; --teal: #0f6e6a; --amber: #b8860b; --vien: #c9d3de; }
+ 
+.trang-Bài7 {
+  max-width: 880px; margin: 0 auto; padding: 24px;
+  font-family: system-ui, sans-serif;
+}
+.trang-Bài7 h1 { color: var(--navy); }
+.lab {
+  border: 1px solid var(--vien); border-radius: 12px;
+  padding: 16px 20px; margin: 20px 0;
+}
+.lab h2 { color: var(--teal); margin-top: 0; }
+button {
+  cursor: pointer; margin: 4px; padding: 6px 12px;
+  border-radius: 6px; border: 1px solid var(--vien); background: #fff;
+}
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+ 
+/* Lab 1 */
+.the-thu {
+  display: inline-flex; gap: 12px; padding: 12px 16px; margin: 12px 0;
+  border: 2px dashed var(--teal); border-radius: 8px; cursor: pointer;
+}
+.nhat-ky { font-family: monospace; font-size: 14px; }
+ 
+/* Lab 2 */
+.thanh-loc button.dang-loc { background: var(--navy); color: #fff; }
+.ds-dia-danh { list-style: none; padding: 0; }
+.the-dia-danh label {
+  display: flex; gap: 10px; align-items: center; padding: 8px 12px; margin: 6px 0;
+  border: 1px solid var(--vien); border-radius: 8px; cursor: pointer;
+}
+.the-dia-danh.dang-chon label { background: #e8f4f3; border-color: var(--teal); }
+.loai { margin-left: auto; font-size: 13px; color: #5a6475; }
+.lich-trinh { font-weight: 600; color: var(--navy); }
+ 
+/* Lab 3 */
+.luoi-the {
+  display: grid; gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+.the-mo-rong {
+  border: 1px solid var(--vien); border-radius: 10px;
+  padding: 12px; cursor: pointer;
+}
+.the-mo-rong.dang-mo { border-color: var(--amber); background: #fbf4e4; }
+.the-mo-rong h3 { margin: 0 0 4px; font-size: 17px; }
+.thong-ke { color: #5a6475; }
+ 
+/* Lab 4 */
+.form-tim { position: relative; display: flex; gap: 6px; }
+.form-tim input {
+  flex: 1; padding: 8px 10px;
+  border-radius: 6px; border: 1px solid var(--vien);
+}
+.goi-y {
+  position: absolute; top: 100%; left: 0; padding: 4px;
+  background: #fff; border: 1px solid var(--vien); border-radius: 8px;
+}
+ 
+/* Lab 5 */
+.ds-mon-yeu-thich li {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 12px; margin: 6px 0; background: #fff; cursor: grab;
+  border: 1px solid var(--vien); border-radius: 8px;
+}
+.ds-mon-yeu-thich li:focus { outline: 3px solid var(--teal); }
+.ds-mon-yeu-thich li.dang-keo { opacity: 0.4; }
+.ds-mon-yeu-thich li.vi-tri-tha { border-top: 3px solid var(--amber); }
+.thong-bao { min-height: 1.4em; color: var(--teal); }
+
+JSX — src/pages/Bài7Page.jsx (bản khởi đầu)
+import '../styles/Bài7.css';
+ 
+export default function Bài7Page() {
+  return (
+    <main className="trang-Bài7">
+      <h1>Bài 7 — Quản lý sự kiện trong React</h1>
+      {/* Các lab sẽ được gắn vào đây */}
+    </main>
+  );
+}
+
+JSX — src/App.jsx
+import Bài7Page from './pages/Bài7Page';
+ 
+export default function App() {
+  // Các trang demo của Bài 5, Bài 6 vẫn giữ nguyên trong thư mục src/pages
+  // Bài này tạm thời chỉ hiển thị trang Bài 7 cho gọn
+  return <Bài7Page />;
+}
+
+Kết quả mong đợi — trình duyệt
+Trình duyệt http://localhost:5173 hiển thị tiêu đề:
+Bài 7 — Quản lý sự kiện trong React
+Console: không có lỗi đỏ
+
+LAB 1 — SỰ KIỆN ĐẦU TIÊN & ĐỐI TƯỢNG SỰ KIỆN
+Truyền hàm hay gọi hàm? target hay currentTarget?
+
+JSX — src/components/Bài7/ThuSuKien.jsx (phiên bản 1)
+import { useState } from 'react';
+ 
+export default function ThuSuKien() {
+  const [soLanBam, setSoLanBam] = useState(0);
+ 
+  function handleBamNut() {
+    setSoLanBam((so) => so + 1);
+  }
+ 
+  return (
+    <section className="lab">
+      <h2>Lab 1 — Sự kiện đầu tiên</h2>
+      <button onClick={handleBamNut}>Bắt đầu hành trình ({soLanBam})</button>
+    </section>
+  );
+}
+
+JSX — src/pages/Bài7Page.jsx (thêm 2 dòng)
+// thêm dưới dòng import CSS:
+import ThuSuKien from '../components/Bài7/ThuSuKien';
+ 
+// thêm bên dưới thẻ <h1> trong phần return:
+      <ThuSuKien />
+
+Kết quả mong đợi — trình duyệt
+Nút "Bắt đầu hành trình (0)"
+Bấm 3 lần -> "Bắt đầu hành trình (3)"
+
+JSX — sửa tạm dòng button (SAI, để quan sát)
+<button onClick={handleBamNut()}>Bắt đầu hành trình ({soLanBam})</button>
+
+Kết quả quan sát được
+Trang trắng hoặc lớp phủ lỗi của Vite, Console báo:
+Uncaught Error: Too many re-renders. React limits the number of renders
+to prevent an infinite loop.
+
+Giải thích — ghi vào vở
+handleBamNut() chạy ngay trong lúc render → gọi setSoLanBam → React phải render lại → lại gọi handleBamNut() → vòng lặp vô hạn. React chủ động dừng và báo lỗi.
+Xoá cặp ngoặc tròn để trở lại onClick={handleBamNut}. Trang hoạt động bình thường trở lại.
+Thử thêm biến thể: onClick={() => handleBamNut()} — cũng đúng, vì hàm mũi tên là một hàm mới chưa chạy.
+
+JSX — src/components/Bài7/ThuSuKien.jsx (hoàn chỉnh)
+import { useRef, useState } from 'react';
+ 
+export default function ThuSuKien() {
+  const [soLanBam, setSoLanBam] = useState(0);
+  const [nhatKy, setNhatKy] = useState([]);
+  const demId = useRef(0); // bộ đếm id cho mỗi dòng nhật ký (Bài 6)
+ 
+  // Hàm tiện ích: thêm một dòng lên đầu nhật ký, giữ tối đa 5 dòng
+  function ghiNhatKy(noiDung) {
+    demId.current += 1;
+    const dong = { id: demId.current, noiDung };
+    setNhatKy((truoc) => [dong, ...truoc].slice(0, 5));
+  }
+ 
+  function handleBamNut() {
+    setSoLanBam((so) => so + 1);
+    ghiNhatKy('Bấm nút "Bắt đầu hành trình"');
+  }
+ 
+  function handleBamThe(e) {
+    ghiNhatKy(
+      'type=' + e.type +
+      ' | target=' + e.target.tagName +
+      ' | currentTarget=' + e.currentTarget.tagName
+    );
+  }
+ 
+  return (
+    <section className="lab">
+      <h2>Lab 1 — Sự kiện đầu tiên</h2>
+ 
+      <button onClick={handleBamNut}>Bắt đầu hành trình ({soLanBam})</button>
+ 
+      <div className="the-thu" onClick={handleBamThe}>
+        <span className="ten">Lăng Tự Đức</span>
+        <span className="loai">Lăng tẩm</span>
+      </div>
+ 
+      <h3>Nhật ký sự kiện (5 dòng gần nhất)</h3>
+      <ol className="nhat-ky">
+        {nhatKy.map((dong) => (
+          <li key={dong.id}>{dong.noiDung}</li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
+Kết quả mong đợi — nhật ký (dòng mới nhất ở trên)
+type=click | target=DIV | currentTarget=DIV      <- bấm vào khoảng trống
+type=click | target=SPAN | currentTarget=DIV     <- bấm chữ "Lăng tẩm"
+type=click | target=SPAN | currentTarget=DIV     <- bấm chữ "Lăng Tự Đức"
+
+✓ CHECKPOINT: Lab 1 hoàn thành
+☐  Bấm nút thì số trong ngoặc tăng, và nhật ký có dòng "Bấm nút…".
+☐  Đã tự gây và tự sửa được lỗi "Too many re-renders", giải thích được nguyên nhân bằng lời.
+☐  Nhật ký phân biệt được target=SPAN và target=DIV khi bấm các vị trí khác nhau.
+☐  Console không có cảnh báo "Each child in a list should have a unique key".
+☐  Đã commit: git add . && git commit -m "Lab 1: handler và đối tượng sự kiện"
+
+Vấn đề gặp phải | Nguyên nhân có thể | Cách khắc phục
+Bấm nút không có phản ứng, không báo lỗi | Viết onclick (chữ thường) hoặc onClick="handleBamNut" | Dùng đúng onClick={handleBamNut}
+Lỗi useRef is not defined | Thiếu useRef trong dòng import | import { useRef, useState } from 'react';
+Nhật ký chỉ luôn có 1 dòng | Viết setNhatKy([dong]) thay vì nối với mảng cũ | Dùng setNhatKy((truoc) => [dong, ...truoc].slice(0, 5))
+Mỗi cú bấm xuất hiện 2 dòng nhật ký giống nhau | Gọi ghiNhatKy hai lần hoặc gắn onClick ở cả thẻ và nút | Kiểm tra lại JSX; mỗi hành động chỉ gọi một lần
+
+CHUYỂN SANG ĐỒ ÁN NHÓM
+Tìm trong đồ án một nút đang viết onClick={ham()} hoặc hàm xử lý dài viết nội tuyến trong JSX. Sửa lại theo quy tắc của Lab 1 và ghi nhận vào bảng sự kiện của nhóm (phần Nhiệm vụ đồ án).
+
+LAB 2 — LỊCH TRÌNH CHỌN NHIỀU ĐỊA DANH
+Truyền tham số · data-* · Truyền bộ xử lý từ cha xuống con
+
+JSX — src/components/Bài7/TheDiaDanh.jsx
+// Component con: chỉ hiển thị và báo sự kiện lên cha, KHÔNG giữ state "đang chọn"
+export default function TheDiaDanh({ diaDanh, dangChon, onChon }) {
+  return (
+    <li className={'the-dia-danh' + (dangChon ? ' dang-chon' : '')}>
+      <label>
+        <input
+          type="checkbox"
+          checked={dangChon}
+          onChange={() => onChon(diaDanh.id)}
+        />
+        <span className="ten">{diaDanh.ten}</span>
+        <span className="loai">{diaDanh.loai}</span>
+      </label>
+    </li>
+  );
+}
+
+Cải tiến so với ví dụ trong tài liệu lý thuyết
+Lý thuyết dùng <li onClick> để minh hoạ cho gọn. Ở đây ta dùng <label> bọc <input type="checkbox"> với onChange: bấm vào chữ cũng chọn được, và dùng phím Tab + Space cũng chọn được — đáp ứng tiêu chí khả năng truy cập trong rubric đồ án.
+
+JSX — src/components/Bài7/DanhSachDiaDanh.jsx (phiên bản 1)
+import { useState } from 'react';
+import { DS_DIA_DANH } from '../../data/diaDanhHue';
+import TheDiaDanh from './TheDiaDanh';
+ 
+export default function DanhSachDiaDanh() {
+  const [dsDaChon, setDsDaChon] = useState([]);
+ 
+  function handleChon(id) {
+    setDsDaChon((truoc) =>
+      truoc.includes(id) ? truoc.filter((x) => x !== id) : [...truoc, id]
+    );
+  }
+ 
+  return (
+    <section className="lab">
+      <h2>Lab 2 — Lịch trình của bạn ({dsDaChon.length}/{DS_DIA_DANH.length})</h2>
+      <ul className="ds-dia-danh">
+        {DS_DIA_DANH.map((dd) => (
+          <TheDiaDanh
+            key={dd.id}
+            diaDanh={dd}
+            dangChon={dsDaChon.includes(dd.id)}
+            onChon={handleChon}
+          />
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+Kết quả mong đợi — trình duyệt
+Lab 2 — Lịch trình của bạn (2/6)
+[x] Đại Nội Huế        Di tích      <- nền xanh nhạt, viền teal
+[ ] Chùa Thiên Mụ      Chùa
+[x] Lăng Tự Đức        Lăng tẩm     <- nền xanh nhạt, viền teal
+...
+
+JSX — src/components/Bài7/DanhSachDiaDanh.jsx (hoàn chỉnh)
+import { useState } from 'react';
+import { DS_DIA_DANH } from '../../data/diaDanhHue';
+import TheDiaDanh from './TheDiaDanh';
+ 
+const TAT_CA = 'Tất cả';
+const CAC_LOAI = [TAT_CA, ...new Set(DS_DIA_DANH.map((dd) => dd.loai))];
+ 
+export default function DanhSachDiaDanh() {
+  const [dsDaChon, setDsDaChon] = useState([]);    // mảng id, theo thứ tự chọn
+  const [loaiDangLoc, setLoaiDangLoc] = useState(TAT_CA);
+ 
+  // Giá trị suy ra từ state — tính ngay khi render, không cần state riêng
+  const dsHienThi = loaiDangLoc === TAT_CA
+    ? DS_DIA_DANH
+    : DS_DIA_DANH.filter((dd) => dd.loai === loaiDangLoc);
+ 
+  // Cách 4: hàm này được truyền xuống TheDiaDanh qua prop onChon
+  function handleChon(id) {
+    setDsDaChon((truoc) =>
+      truoc.includes(id) ? truoc.filter((x) => x !== id) : [...truoc, id]
+    );
+  }
+ 
+  // Cách 3: một hàm dùng chung cho mọi nút lọc, đọc loại từ data-loai
+  function handleLocLoai(e) {
+    setLoaiDangLoc(e.currentTarget.dataset.loai);
+  }
+ 
+  // Chọn thêm mọi địa danh đang hiển thị, không trùng lặp
+  function handleChonTatCa() {
+    setDsDaChon((truoc) => {
+      const moi = dsHienThi
+        .map((dd) => dd.id)
+        .filter((id) => !truoc.includes(id));
+      return [...truoc, ...moi];
+    });
+  }
+ 
+  const lichTrinh = dsDaChon
+    .map((id) => DS_DIA_DANH.find((dd) => dd.id === id).ten)
+    .join(' → ');
+ 
+  return (
+    <section className="lab">
+      <h2>Lab 2 — Lịch trình của bạn ({dsDaChon.length}/{DS_DIA_DANH.length})</h2>
+ 
+      <div className="thanh-loc">
+        {CAC_LOAI.map((loai) => (
+          <button
+            key={loai}
+            data-loai={loai}
+            className={loai === loaiDangLoc ? 'dang-loc' : ''}
+            onClick={handleLocLoai}
+          >
+            {loai}
+          </button>
+        ))}
+      </div>
+ 
+      <div className="thanh-cong-cu">
+        <button onClick={handleChonTatCa}>Chọn tất cả đang hiển thị</button>
+        <button onClick={() => setDsDaChon([])} disabled={dsDaChon.length === 0}>
+          Bỏ chọn
+        </button>
+      </div>
+ 
+      <ul className="ds-dia-danh">
+        {dsHienThi.map((dd) => (
+          <TheDiaDanh
+            key={dd.id}
+            diaDanh={dd}
+            dangChon={dsDaChon.includes(dd.id)}
+            onChon={handleChon}
+          />
+        ))}
+      </ul>
+ 
+      <p className="lich-trinh">
+        {lichTrinh ? 'Lộ trình: ' + lichTrinh : 'Chưa chọn địa danh nào.'}
+      </p>
+    </section>
+  );
+}
+
+Kết quả mong đợi — kịch bản kiểm tra
+1. Bấm Đại Nội Huế          -> "Lộ trình: Đại Nội Huế"
+2. Bấm nút lọc "Lăng tẩm"   -> chỉ còn 2 dòng: Lăng Tự Đức, Lăng Khải Định
+3. Bấm "Chọn tất cả đang hiển thị"
+   -> "Lộ trình: Đại Nội Huế → Lăng Tự Đức → Lăng Khải Định", tiêu đề (3/6)
+4. Bấm "Tất cả"             -> hiện lại 6 dòng, 3 dòng vẫn được đánh dấu
+5. Bấm "Bỏ chọn"            -> "Chưa chọn địa danh nào.", nút Bỏ chọn bị mờ
+
+✓ CHECKPOINT: Lab 2 hoàn thành
+☐  Chọn/bỏ chọn bằng chuột và bằng bàn phím (Tab đến ô, nhấn Space) đều hoạt động.
+☐  Bộ lọc loại hoạt động; nút đang lọc có nền navy.
+☐  "Chọn tất cả đang hiển thị" không tạo id trùng lặp khi bấm nhiều lần.
+☐  Giải thích được vì sao TheDiaDanh không có state riêng.
+☐  Đã commit: git commit -m "Lab 2: chọn nhiều địa danh, truyền tham số, data-*"
+
+Vấn đề gặp phải | Nguyên nhân có thể | Cách khắc phục
+Cảnh báo: "You provided a checked prop to a form field without an onChange handler" | Quên gắn onChange cho ô đánh dấu | Thêm onChange={() => onChon(diaDanh.id)}
+Lỗi onChon is not a function | Quên truyền prop onChon ở cha, hoặc gõ sai tên (onchon, onSelect) | Kiểm tra <TheDiaDanh ... onChon={handleChon} />
+Bấm nút lọc thì mọi địa danh biến mất | Đọc e.target.dataset.loai hoặc sai tên data-loai | Dùng e.currentTarget.dataset.loai, đúng tên thuộc tính data-loai
+Chọn một địa danh thì tất cả cùng được chọn | Truyền dangChon={dsDaChon.length > 0} thay vì kiểm tra theo id | dangChon={dsDaChon.includes(dd.id)}
+Bấm "Chọn tất cả" nhiều lần thì số đếm vượt quá 6 | Nối mảng mà không lọc trùng | Lọc !truoc.includes(id) trước khi nối như bản hoàn chỉnh
+
+CHUYỂN SANG ĐỒ ÁN NHÓM
+Hầu hết đề tài đều có một danh sách có thể chọn: chọn phòng homestay, chọn món khi đặt, chọn nhiều sách khi mượn. Áp dụng đúng mẫu cha giữ mảng id — con báo onChon(id), và dùng data-* cho thanh lọc danh mục.
+
+LAB 3 — THẺ ĐỊA DANH CÓ NÚT LỒNG NHAU
+Nổi bọt · stopPropagation · Pha bắt · Hàm cập nhật state
+
+JSX — src/components/Bài7/TheDiaDanhMoRong.jsx (phiên bản 1 — có lỗi)
+export default function TheDiaDanhMoRong({
+  diaDanh, dangMo, laYeuThich, onXem, onYeuThich,
+}) {
+  return (
+    <article
+      className={'the-mo-rong' + (dangMo ? ' dang-mo' : '')}
+      onClick={() => onXem(diaDanh.id)}
+    >
+      <header>
+        <h3>{diaDanh.ten}</h3>
+        <span className="loai">{diaDanh.loai}</span>
+      </header>
+      {dangMo && <p className="mo-ta">{diaDanh.moTa}</p>}
+      <div className="hanh-dong">
+        <button onClick={() => onYeuThich(diaDanh.id)}>
+          {laYeuThich ? '♥ Đã thích' : '♡ Yêu thích'}
+        </button>
+      </div>
+    </article>
+  );
+}
+
+Kết quả quan sát được
+Nút đổi thành "♥ Đã thích"            <- đúng
+Phần mô tả của Chùa Thiên Mụ cũng mở ra   <- LỖI: người dùng chỉ muốn thả tim
+
+JSX — src/components/Bài7/TheDiaDanhMoRong.jsx (hoàn chỉnh)
+import { useState } from 'react';
+ 
+export default function TheDiaDanhMoRong({
+  diaDanh, dangMo, laYeuThich, onXem, onYeuThich,
+}) {
+  const [daSaoChep, setDaSaoChep] = useState(false);
+ 
+  function handleYeuThich(e) {
+    e.stopPropagation();          // không để cú bấm lan lên thẻ (mở chi tiết)
+    onYeuThich(diaDanh.id);
+  }
+ 
+  async function handleChiaSe(e) {
+    e.stopPropagation();
+    try {
+      await navigator.clipboard.writeText(diaDanh.ten + ' — ' + diaDanh.moTa);
+      setDaSaoChep(true);
+      setTimeout(() => setDaSaoChep(false), 1500);
+    } catch {
+      alert('Trình duyệt không cho phép sao chép. Hãy chạy trên localhost.');
+    }
+  }
+ 
+  return (
+    <article
+      className={'the-mo-rong' + (dangMo ? ' dang-mo' : '')}
+      onClick={() => onXem(diaDanh.id)}
+    >
+      <header>
+        <h3>{diaDanh.ten}</h3>
+        <span className="loai">{diaDanh.loai}</span>
+      </header>
+ 
+      {dangMo && <p className="mo-ta">{diaDanh.moTa}</p>}
+ 
+      <div className="hanh-dong">
+        <button onClick={handleYeuThich} aria-pressed={laYeuThich}>
+          {laYeuThich ? '♥ Đã thích' : '♡ Yêu thích'}
+        </button>
+        <button onClick={handleChiaSe}>
+          {daSaoChep ? 'Đã sao chép' : 'Chia sẻ'}
+        </button>
+      </div>
+    </article>
+  );
+}
+
+Lưu ý về navigator.clipboard
+API chỉ hoạt động trong ngữ cảnh an toàn: https:// hoặc http://localhost. Nếu mở bằng địa chỉ IP trong mạng LAN (ví dụ http://192.168.1.5:5173) thì sẽ rơi vào nhánh catch.
+e.stopPropagation() được gọi trước await. Từ React 17 không còn pooling nên đọc e sau await vẫn an toàn, nhưng việc chặn lan truyền luôn phải làm đồng bộ, trước khi sự kiện kịp lan lên cha.
+
+JSX — src/components/Bài7/KhamPhaDiaDanh.jsx
+import { useState } from 'react';
+import { DS_DIA_DANH } from '../../data/diaDanhHue';
+import TheDiaDanhMoRong from './TheDiaDanhMoRong';
+ 
+export default function KhamPhaDiaDanh() {
+  const [idDangMo, setIdDangMo] = useState(null);
+  const [dsYeuThich, setDsYeuThich] = useState([]);
+  const [soTuongTac, setSoTuongTac] = useState(0);
+ 
+  // Bấm lại thẻ đang mở thì đóng lại
+  function handleXem(id) {
+    setIdDangMo((truoc) => (truoc === id ? null : id));
+  }
+ 
+  function handleYeuThich(id) {
+    setDsYeuThich((truoc) =>
+      truoc.includes(id) ? truoc.filter((x) => x !== id) : [...truoc, id]
+    );
+  }
+ 
+  return (
+    // Pha bắt: đếm MỌI cú bấm trong khu vực, kể cả khi thẻ con đã stopPropagation
+    <section className="lab" onClickCapture={() => setSoTuongTac((t) => t + 1)}>
+      <h2>Lab 3 — Khám phá địa danh</h2>
+      <p className="thong-ke">
+        Số lượt tương tác: {soTuongTac} · Yêu thích: {dsYeuThich.length}
+      </p>
+      <div className="luoi-the">
+        {DS_DIA_DANH.map((dd) => (
+          <TheDiaDanhMoRong
+            key={dd.id}
+            diaDanh={dd}
+            dangMo={dd.id === idDangMo}
+            laYeuThich={dsYeuThich.includes(dd.id)}
+            onXem={handleXem}
+            onYeuThich={handleYeuThich}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+Kết quả mong đợi — kịch bản kiểm tra
+1. Bấm "♡ Yêu thích" trên Chùa Thiên Mụ
+   -> nút thành "♥ Đã thích", mô tả KHÔNG mở
+   -> "Số lượt tương tác: 1 · Yêu thích: 1"
+2. Bấm vào tên "Chùa Thiên Mụ" -> thẻ viền vàng, hiện mô tả; lượt tương tác: 2
+3. Bấm lại vào thẻ đó          -> mô tả đóng lại; lượt tương tác: 3
+4. Bấm "Chia sẻ"               -> nút hiện "Đã sao chép" 1,5 giây, mô tả không đổi
+   Dán (Ctrl+V) vào Notepad: "Chùa Thiên Mụ — Ngôi chùa cổ với tháp..."
+
+Thử nghiệm để hiểu sâu (1 phút)
+Đổi onClickCapture thành onClick rồi bấm nút Yêu thích: số lượt tương tác không tăng nữa, vì stopPropagation ở nút đã chặn sự kiện trước khi nó nổi bọt tới <section>. Đổi lại onClickCapture sau khi quan sát.
+
+JSX — src/components/Bài7/LuotThichMonAn.jsx (phiên bản 1 — có lỗi)
+import { useState } from 'react';
+ 
+export default function LuotThichMonAn() {
+  const [luotThich, setLuotThich] = useState(0);
+ 
+  function handleThich3() {
+    setLuotThich(luotThich + 1);
+    setLuotThich(luotThich + 1);
+    setLuotThich(luotThich + 1);
+    console.log('Giá trị trong hàm:', luotThich);
+  }
+ 
+  return (
+    <div className="luot-thich">
+      <p>Bún bò Huế — {luotThich} lượt thích</p>
+      <button onClick={handleThich3}>+3 lượt thích</button>
+    </div>
+  );
+}
+
+Kết quả quan sát được
+Bấm "+3 lượt thích" lần 1: giao diện 1 lượt thích, Console: Giá trị trong hàm: 0
+Bấm lần 2:                   giao diện 2 lượt thích, Console: Giá trị trong hàm: 1
+
+JSX — src/components/Bài7/LuotThichMonAn.jsx (hoàn chỉnh)
+import { useState } from 'react';
+ 
+export default function LuotThichMonAn() {
+  const [luotThich, setLuotThich] = useState(0);
+ 
+  // Dùng hàm cập nhật: mỗi lời gọi nhận kết quả của lời gọi trước
+  function handleThich3() {
+    setLuotThich((truoc) => truoc + 1);
+    setLuotThich((truoc) => truoc + 1);
+    setLuotThich((truoc) => truoc + 1);
+  }
+ 
+  return (
+    <div className="luot-thich">
+      <p>Bún bò Huế — {luotThich} lượt thích</p>
+      <button onClick={() => setLuotThich((t) => t + 1)}>+1</button>
+      <button onClick={handleThich3}>+3 lượt thích</button>
+      <button onClick={() => setLuotThich(0)}>Đặt lại</button>
+    </div>
+  );
+}
+
+Kết quả mong đợi
+Bấm "+3 lượt thích" -> "Bún bò Huế — 3 lượt thích"
+Bấm "+1"            -> 4
+Bấm "Đặt lại"       -> 0
+
+✓ CHECKPOINT: Lab 3 hoàn thành
+☐  Bấm Yêu thích/Chia sẻ không mở mô tả; bấm vùng còn lại của thẻ thì mở/đóng mô tả.
+☐  Số lượt tương tác tăng với mọi cú bấm trong khu vực, kể cả bấm nút con.
+☐  Chia sẻ sao chép được nội dung vào clipboard (kiểm tra bằng cách dán).
+☐  "+3 lượt thích" tăng đúng 3; giải thích được vì sao phiên bản 1 chỉ tăng 1.
+☐  Đã commit: git commit -m "Lab 3: stopPropagation, capture, updater function"
+
+Vấn đề gặp phải | Nguyên nhân có thể | Cách khắc phục
+Đã thêm stopPropagation nhưng mô tả vẫn mở | Gọi e.stopPropagation (thiếu ngoặc) hoặc hàm không nhận tham số e | function handleYeuThich(e) { e.stopPropagation(); ... }
+Lỗi Cannot read properties of undefined (reading 'stopPropagation') | Viết onClick={() => handleYeuThich()} — không chuyển tiếp e | Truyền thẳng onClick={handleYeuThich} hoặc (e) => handleYeuThich(e)
+Bấm Chia sẻ luôn hiện hộp thoại báo lỗi | Không chạy trên localhost/https, hoặc trình duyệt chặn quyền clipboard | Mở đúng http://localhost:5173; kiểm tra quyền trang trong biểu tượng ổ khoá
+Số lượt tương tác tăng 2 cho mỗi cú bấm | Gắn cả onClick và onClickCapture cùng tăng bộ đếm | Chỉ giữ onClickCapture trên <section>
+Mở thẻ khác thì thẻ cũ không đóng | Lưu mảng id đang mở thay vì một id | Dùng một state idDangMo như bản hoàn chỉnh
+
+CHUYỂN SANG ĐỒ ÁN NHÓM
+Mọi thẻ sản phẩm/phòng/món trong đồ án có nút "Thêm vào giỏ", "Yêu thích" bên trong vùng bấm để xem chi tiết đều cần xử lý lan truyền như Lab 3. Khi thực tế, cân nhắc thêm một nút "Xem chi tiết" riêng để người dùng bàn phím cũng mở được chi tiết.
+
+LAB 4 — TÌM MÓN ĂN HUẾ BẰNG BÀN PHÍM
+onSubmit · preventDefault · onKeyDown · onFocus/onBlur · gõ tiếng Việt
+
+JSX — src/components/Bài7/FormTimMonAn.jsx (phiên bản 1 — có lỗi)
+import { useState } from 'react';
+ 
+export default function FormTimMonAn({ onTimKiem }) {
+  const [tuKhoa, setTuKhoa] = useState('');
+ 
+  function handleSubmit() {
+    onTimKiem(tuKhoa.trim());
+  }
+ 
+  return (
+    <form className="form-tim" onSubmit={handleSubmit}>
+      <input value={tuKhoa} onChange={(e) => setTuKhoa(e.target.value)} />
+      <button type="submit">Tìm</button>
+    </form>
+  );
+}
+
+Kết quả quan sát được
+Trang tải lại, thanh địa chỉ thành http://localhost:5173/?
+Kết quả chớp lên rồi mất, ô nhập trống trở lại, mọi state của trang bị reset
+
+JSX — src/components/Bài7/FormTimMonAn.jsx (hoàn chỉnh)
+import { useState } from 'react';
+ 
+const GOI_Y = ['bún', 'bánh', 'chè', 'hến'];
+ 
+export default function FormTimMonAn({ onTimKiem }) {
+  const [tuKhoa, setTuKhoa] = useState('');
+  const [dangFocus, setDangFocus] = useState(false);
+ 
+  // Enter trong ô nhập sẽ tự gửi form -> không cần bắt phím Enter riêng
+  function handleSubmit(e) {
+    e.preventDefault();                 // chặn tải lại trang
+    onTimKiem(tuKhoa.trim());
+  }
+ 
+  function handleKeyDown(e) {
+    if (e.nativeEvent.isComposing) return; // đang gõ dấu tiếng Việt: bỏ qua
+    if (e.key === 'Escape') {
+      e.preventDefault();               // chặn hành vi xoá mặc định của ô search
+      setTuKhoa('');
+      onTimKiem('');
+    }
+  }
+ 
+  function handleChonGoiY(goiY) {
+    setTuKhoa(goiY);
+    onTimKiem(goiY);
+  }
+ 
+  return (
+    <form className="form-tim" onSubmit={handleSubmit}>
+      <input
+        type="search"
+        aria-label="Tìm món ăn Huế"
+        value={tuKhoa}
+        onChange={(e) => setTuKhoa(e.target.value)}
+        onKeyDown={handleKeyDown}
+        onFocus={() => setDangFocus(true)}
+        onBlur={() => setDangFocus(false)}
+        placeholder="Tìm món Huế… (Enter để tìm, Esc để xoá)"
+      />
+      <button type="submit">Tìm</button>
+ 
+      {dangFocus && (
+        <div className="goi-y">
+          {GOI_Y.map((goiY) => (
+            <button
+              key={goiY}
+              type="button"
+              // Giữ tiêu điểm ở ô nhập: nếu không, blur chạy trước click
+              // và khung gợi ý biến mất trước khi kịp nhận cú bấm
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => handleChonGoiY(goiY)}
+            >
+              {goiY}
+            </button>
+          ))}
+        </div>
+      )}
+    </form>
+  );
+}
+
+JSX — src/components/Bài7/TimMonAnHue.jsx
+import { useState } from 'react';
+import { DS_MON_AN } from '../../data/monAnHue';
+import FormTimMonAn from './FormTimMonAn';
+ 
+// So khớp không phân biệt hoa thường
+function khop(ten, tuKhoa) {
+  return ten.toLowerCase().includes(tuKhoa.toLowerCase());
+}
+ 
+export default function TimMonAnHue() {
+  const [tuKhoaDaTim, setTuKhoaDaTim] = useState('');
+ 
+  const ketQua = tuKhoaDaTim
+    ? DS_MON_AN.filter((mon) => khop(mon.ten, tuKhoaDaTim))
+    : DS_MON_AN;
+ 
+  return (
+    <section className="lab">
+      <h2>Lab 4 — Tìm món ăn Huế</h2>
+      <FormTimMonAn onTimKiem={setTuKhoaDaTim} />
+      <p className="thong-ke">
+        {tuKhoaDaTim
+          ? 'Tìm thấy ' + ketQua.length + ' món cho "' + tuKhoaDaTim + '"'
+          : 'Đang hiển thị toàn bộ ' + DS_MON_AN.length + ' món'}
+      </p>
+      <ul className="ds-mon">
+        {ketQua.map((mon) => (
+          <li key={mon.id}>
+            {mon.ten} <small>{mon.gia.toLocaleString('vi-VN')} đ</small>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+Kết quả mong đợi — kịch bản kiểm tra
+1. Bấm vào ô tìm kiếm       -> hiện khung gợi ý: bún  bánh  chè  hến
+2. Gõ "bánh", nhấn Enter      -> Tìm thấy 3 món cho "bánh"
+                                 Bánh bèo, Bánh khoái, Bánh lọc
+                                 trang KHÔNG tải lại, thanh địa chỉ không có dấu ?
+3. Nhấn Esc                   -> ô nhập trống, "Đang hiển thị toàn bộ 7 món"
+4. Bấm vào ô, bấm gợi ý "hến" -> ô nhập thành "hến"
+                                 Tìm thấy 1 món cho "hến": Cơm hến
+5. Xoá ô, gõ "BÚN", Enter     -> vẫn thấy Bún bò Huế (không phân biệt hoa thường)
+
+✓ CHECKPOINT: Lab 4 hoàn thành
+☐  Enter gửi tìm kiếm, trang không tải lại.
+☐  Esc xoá từ khoá và hiện lại toàn bộ danh sách.
+☐  Bấm gợi ý chạy tìm kiếm ngay; khung gợi ý không biến mất trước khi bấm được.
+☐  Giải thích được vai trò của onMouseDown={(e) => e.preventDefault()}.
+☐  Đã commit: git commit -m "Lab 4: form tìm món, phím Enter/Esc, gợi ý"
+
+Vấn đề gặp phải | Nguyên nhân có thể | Cách khắc phục
+Nhấn Enter trang vẫn tải lại | handleSubmit không nhận e hoặc quên e.preventDefault() | function handleSubmit(e) { e.preventDefault(); ... }
+Bấm vào gợi ý không có tác dụng, khung gợi ý biến mất | onBlur chạy trước onClick của nút gợi ý | Thêm onMouseDown={(e) => e.preventDefault()} cho nút gợi ý
+Bấm gợi ý thì biểu mẫu bị gửi hai lần | Nút gợi ý thiếu type="button" nên mặc định là nút submit | Thêm type="button"
+Gõ phím không hiện chữ trong ô | Có value={tuKhoa} nhưng thiếu onChange (ô bị khoá theo state) | Thêm onChange={(e) => setTuKhoa(e.target.value)} — Bài 8 sẽ học kỹ
+Kết quả lọc thay đổi theo từng phím gõ | Truyền tuKhoa đang gõ lên cha thay vì chỉ gửi khi submit | Chỉ gọi onTimKiem trong handleSubmit, handleKeyDown và handleChonGoiY
+
+LAB 5 — SẮP XẾP MÓN HUẾ YÊU THÍCH BẰNG KÉO THẢ
+onDragStart · onDragOver · onDrop · onDragEnd · Alt + mũi tên · aria-live
+
+JavaScript — phần đầu file MonAnYeuThich.jsx
+// Hàm thuần: trả về MẢNG MỚI với phần tử chuyển từ vị trí tu sang den
+function diChuyen(mang, tu, den) {
+  const moi = [...mang];
+  const [phanTu] = moi.splice(tu, 1);
+  moi.splice(den, 0, phanTu);
+  return moi;
+}
+ 
+// Thử nhanh trong Console trình duyệt:
+// diChuyen(['A', 'B', 'C', 'D'], 0, 2)  ->  ['B', 'C', 'A', 'D']
+
+Sự kiện | Gắn ở | Việc cần làm trong bài | Nếu quên
+onDragStart | Dòng được kéo | Lưu idDangKeo; gọi setData (cần cho Firefox) | Firefox không cho kéo
+onDragOver | Dòng nhận thả | e.preventDefault(); lưu idViTriTha để tô viền | Con trỏ hiện biểu tượng cấm, không thả được
+onDrop | Dòng nhận thả | Tính vị trí, gọi diChuyen, cập nhật state, thông báo | Thả xong danh sách không đổi
+onDragEnd | Dòng được kéo | Xoá idDangKeo, idViTriTha | Dòng mờ mãi khi thả ra ngoài danh sách
+
+JSX — src/components/Bài7/MonAnYeuThich.jsx
+import { useState } from 'react';
+import { DS_MON_AN } from '../../data/monAnHue';
+ 
+// Hàm thuần: trả về MẢNG MỚI với phần tử chuyển từ vị trí tu sang den
+function diChuyen(mang, tu, den) {
+  const moi = [...mang];
+  const [phanTu] = moi.splice(tu, 1);
+  moi.splice(den, 0, phanTu);
+  return moi;
+}
+ 
+export default function MonAnYeuThich() {
+  const [dsMon, setDsMon] = useState(DS_MON_AN.slice(0, 5));
+  const [idDangKeo, setIdDangKeo] = useState(null);
+  const [idViTriTha, setIdViTriTha] = useState(null);
+  const [thongBao, setThongBao] = useState('');
+ 
+  function baoViTri(ds, id) {
+    const viTri = ds.findIndex((m) => m.id === id);
+    setThongBao('Đã chuyển ' + ds[viTri].ten + ' đến vị trí ' + (viTri + 1));
+  }
+ 
+  function handleDragStart(e, id) {
+    setIdDangKeo(id);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', id);   // cần cho Firefox
+  }
+ 
+  function handleDragOver(e, id) {
+    e.preventDefault();                          // cho phép thả
+    if (id !== idViTriTha) setIdViTriTha(id);
+  }
+ 
+  function handleDrop(e, idDich) {
+    e.preventDefault();
+    if (idDangKeo === null || idDangKeo === idDich) return;
+    const tu = dsMon.findIndex((m) => m.id === idDangKeo);
+    const den = dsMon.findIndex((m) => m.id === idDich);
+    const moi = diChuyen(dsMon, tu, den);
+    setDsMon(moi);
+    baoViTri(moi, idDangKeo);
+  }
+ 
+  function handleDragEnd() {
+    setIdDangKeo(null);
+    setIdViTriTha(null);
+  }
+ 
+  function handleKeyDown(e, viTri) {
+    if (!e.altKey) return;
+    const buoc = e.key === 'ArrowUp' ? -1 : e.key === 'ArrowDown' ? 1 : 0;
+    if (buoc === 0) return;
+    e.preventDefault();                          // không cuộn trang
+    const den = viTri + buoc;
+    if (den < 0 || den >= dsMon.length) return;
+    const moi = diChuyen(dsMon, viTri, den);
+    setDsMon(moi);
+    baoViTri(moi, dsMon[viTri].id);
+  }
+ 
+  function handleXoa(id) {
+    const mon = dsMon.find((m) => m.id === id);
+    setDsMon((truoc) => truoc.filter((m) => m.id !== id));
+    setThongBao('Đã xoá ' + mon.ten + ' khỏi danh sách');
+  }
+ 
+  return (
+    <section className="lab">
+      <h2>Lab 5 — Món Huế yêu thích của tôi</h2>
+      <p className="goi-y-thao-tac">
+        Kéo thả để sắp xếp, hoặc chọn một món rồi nhấn Alt + mũi tên lên/xuống.
+      </p>
+ 
+      <ol className="ds-mon-yeu-thich">
+        {dsMon.map((mon, viTri) => (
+          <li
+            key={mon.id}
+            draggable
+            tabIndex={0}
+            onDragStart={(e) => handleDragStart(e, mon.id)}
+            onDragOver={(e) => handleDragOver(e, mon.id)}
+            onDrop={(e) => handleDrop(e, mon.id)}
+            onDragEnd={handleDragEnd}
+            onKeyDown={(e) => handleKeyDown(e, viTri)}
+            className={
+              (mon.id === idDangKeo ? 'dang-keo ' : '') +
+              (mon.id === idViTriTha && mon.id !== idDangKeo ? 'vi-tri-tha' : '')
+            }
+          >
+            <span>{mon.ten}</span>
+            <button
+              aria-label={'Xoá ' + mon.ten}
+              onClick={() => handleXoa(mon.id)}
+              onKeyDown={(e) => e.stopPropagation()}
+            >
+              Xoá
+            </button>
+          </li>
+        ))}
+      </ol>
+ 
+      {/* Vùng thông báo cho trình đọc màn hình */}
+      <p className="thong-bao" aria-live="polite">{thongBao}</p>
+    </section>
+  );
+}
+
+Ba chi tiết đáng chú ý trong mã
+Nút Xoá có onKeyDown={(e) => e.stopPropagation()}: khi tiêu điểm đang ở nút Xoá, phím bấm không nổi bọt lên <li> và không kích hoạt nhầm phím tắt sắp xếp.
+handleDrop và handleKeyDown tính moi trước rồi mới setDsMon(moi), để dùng ngay moi cho câu thông báo — không thể đọc state mới ngay sau khi set (state là ảnh chụp).
+handleXoa tìm tên món trước khi xoá khỏi danh sách, vì sau đó món không còn trong mảng.
+
+JSX — src/pages/Bài7Page.jsx (hoàn chỉnh sau Lab 5)
+import '../styles/Bài7.css';
+import ThuSuKien from '../components/Bài7/ThuSuKien';
+import DanhSachDiaDanh from '../components/Bài7/DanhSachDiaDanh';
+import KhamPhaDiaDanh from '../components/Bài7/KhamPhaDiaDanh';
+import LuotThichMonAn from '../components/Bài7/LuotThichMonAn';
+import TimMonAnHue from '../components/Bài7/TimMonAnHue';
+import MonAnYeuThich from '../components/Bài7/MonAnYeuThich';
+ 
+export default function Bài7Page() {
+  return (
+    <main className="trang-Bài7">
+      <h1>Bài 7 — Quản lý sự kiện trong React</h1>
+      <ThuSuKien />
+      <DanhSachDiaDanh />
+      <KhamPhaDiaDanh />
+      <LuotThichMonAn />
+      <TimMonAnHue />
+      <MonAnYeuThich />
+    </main>
+  );
+}
+
+Kết quả mong đợi — kịch bản kiểm tra
+Ban đầu: 1. Bún bò Huế  2. Cơm hến  3. Bánh bèo  4. Bánh khoái  5. Bánh lọc
+1. Kéo "Bún bò Huế" thả lên "Bánh khoái"
+   -> Cơm hến, Bánh bèo, Bánh khoái, Bún bò Huế, Bánh lọc
+   -> thông báo: "Đã chuyển Bún bò Huế đến vị trí 4"
+2. Tab vào dòng "Cơm hến", nhấn Alt + mũi tên xuống
+   -> Bánh bèo, Cơm hến, ...; thông báo: "Đã chuyển Cơm hến đến vị trí 2"
+3. Alt + mũi tên lên ở dòng đầu tiên -> không có gì xảy ra, trang không cuộn
+4. Bấm "Xoá" ở Bánh lọc -> còn 4 món; thông báo: "Đã xoá Bánh lọc khỏi danh sách"
+
+Giới hạn cần biết
+Kéo thả HTML5 hỗ trợ hạn chế trên điện thoại cảm ứng. Phương án bàn phím và nút bấm vẫn hoạt động trên mọi thiết bị. Nhóm nào cần kéo thả trên di động sẽ được hướng dẫn thư viện chuyên dụng ở Studio 3 (Bài 16).
+
+✓ CHECKPOINT: Lab 5 hoàn thành
+☐  Kéo thả đổi được thứ tự; dòng đang kéo mờ đi, vị trí thả có viền vàng phía trên.
+☐  Thả ra ngoài danh sách thì mọi hiệu ứng được xoá (nhờ onDragEnd).
+☐  Sắp xếp được hoàn toàn bằng bàn phím với Tab và Alt + mũi tên.
+☐  Thông báo cập nhật đúng sau mỗi thao tác kéo thả, phím tắt và xoá.
+☐  Đã commit: git commit -m "Lab 5: kéo thả, phím tắt, aria-live"
+
+Vấn đề gặp phải | Nguyên nhân có thể | Cách khắc phục
+Kéo được nhưng không thả được, con trỏ hiện biểu tượng cấm | Thiếu e.preventDefault() trong onDragOver | Thêm dòng đó ở đầu handleDragOver
+Trên Firefox không kéo được | Firefox yêu cầu có dữ liệu kéo | e.dataTransfer.setData('text/plain', id) trong handleDragStart
+Thả xong danh sách không đổi dù không báo lỗi | Sửa trực tiếp dsMon.splice(...) rồi set lại cùng mảng | Dùng hàm diChuyen trả về mảng mới
+Alt + mũi tên làm trang cuộn | Thiếu e.preventDefault() trong handleKeyDown | Gọi sau khi xác định đúng phím, trước khi đổi chỗ
+Nhấn phím trên nút Xoá lại làm đổi chỗ món | Sự kiện keydown nổi bọt từ nút lên <li> | onKeyDown={(e) => e.stopPropagation()} trên nút Xoá
+
+Phần tử / Component | Sự kiện | Khai báo | Truyền tham số | Lan truyền / mặc định | Lý do chọn
+Ví dụ: TheMon trong trang Thực đơn | onClick | Tách rời handleThemVaoGio | Qua props onThem(mon.id) | stopPropagation (thẻ có thể bấm) | State giỏ hàng nằm ở trang cha; nút nằm trong thẻ mở chi tiết
+Ví dụ: ô tìm phòng | onSubmit, onKeyDown | Tách rời | Không cần | preventDefault khi submit | Enter tự gửi form, Esc xoá nhanh
+(nhóm điền) |  |  |  |  | 
+(nhóm điền) |  |  |  |  | 
+(nhóm điền) |  |  |  |  | 
+
+JSX — thay đổi trong TheDiaDanh.jsx và DanhSachDiaDanh.jsx
+// TheDiaDanh.jsx — bọc component bằng memo
+import { memo } from 'react';
+function TheDiaDanh({ diaDanh, dangChon, onChon }) { /* giữ nguyên thân hàm */ }
+export default memo(TheDiaDanh);
+ 
+// DanhSachDiaDanh.jsx — giữ tham chiếu hàm ổn định qua các lần render
+import { useCallback, useState } from 'react';
+const handleChon = useCallback((id) => {
+  setDsDaChon((truoc) =>
+    truoc.includes(id) ? truoc.filter((x) => x !== id) : [...truoc, id]
+  );
+}, []); // không phụ thuộc gì, vì đã dùng hàm cập nhật
+
+# | Test case | Thao tác kiểm tra | Kết quả mong đợi | Kết quả thực tế
+1 | Truyền hàm đúng | Bấm nút "Bắt đầu hành trình" 3 lần | Số tăng lên 3; không có lỗi Console | 
+2 | target / currentTarget | Bấm chữ "Lăng tẩm" trong thẻ Lab 1 | Nhật ký: target=SPAN | currentTarget=DIV | 
+3 | Chọn bằng bàn phím | Tab tới ô Đại Nội Huế, nhấn Space | Được chọn, tiêu đề (1/6) | 
+4 | Lọc bằng data-* | Bấm nút lọc "Chùa" | Chỉ còn Chùa Thiên Mụ | 
+5 | Không trùng khi chọn tất cả | Bấm "Chọn tất cả đang hiển thị" 3 lần | Tiêu đề không vượt quá (6/6) | 
+6 | stopPropagation | Bấm "Yêu thích" trên thẻ Lăng Khải Định | Nút đổi trạng thái, mô tả không mở | 
+7 | Pha bắt | Bấm nút Yêu thích rồi bấm vào thẻ | Số lượt tương tác tăng 2 | 
+8 | Hàm cập nhật | Bấm "+3 lượt thích" 2 lần | Hiển thị 6 lượt thích | 
+9 | preventDefault submit | Gõ "bún", nhấn Enter | 1 kết quả; URL không có dấu ? | 
+10 | Phím Esc | Nhấn Esc trong ô tìm kiếm | Ô trống; hiển thị 7 món | 
+11 | Gõ tiếng Việt | Gõ "chè" bằng Telex, nhấn Enter khi chữ còn gạch chân | Lần Enter đầu chỉ chốt chữ (nếu bộ gõ có gạch chân) | 
+12 | Kéo thả | Kéo dòng 1 thả vào dòng 4 | Món đầu chuyển xuống vị trí 4, có thông báo | 
+13 | Sắp xếp bằng bàn phím | Tab vào dòng 2, nhấn Alt + mũi tên lên | Món lên vị trí 1; trang không cuộn | 
+
+Kỹ năng | Mức độ đạt được | Ghi chú
+Viết handler đúng cú pháp, phân biệt truyền hàm và gọi hàm | ☐ Chưa   ☐ Cơ bản   ☐ Thành thạo | 
+Đọc và dùng đúng thuộc tính của đối tượng sự kiện | ☐ Chưa   ☐ Cơ bản   ☐ Thành thạo | 
+Chọn giữa khai báo nội tuyến và tách rời, giải thích được lý do | ☐ Chưa   ☐ Cơ bản   ☐ Thành thạo | 
+Truyền tham số bằng hàm mũi tên và data-* | ☐ Chưa   ☐ Cơ bản   ☐ Thành thạo | 
+Truyền handler từ cha xuống con (luồng dữ liệu ngược) | ☐ Chưa   ☐ Cơ bản   ☐ Thành thạo | 
+Kiểm soát lan truyền và hành vi mặc định | ☐ Chưa   ☐ Cơ bản   ☐ Thành thạo | 
+Cập nhật state bằng hàm cập nhật khi giá trị mới phụ thuộc giá trị cũ | ☐ Chưa   ☐ Cơ bản   ☐ Thành thạo | 
+Hỗ trợ bàn phím và trình đọc màn hình cho tương tác | ☐ Chưa   ☐ Cơ bản   ☐ Thành thạo | 
+
+✓ TÓM TẮT NHỮNG GÌ ĐÃ HỌC TRONG Bài 7
+Prop sự kiện nhận một hàm: onClick={handleX} hoặc onClick={() => handleX(id)} — không bao giờ onClick={handleX()}.
+e.currentTarget là phần tử gắn handler; e.target là phần tử bị bấm trúng.
+Truyền tham số: hàm mũi tên (mặc định), data-* (một hàm dùng chung), props onXxx (con báo lên cha).
+Sự kiện nổi bọt từ con lên cha; chặn bằng stopPropagation; pha bắt onXxxCapture chạy trước và không bị chặn.
+Hành vi mặc định của trình duyệt (gửi form, cuộn trang, cấm thả, mất tiêu điểm) chặn bằng preventDefault.
+State là ảnh chụp: giá trị mới phụ thuộc giá trị cũ thì dùng setX((truoc) => ...).
+Mọi tương tác bằng chuột nên có phương án bàn phím tương đương.
+
+Markdown — mẫu mô tả Pull Request
+## Bài 7 — Quản lý sự kiện trong React
+Họ tên: ...            MSSV: ...            Nhóm đồ án: ...
+ 
+### Đã hoàn thành
+- [x] Lab 1 — ThuSuKien
+- [x] Lab 2 — DanhSachDiaDanh (chọn nhiều, lọc data-*)
+- [x] Lab 3 — KhamPhaDiaDanh + LuotThichMonAn
+- [ ] Lab 4 — TimMonAnHue
+- [ ] Lab 5 — MonAnYeuThich (BONUS)
+ 
+### Bảng test case
+(dán bảng 13 test case với cột Kết quả thực tế)
+ 
+### Câu hỏi / khó khăn gặp phải
+...
+
+Chuẩn bị cho Bài 8
+Bài 8 nâng cấp FormTimMonAn của Lab 4 và DatVeThamQuan trong tài liệu lý thuyết thành biểu mẫu đặt vé tham quan đầy đủ: họ tên, số điện thoại, ngày tham quan, số vé, loại vé — mọi ô nhập đều được điều khiển bởi state.
+Sự kiện onChange, onBlur, onSubmit của hôm nay sẽ được dùng để kiểm tra dữ liệu hợp lệ theo từng ô và hiển thị lỗi đúng lúc.
+Giữ nguyên các file của Bài 7 sau khi Pull Request được merge — Bài 8 cộng dồn trên nền đó.
+Câu hỏi suy nghĩ trước: ở Lab 4, nếu xoá onChange khỏi ô nhập nhưng giữ value={tuKhoa}, chuyện gì xảy ra khi gõ phím? Vì sao React lại làm như vậy?
+

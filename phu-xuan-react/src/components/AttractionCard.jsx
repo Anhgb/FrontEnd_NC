@@ -1,18 +1,19 @@
 import { useState } from 'react';
- 
-function AttractionCard({ name, category, description, rating }) {
+import StarRating from './StarRating';
+import TicketCounter from './TicketCounter';
+
+function AttractionCard({ id, name, category, description, rating }) {
   const [isFavorite, setIsFavorite] = useState(false);
- 
+
   function handleToggleFavorite() {
     setIsFavorite((prev) => !prev);
   }
- 
+
   return (
     <div className="attraction-card">
       <button
-        className="attraction-card__favorite"
+        className={`attraction-card__favorite ${isFavorite ? 'is-active' : ''}`}
         onClick={handleToggleFavorite}
-        style={{ color: isFavorite ? '#e91818ff' : '#000000ff' }}
       >
         {isFavorite ? '♥ Đã lưu' : '♡ Lưu địa điểm'}
       </button>
@@ -20,8 +21,10 @@ function AttractionCard({ name, category, description, rating }) {
       <h3>{name}</h3>
       <p>{description}</p>
       <span className="attraction-card__rating">⭐ {rating}</span>
+      <StarRating />
+      {id === 1 && <TicketCounter price={150000} />}
     </div>
   );
 }
- 
+
 export default AttractionCard;
