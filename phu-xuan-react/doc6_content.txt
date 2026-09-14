@@ -1,0 +1,355 @@
+ĐẠI HỌC PHÚ XUÂN
+KHOA CÔNG NGHỆ THÔNG TIN
+HƯỚNG DẪN THỰC HÀNH · INT.7.18 — WEB FRONTEND NÂNG CAO
+HOOK NÂNG CAO TRONG REACT
+Bài 6 — VÒNG ĐỜI, THAM CHIẾU, GHI NHỚ GIÁ TRỊ/HÀM & HOOK TÙY BIẾN
+Dự án phu-xuan-react  ·  React + Vite — phiên bản đã khóa từ Bài 1  ·  INT.7.18 – Đại học Phú Xuân
+Thời lượng thực hành
+60 phút tại lớp (Lab 1–3) + phần Lab 4–5 làm ở nhà (BTVN)
+Yêu cầu đầu vào
+Đã hoàn thành Bài 5 (Props, State) và đã học lý thuyết Bài 6 (useEffect, useRef, useMemo, useCallback, Custom Hook)
+Môi trường
+CodeSandbox hoặc VS Code + Node.js LTS, dự án phu-xuan-react đã clone/pull bản mới nhất
+Chủ đề dữ liệu
+Địa danh và ẩm thực Huế: Đại Nội Huế, Chợ Đông Ba, Cầu Tràng Tiền, Bún bò Huế, Cơm hến, Bánh bèo…
+Nộp bài
+Nhánh Git feature/Bài6-hook-nang-cao → Pull Request về nhánh main
+MỤC LỤC
+MỤC TIÊU THỰC HÀNH Bài 6
+💡 Sau Bài thực hành, sinh viên sẽ:
+•  1. Viết đúng một useEffect có mảng phụ thuộc rỗng kèm hàm dọn dẹp (cleanup) để quản lý một bộ đếm thời gian.
+•  2. Viết đúng một useEffect có mảng phụ thuộc chứa biến, gọi lại dữ liệu mô phỏng mỗi khi biến đó đổi, có xử lý trạng thái đang tải.
+•  3. Dùng useRef để thao tác trực tiếp với một nút DOM (focus input) và để lưu một giá trị không kích hoạt render lại.
+•  4. Dùng useMemo và useCallback để tối ưu một danh sách có bộ lọc, kết hợp với React.memo cho component con.
+•  5. Tự thiết kế và đóng gói một Custom Hook (useDebounce) để tái sử dụng logic trì hoãn xử lý khi người dùng gõ phím.
+YÊU CẦU TRƯỚC KHI BẮT ĐẦU
+⚠️ Kiểm tra checklist sau trước khi vào Lab 1
+•  Dự án phu-xuan-react chạy được bằng npm run dev (hoặc tương đương trên CodeSandbox) và mở được tại localhost:5173.
+•  Nhánh Git hiện tại đã pull bản mới nhất từ main, không còn thay đổi chưa commit của Bài 5.
+•  Đã đọc và hiểu ví dụ LuotXemDaiNoi và ChiTietMonAn trong tài liệu lý thuyết Bài 6 — các Lab dưới đây xây dựng trực tiếp trên nền hai ví dụ đó.
+•  Đã tạo nhánh mới: git checkout -b feature/Bài6-hook-nang-cao
+LAB 1 — ĐỒNG HỒ ĐẾM LƯỢT XEM ĐẠI NỘI HUẾ
+LAB 1 · useEffect CƠ BẢN — MOUNT & CLEANUP
+⏱ Thời gian: 20 phút     🎯 Mục tiêu: Viết đúng useEffect với mảng phụ thuộc rỗng và hàm dọn dẹp tương ứng
+Bước 1 — Tạo file component
+Trong thư mục src/features/landmarks/, tạo file mới LuotXemDaiNoi.jsx.
+JSX — src/features/landmarks/LuotXemDaiNoi.jsx
+import { useState, useEffect } from 'react';
+function LuotXemDaiNoi() {
+  const [luotXem, setLuotXem] = useState(120);
+  // Bước 2 và 3 sẽ được thêm vào đây
+  return (
+    <div className="the-luot-xem">
+      <h3>Đại Nội Huế</h3>
+      <p>Đang xem: {luotXem} lượt</p>
+    </div>
+  );
+}
+export default LuotXemDaiNoi;
+Bước 2 — Thêm useEffect khởi động bộ đếm giờ
+Thêm useEffect ngay dưới dòng useState, với setInterval tăng luotXem mỗi giây, và mảng phụ thuộc rỗng để chỉ chạy một lần khi mount.
+JSX — bổ sung trong LuotXemDaiNoi
+  useEffect(() => {
+    console.log('Đã gắn component — bắt đầu đếm lượt xem');
+    const idBoDem = setInterval(() => {
+      setLuotXem((soCu) => soCu + 1);
+    }, 1000);
+  }, []);
+Bước 3 — Thêm hàm dọn dẹp (cleanup)
+Return một hàm huỷ setInterval, kèm console.log để quan sát được thời điểm cleanup chạy.
+JSX — hoàn chỉnh useEffect
+  useEffect(() => {
+    console.log('Đã gắn component — bắt đầu đếm lượt xem');
+    const idBoDem = setInterval(() => {
+      setLuotXem((soCu) => soCu + 1);
+    }, 1000);
+    return () => {
+      console.log('Dọn dẹp: đã huỷ bộ đếm lượt xem');
+      clearInterval(idBoDem);
+    };
+  }, []);
+Bước 4 — Gắn component vào trang để kiểm thử ẩn/hiện
+Để quan sát được cleanup chạy đúng lúc unmount, tạm thời thêm một nút bật/tắt trong App.jsx (hoặc trang chi tiết địa danh nếu đã có).
+JSX — src/App.jsx  (đoạn kiểm thử tạm thời)
+import { useState } from 'react';
+import LuotXemDaiNoi from './features/landmarks/LuotXemDaiNoi';
+function App() {
+  const [hienThi, setHienThi] = useState(true);
+  return (
+    <div>
+      <button onClick={() => setHienThi(!hienThi)}>
+        {hienThi ? 'Ẩn thẻ Đại Nội' : 'Hiện thẻ Đại Nội'}
+      </button>
+      {hienThi && <LuotXemDaiNoi />}
+    </div>
+  );
+}
+export default App;
+▶ KẾT QUẢ MONG ĐỢI (terminal / trình duyệt)
+[Trình duyệt]  Đại Nội Huế — Đang xem: 120 lượt  →  121  →  122 …
+[Console]      Đã gắn component — bắt đầu đếm lượt xem
+[Bấm 'Ẩn thẻ Đại Nội']
+[Console]      Dọn dẹp: đã huỷ bộ đếm lượt xem
+→ Số lượt xem NGỪNG tăng ngay khi ẩn, không còn chạy ngầm.
+✓ CHECKPOINT: Lab 1 hoàn thành khi
+•  Số lượt xem tăng đúng 1 mỗi giây, không nhảy cóc.
+•  Console hiện đúng một dòng "Đã gắn component…" khi trang tải, KHÔNG lặp lại dòng này khi số vẫn đang đếm.
+•  Khi bấm nút ẩn thẻ, console hiện dòng "Dọn dẹp…" và số ngừng tăng hẳn (mở tab Console kiểm tra không còn log mới).
+Vấn đề gặp phải
+Nguyên nhân có thể
+Cách khắc phục
+Số lượt xem nhảy 2, 3 đơn vị mỗi giây
+Thiếu mảng phụ thuộc [] khiến effect chạy lại mỗi lần render, tạo thêm interval mới
+Kiểm tra lại đã truyền [] làm tham số thứ hai của useEffect chưa
+Bấm 'Ẩn' nhưng số vẫn tiếp tục tăng
+Chưa return hàm cleanup, hoặc quên clearInterval bên trong
+Đảm bảo có return () => { clearInterval(idBoDem); }
+Console báo lỗi 'idBoDem is not defined' trong cleanup
+Khai báo idBoDem bằng let/const bên trong effect nhưng đặt cleanup ngoài phạm vi
+Đảm bảo cleanup nằm cùng bên trong callback của useEffect, cùng scope với idBoDem
+LAB 2 — XEM CHI TIẾT MÓN ĂN HUẾ THEO LỰA CHỌN
+LAB 2 · useEffect VỚI DEPENDENCY — GỌI LẠI DỮ LIỆU KHI ID ĐỔI
+⏱ Thời gian: 20 phút     🎯 Mục tiêu: Viết useEffect có mảng phụ thuộc chứa biến, xử lý trạng thái đang tải và tránh dữ liệu cũ (stale)
+Bước 1 — Tạo dữ liệu món ăn mô phỏng
+JSON — src/data/mon-an.json
+[
+  { "id": 1, "ten": "Bún bò Huế", "gia": 35000, "moTa": "Nước dùng cay nồng, sả và mắm ruốc." },
+  { "id": 2, "ten": "Cơm hến", "gia": 25000, "moTa": "Hến xào, rau sống, bánh tráng nướng giòn." },
+  { "id": 3, "ten": "Bánh bèo", "gia": 30000, "moTa": "Bánh bèo chén, tôm cháy, mỡ hành." },
+  { "id": 4, "ten": "Nem lụi", "gia": 40000, "moTa": "Nem nướng than, cuốn bánh tráng, nước lèo đậu phộng." }
+]
+Bước 2 — Tạo hàm mô phỏng gọi API
+Vì chưa có máy chủ thật, ta viết một hàm trả về Promise với setTimeout để giả lập độ trễ mạng.
+JSX — src/data/fetchMonAn.js
+import danhSachMonAn from './mon-an.json';
+function fetchMonAn(id) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const monAn = danhSachMonAn.find((m) => m.id === id);
+      resolve(monAn);
+    }, 800); // giả lập độ trễ mạng 800ms
+  });
+}
+export default fetchMonAn;
+Bước 3 — Viết component ChiTietMonAn với useEffect phụ thuộc idMonAn
+JSX — src/features/food/ChiTietMonAn.jsx
+import { useState, useEffect } from 'react';
+import fetchMonAn from '../../data/fetchMonAn';
+function ChiTietMonAn({ idMonAn }) {
+  const [monAn, setMonAn] = useState(null);
+  const [dangTai, setDangTai] = useState(true);
+  useEffect(() => {
+    let daHuy = false;
+    setDangTai(true);
+    fetchMonAn(idMonAn).then((data) => {
+      if (!daHuy) {
+        setMonAn(data);
+        setDangTai(false);
+      }
+    });
+    return () => { daHuy = true; };
+  }, [idMonAn]);
+  if (dangTai) return <p>Đang tải thông tin món ăn…</p>;
+  return (
+    <div>
+      <h3>{monAn.ten} — {monAn.gia.toLocaleString()}đ</h3>
+      <p>{monAn.moTa}</p>
+    </div>
+  );
+}
+export default ChiTietMonAn;
+Bước 4 — Viết component cha cho phép chọn món
+JSX — src/features/food/TrangMonAn.jsx
+import { useState } from 'react';
+import ChiTietMonAn from './ChiTietMonAn';
+function TrangMonAn() {
+  const [idDangChon, setIdDangChon] = useState(1);
+  return (
+    <div>
+      <button onClick={() => setIdDangChon(1)}>Bún bò Huế</button>
+      <button onClick={() => setIdDangChon(2)}>Cơm hến</button>
+      <button onClick={() => setIdDangChon(3)}>Bánh bèo</button>
+      <button onClick={() => setIdDangChon(4)}>Nem lụi</button>
+      <ChiTietMonAn idMonAn={idDangChon} />
+    </div>
+  );
+}
+export default TrangMonAn;
+▶ KẾT QUẢ MONG ĐỢI (terminal / trình duyệt)
+[Bấm 'Cơm hến']
+Đang tải thông tin món ăn…      (khoảng 800ms)
+Cơm hến — 25.000đ
+Hến xào, rau sống, bánh tráng nướng giòn.
+[Bấm nhanh liên tiếp 'Bún bò Huế' rồi 'Nem lụi']
+→ Chỉ hiển thị đúng thông tin Nem lụi cuối cùng, không bị lẫn dữ liệu cũ.
+✓ CHECKPOINT: Lab 2 hoàn thành khi
+•  Bấm mỗi nút món ăn đều hiện đúng "Đang tải…" rồi đổi sang đúng thông tin món đó.
+•  Bấm liên tiếp thật nhanh giữa các món không làm hiện sai thông tin (nhờ cờ daHuy).
+•  Mở tab Network hoặc thêm console.log tạm thời để xác nhận effect chạy lại đúng mỗi khi idMonAn đổi, không chạy thừa khi các state khác đổi.
+Vấn đề gặp phải
+Nguyên nhân có thể
+Cách khắc phục
+Bấm món khác nhưng thông tin không đổi
+Thiếu idMonAn trong mảng phụ thuộc của useEffect
+Thêm [idMonAn] làm tham số thứ hai
+Bấm nhanh nhiều món, hiện sai món cuối
+Không dùng cờ daHuy để bỏ qua kết quả Promise cũ
+Thêm biến daHuy, kiểm tra if (!daHuy) trước khi setState
+Trang bị treo ở 'Đang tải…' mãi
+Quên gọi setDangTai(false) trong callback then
+Đảm bảo gọi đủ cả setMonAn và setDangTai(false)
+LAB 3 — Ô TÌM KIẾM TỰ ĐỘNG FOCUS & ĐẾM SỐ LẦN RENDER
+LAB 3 · useRef — THAM CHIẾU DOM & GIÁ TRỊ KHÔNG GÂY RENDER
+⏱ Thời gian: 20 phút     🎯 Mục tiêu: Dùng useRef đúng cho hai công dụng: tham chiếu DOM và lưu giá trị nội bộ
+Bước 1 — Tạo component với ô tìm kiếm tự động focus
+JSX — src/features/food/TimMonAn.jsx
+import { useRef, useEffect, useState } from 'react';
+function TimMonAn() {
+  const oTimKiemRef = useRef(null);
+  const [tuKhoa, setTuKhoa] = useState('');
+  useEffect(() => {
+    oTimKiemRef.current.focus();
+  }, []);
+  return (
+    <input
+      ref={oTimKiemRef}
+      type="text"
+      value={tuKhoa}
+      onChange={(e) => setTuKhoa(e.target.value)}
+      placeholder="Tìm bún bò, cơm hến, bánh bèo…"
+    />
+  );
+}
+export default TimMonAn;
+Bước 2 — Thêm bộ đếm số lần render bằng useRef
+Thêm một ref đếm số lần component render lại, in ra console mỗi lần render để quan sát: giá trị KHÔNG được hiển thị trực tiếp trong JSX (nếu muốn hiển thị, phải dùng useState thay vì useRef — đây chính là điểm cần rút ra ở bước 3).
+JSX — bổ sung trong TimMonAn
+  const soLanRenderRef = useRef(0);
+  soLanRenderRef.current = soLanRenderRef.current + 1;
+  console.log('TimMonAn đã render:', soLanRenderRef.current, 'lần');
+Bước 3 — Thử nghiệm: hiển thị số lần render lên giao diện
+Thêm dòng <p>Đã render {soLanRenderRef.current} lần</p> vào JSX, sau đó gõ vài ký tự vào ô tìm kiếm và quan sát: số hiển thị trên giao diện có tăng theo mỗi ký tự gõ không, so với số in trong console?
+JSX — thử nghiệm quan sát (không cần giữ lại sau khi hiểu)
+  return (
+    <div>
+      <input ref={oTimKiemRef} value={tuKhoa}
+        onChange={(e) => setTuKhoa(e.target.value)} />
+      <p>Đã render {soLanRenderRef.current} lần</p>
+    </div>
+  );
+▶ KẾT QUẢ MONG ĐỢI (terminal / trình duyệt)
+[Console]  TimMonAn đã render: 1 lần
+[Gõ chữ 'b']
+[Console]  TimMonAn đã render: 2 lần   ← console đúng vì setTuKhoa gây render
+[Giao diện] Đã render 2 lần            ← giao diện CŨNG đúng, vì lần render
+                                          này soLanRenderRef.current đã là 2
+  Lưu ý: giao diện luôn hiển thị đúng giá trị TẠI THỜI ĐIỂM render đó — nó
+  không 'live update' một mình; nếu ref đổi mà KHÔNG có render nào khác
+  xảy ra, con số trên giao diện sẽ đứng yên dù ref.current đã đổi ngầm.
+✅ Điểm cần rút ra
+•  Component vẫn render lại đúng số lần bằng với số ký tự gõ vào — vì chính setTuKhoa (useState) là nguyên nhân gây render, không phải soLanRenderRef.
+•  soLanRenderRef chỉ đi "ăn theo" số lần render do NGUYÊN NHÂN KHÁC gây ra; bản thân việc gán soLanRenderRef.current không hề kích hoạt thêm bất kỳ lần render nào.
+✓ CHECKPOINT: Lab 3 hoàn thành khi
+•  Con trỏ tự động nằm sẵn trong ô tìm kiếm ngay khi trang tải, không cần bấm chuột.
+•  Gõ được bình thường vào ô tìm kiếm, giá trị cập nhật đúng theo từng ký tự.
+•  Giải thích được bằng lời (nói với bạn cùng nhóm) vì sao thay đổi soLanRenderRef.current không tự nó gây thêm một lần render nào.
+Vấn đề gặp phải
+Nguyên nhân có thể
+Cách khắc phục
+Lỗi 'Cannot read property focus of null'
+Gọi oTimKiemRef.current.focus() trước khi DOM được gắn (ví dụ gọi ngay trong thân hàm thay vì trong useEffect)
+Đảm bảo lệnh focus() nằm trong useEffect với mảng phụ thuộc []
+Ô tìm kiếm không nhận ký tự gõ vào
+Thiếu onChange hoặc thiếu value được nối với state tuKhoa
+Kiểm tra input đã có đủ value={tuKhoa} và onChange cập nhật đúng state
+Số lần render hiển thị sai hoặc không đổi
+Đặt sai vị trí dòng soLanRenderRef.current = soLanRenderRef.current + 1 (ví dụ đặt trong useEffect thay vì đặt ngay trong thân hàm component)
+Dòng tăng ref phải nằm ở cấp cao nhất của hàm component, chạy mỗi lần hàm được gọi để render
+LAB 4 (BÀI TẬP VỀ NHÀ) — TỐI ƯU DANH SÁCH VỚI useMemo & useCallback
+LAB 4 · BTVN · useMemo + useCallback — TỐI ƯU DANH SÁCH ĐỊA DANH
+⏱ Thời gian: Làm ở nhà, nộp cùng đợt với Lab 5     🎯 Mục tiêu: Áp dụng useMemo cho phép lọc tốn kém và useCallback kết hợp React.memo cho hàm truyền xuống con
+Lab này mở rộng trực tiếp bài tập số 1 và số 2 đã giao trong tài liệu lý thuyết Bài 6 (DemNguocKhaiMac và ChiTietDiaDanh). Thực hiện theo các bước sau, dựa trên ví dụ DanhSachDiaDanh đã trình bày ở Mục VI–VII của tài liệu lý thuyết.
+Tạo file dữ liệu src/data/dia-danh.json gồm ít nhất 8 địa danh Huế (Đại Nội Huế, Chợ Đông Ba, Cầu Tràng Tiền, Lăng Khải Định, Lăng Tự Đức, Chùa Thiên Mụ, Sông Hương, Cầu Ngói Thanh Toàn…) mỗi địa danh có id, ten, khuVuc.
+Viết component DanhSachDiaDanh nhận danh sách trên và một ô nhập boLoc; dùng useMemo để lọc theo tên, chỉ tính lại khi danhSach hoặc boLoc đổi. Thêm console.log bên trong useMemo để tự kiểm chứng nó không chạy thừa.
+Viết component con TheDiaDanh, bọc bằng React.memo, nhận props diaDanh và onYeuThich; thêm console.log ngay đầu thân hàm để quan sát khi nào nó render lại.
+Viết hàm themYeuThich trong DanhSachDiaDanh bằng useCallback với mảng phụ thuộc rỗng, truyền xuống mọi TheDiaDanh.
+Kiểm chứng: gõ vào ô boLoc để lọc danh sách, quan sát console — các TheDiaDanh không bị lọc ra khỏi danh sách hiển thị thì KHÔNG được in log render lại.
+⚠️ Gợi ý tự kiểm tra bằng React DevTools
+•  Mở tab Components trong React DevTools, bật tuỳ chọn "Highlight updates when components render" — các thẻ địa danh không đổi sẽ KHÔNG nhấp nháy viền khi gõ vào ô lọc, nếu đã dùng đúng useCallback + React.memo.
+LAB 5 (BÀI TẬP VỀ NHÀ) — CUSTOM HOOK useDebounce CHO TÌM KIẾM MÓN ĂN
+LAB 5 · BTVN · CUSTOM HOOK — useDebounce
+⏱ Thời gian: Làm ở nhà, nộp cùng đợt với Lab 4     🎯 Mục tiêu: Tự thiết kế một Custom Hook đóng gói logic trì hoãn (debounce), áp dụng vào ô tìm kiếm món ăn của Lab 2
+Lab này chính là bài tập số 3 đã giao trong tài liệu lý thuyết Bài 6, được chia nhỏ thành các bước có thể làm theo.
+Tạo file src/hooks/useDebounce.js. Hook nhận vào (giaTri, doTre) và trả về một giá trị "đã trì hoãn" — chỉ cập nhật sau khi giaTri ngừng thay đổi trong đúng doTre mili-giây.
+Bên trong useDebounce, dùng useState để lưu giá trị trì hoãn, và useEffect với setTimeout để cập nhật giá trị đó sau doTre mili-giây — nhớ return hàm cleanup gọi clearTimeout để huỷ bộ đếm cũ mỗi khi giaTri đổi trước khi hết thời gian chờ.
+Áp dụng useDebounce vào ô tìm kiếm món ăn đã xây ở Lab 2/Lab 3: lấy tuKhoaDaTre = useDebounce(tuKhoa, 300), rồi dùng tuKhoaDaTre (không phải tuKhoa) để lọc danh sách món ăn.
+Thêm console.log ngay trước bước lọc danh sách để kiểm chứng: gõ liên tục 5–6 ký tự thật nhanh, log lọc chỉ nên chạy MỘT lần sau khi ngừng gõ, không chạy theo từng ký tự.
+JSX — src/hooks/useDebounce.js  (khung sườn — tự hoàn thiện phần còn thiếu)
+import { useState, useEffect } from 'react';
+function useDebounce(giaTri, doTre) {
+  const [giaTriDaTre, setGiaTriDaTre] = useState(giaTri);
+  useEffect(() => {
+    // TODO: đặt setTimeout để cập nhật giaTriDaTre sau `doTre` mili-giây
+    // TODO: return hàm cleanup gọi clearTimeout
+  }, [giaTri, doTre]);
+  return giaTriDaTre;
+}
+export default useDebounce;
+▶ KẾT QUẢ MONG ĐỢI (terminal / trình duyệt)
+[Gõ liên tục: 'b' 'ú' 'n' ' ' 'b' 'ò'  (rất nhanh, < 300ms giữa các ký tự)]
+[Console]  Đang lọc theo từ khoá: bún bò      (chỉ MỘT dòng, in ra sau
+                                                khi ngừng gõ 300ms)
+BẢNG TEST CASE TỰ KIỂM TRA
+Test case
+Thao tác kiểm tra
+Kết quả mong đợi
+Kết quả thực tế
+TC1
+Mở trang có LuotXemDaiNoi, chờ 5 giây
+Số lượt xem tăng đúng 5, không nhảy cóc
+TC2
+Ẩn LuotXemDaiNoi bằng nút bật/tắt
+Console in 'Dọn dẹp…', số ngừng tăng hẳn
+TC3
+Bấm lần lượt 4 nút món ăn trong TrangMonAn
+Mỗi lần hiện đúng 'Đang tải…' rồi đúng thông tin món đã chọn
+TC4
+Bấm thật nhanh 2 nút món ăn liên tiếp
+Không hiển thị nhầm lẫn dữ liệu của món đã bấm trước đó
+TC5
+Mở trang TimMonAn
+Con trỏ tự động nằm sẵn trong ô tìm kiếm, không cần bấm chuột
+TC6
+Gõ vào ô lọc DanhSachDiaDanh (Lab 4)
+Các thẻ địa danh KHÔNG bị lọc ra không render lại (kiểm bằng console.log hoặc DevTools)
+TC7
+Gõ nhanh 5–6 ký tự vào ô tìm kiếm có useDebounce (Lab 5)
+Log lọc danh sách chỉ chạy đúng một lần, sau khi ngừng gõ 300ms
+BẢNG TỰ ĐÁNH GIÁ Bài 6
+Kỹ năng
+☐ Chưa   ☐ Cơ bản   ☐ Thành thạo
+Ghi chú
+Viết useEffect với mảng phụ thuộc rỗng và cleanup
+Viết useEffect với mảng phụ thuộc chứa biến, tránh dữ liệu cũ (stale)
+Dùng useRef để tham chiếu DOM (focus input)
+Dùng useRef để lưu giá trị không gây render lại
+Dùng useMemo cho phép tính tốn kém (lọc danh sách)
+Dùng useCallback kết hợp React.memo để tránh render thừa
+Thiết kế và sử dụng một Custom Hook tùy biến (useDebounce)
+TÓM TẮT NHỮNG GÌ ĐÃ HỌC TRONG Bài 6
+useEffect đồng bộ component với thế giới bên ngoài; mảng phụ thuộc quyết định effect chạy lại khi nào; luôn dọn dẹp (cleanup) những gì effect đã thiết lập.
+useRef tạo một hộp chứa giá trị bền qua các lần render mà KHÔNG kích hoạt render lại; dùng để tham chiếu DOM hoặc lưu giá trị nội bộ.
+useMemo ghi nhớ KẾT QUẢ của một phép tính tốn kém; useCallback ghi nhớ CHÍNH BẢN THÂN một hàm — chỉ dùng khi đã xác định thật sự cần thiết.
+Custom Hook đóng gói logic có trạng thái để tái sử dụng nhiều nơi, luôn đặt tên bắt đầu bằng use.
+Hook chỉ được gọi ở cấp cao nhất của component hoặc Custom Hook, không trong vòng lặp/điều kiện.
+HƯỚNG DẪN NỘP BÀI QUA GITHUB
+Đảm bảo đang ở nhánh feature/Bài6-hook-nang-cao (đã tạo ở phần Yêu cầu trước khi bắt đầu).
+Kiểm tra dự án chạy sạch, không còn console.error, bằng npm run dev.
+git add . && git commit -m "Bài 6: useEffect, useRef, useMemo, useCallback, custom hook"
+git push origin feature/Bài6-hook-nang-cao
+Tạo Pull Request trên GitHub về nhánh main, mô tả ngắn gọn các Lab đã hoàn thành và đính kèm ảnh chụp React DevTools cho phần BONUS (nếu làm).
+PREVIEW Bài 7
+💡 Chuẩn bị cho Bài 7 — Quản lý sự kiện trong React
+•  Bài 7 sẽ dùng lại chính các component đã xây ở Bài 6 (DanhSachDiaDanh, TimMonAn) để bổ sung các bộ xử lý sự kiện đầy đủ hơn — bấm chọn nhiều địa danh, kéo-thả sắp xếp món ăn yêu thích.
+•  Giữ nguyên nhánh feature/Bài6-hook-nang-cao đã merge để Bài 7 tiếp tục phát triển trên nền đó, đúng nguyên tắc "mỗi Bài cộng dồn lên Bài trước" của dự án phu-xuan-react.
+— Hết hướng dẫn thực hành Bài 6 —
