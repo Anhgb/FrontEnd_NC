@@ -60,10 +60,10 @@
 // }
 
 // export default App;
-import Bai7Page from './pages/Bai7Page';
+// import TrangThemDiaDiem from './pages/TrangThemDiaDiem'; // Bài 8
+import TrangDanhMuc from './pages/TrangDanhMuc';
 
-// Các trang demo của Bài 5, Bài 6 vẫn giữ nguyên trong thư mục src/pages
-// Bài này tạm thời chỉ hiển thị trang Bài 7 cho gọn
+// Bài 9 — Tái sử dụng thành phần: Props, Children, JSX Slots, Render Props, Composition
 export default function App() {
-  return <Bai7Page />;
+  return <TrangDanhMuc />;
 }
