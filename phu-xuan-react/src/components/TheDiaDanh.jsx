@@ -1,13 +1,10 @@
-import './TheDiaDanh.css';
+import "./TheDiaDanh.css";
 
-/**
- * Lab 1 — Thẻ địa danh tái sử dụng.
- * Props:
- *   anh   — URL ảnh đại diện
- *   ten   — Tên địa danh
- *   moTa  — Mô tả ngắn (mặc định nếu bỏ trống)
- */
-export default function TheDiaDanh({ anh, ten, moTa = 'Đang cập nhật mô tả...' }) {
+function TheDiaDanh({
+  anh,
+  ten,
+  moTa = "Chưa có thông tin mô tả cho địa danh này.",
+}) {
   return (
     <div className="the-dia-danh">
       <img src={anh} alt={ten} className="the-dia-danh__anh" />
@@ -18,3 +15,5 @@ export default function TheDiaDanh({ anh, ten, moTa = 'Đang cập nhật mô t�
     </div>
   );
 }
+
+export default TheDiaDanh;

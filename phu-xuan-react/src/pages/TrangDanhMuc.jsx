@@ -1,106 +1,79 @@
-import BoCucTrang from '../components/BoCucTrang';
-import The from '../components/The';
-import TheDiaDanh from '../components/TheDiaDanh';
-import DanhSach from '../components/DanhSach';
-import HopThongBao, { HopThongBaoThanhCong } from '../components/HopThongBao';
-import { DANH_SACH_DIA_DANH } from '../du-lieu/diaDanh';
-import { DANH_SACH_MON_AN } from '../du-lieu/monAn';
-import './TrangDanhMuc.css';
+import BoCucTrang from "../components/BoCucTrang";
+import The from "../components/The";
+import TheDiaDanh from "../components/TheDiaDanh";
+import DanhSach from "../components/DanhSach";
+import HopThongBao, {
+  HopThongBaoThanhCong,
+} from "../components/HopThongBao";
+import { DANH_SACH_DIA_DANH } from "../du-lieu/diaDanh";
+import { DANH_SACH_MON_AN } from "../du-lieu/monAn";
 
-/**
- * Lab 4 — Trang danh mục lắp ghép tất cả thành phần đã học.
- * Minh hoạ: JSX Slots (BoCucTrang), children (The),
- * tái sử dụng (TheDiaDanh × .map), Render Props (DanhSach),
- * Composition & Specialization (HopThongBao).
- */
-export default function TrangDanhMuc() {
+function TrangDanhMuc() {
+  const soLuong = DANH_SACH_DIA_DANH.length;
+
   return (
     <BoCucTrang
-      /* Khe 1 — Thanh điều hướng */
       thanhDieuHuong={
-        <nav className="thanh-dieu-huong">
-          <span className="thanh-dieu-huong__logo">🏯 Khám phá Huế</span>
-          <ul className="thanh-dieu-huong__lien-ket">
-            <li><a href="#dia-danh">Địa danh</a></li>
-            <li><a href="#am-thuc">Ẩm thực</a></li>
-          </ul>
+        <nav>
+          <strong>Khám phá Huế</strong>
         </nav>
       }
-
-      /* Khe 2 — Nội dung chính */
       noiDungChinh={
         <>
-          {/* Thông báo chào mừng */}
           <HopThongBaoThanhCong>
-            Chào mừng bạn đến với trang khám phá địa danh &amp; ẩm thực Huế!
+            Đã tải thành công dữ liệu trang danh mục.
           </HopThongBaoThanhCong>
 
-          <HopThongBao mauNen="#fffbeb" mauVienTren="#f6ad55">
-            💡 Dữ liệu bên dưới được render bằng <code>.map()</code>, Render Props và
-            thành phần <code>{'<The>'}</code> bọc ngoài.
+          <HopThongBao>
+            Hiện có <strong>{soLuong}</strong> địa danh trong danh mục.
           </HopThongBao>
 
-          {/* Lab 1+2 — Lưới địa danh bên trong thành phần khung The */}
-          <section id="dia-danh">
-            <The tieuDe="Di tích tiêu biểu">
-              <div className="luoi-dia-danh">
-                {DANH_SACH_DIA_DANH.map((dd) => (
-                  <TheDiaDanh
-                    key={dd.id}
-                    anh={dd.anh}
-                    ten={dd.ten}
-                    moTa={dd.moTa}
-                  />
-                ))}
-              </div>
-            </The>
-          </section>
+          <The tieuDe="Di tích tiêu biểu">
+            <div className="luoi-dia-danh">
+              {DANH_SACH_DIA_DANH.map((dd) => (
+                <TheDiaDanh
+                  key={dd.id}
+                  anh={dd.anh}
+                  ten={dd.ten}
+                  moTa={dd.moTa}
+                />
+              ))}
+            </div>
+          </The>
 
-          {/* Lab 3 — Render Props: 2 cách hiển thị cùng 1 component DanhSach */}
-          <section id="am-thuc">
-            <The tieuDe="Ẩm thực Huế">
-              <p style={{ marginBottom: '1rem', color: '#4a5568', fontWeight: 600 }}>
-                Kiểu 1 — Tên in đậm kèm giá:
-              </p>
-              <DanhSach
-                cacMuc={DANH_SACH_MON_AN}
-                hienThiMuc={(mon) => (
-                  <span>
-                    <strong>{mon.ten}</strong>
-                    {' — '}
-                    {mon.giaTien.toLocaleString('vi-VN')} đ
-                  </span>
-                )}
-              />
+          <The tieuDe="Ẩm thực Huế">
+            <p>Kiểu 1 — Tên và giá:</p>
+            <DanhSach
+              cacMuc={DANH_SACH_MON_AN}
+              hienThiMuc={(mon) => (
+                <span>
+                  <strong>{mon.ten}</strong> — {mon.gia.toLocaleString("vi-VN")} đ
+                </span>
+              )}
+            />
 
-              <hr style={{ margin: '1.25rem 0', borderColor: '#e2e8f0' }} />
+            <hr style={{ margin: "12px 0", borderColor: "#cbd2d9" }} />
 
-              <p style={{ marginBottom: '1rem', color: '#4a5568', fontWeight: 600 }}>
-                Kiểu 2 — Có nút &ldquo;Đặt món&rdquo;:
-              </p>
-              <DanhSach
-                cacMuc={DANH_SACH_MON_AN}
-                hienThiMuc={(mon) => (
-                  <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    {mon.ten}
-                    <button
-                      className="nut-dat-mon"
-                      onClick={() => alert(`Đã đặt: ${mon.ten}`)}
-                    >
-                      Đặt món
-                    </button>
-                  </span>
-                )}
-              />
-            </The>
-          </section>
+            <p>Kiểu 2 — Có nút đặt món:</p>
+            <DanhSach
+              cacMuc={DANH_SACH_MON_AN}
+              hienThiMuc={(mon) => (
+                <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  {mon.ten}
+                  <button onClick={() => alert(`Đã đặt: ${mon.ten}`)}>
+                    Đặt món
+                  </button>
+                </span>
+              )}
+            />
+          </The>
         </>
       }
-
-      /* Khe 3 — Chân trang */
       chanTrang={
-        <p>© {new Date().getFullYear()} Khám phá Huế — Bài 9 React Composition</p>
+        <p>© 2025 Khám phá Huế — Bài 9 React</p>
       }
     />
   );
 }
+
+export default TrangDanhMuc;

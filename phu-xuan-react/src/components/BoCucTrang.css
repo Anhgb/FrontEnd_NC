@@ -1,30 +1,25 @@
-.bo-cuc-trang {
+.bo-cuc {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 16px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  font-family: 'Segoe UI', 'Inter', sans-serif;
 }
-
-.bo-cuc-trang__header {
-  background: #1a202c;
+.bo-cuc__dau {
+  background: #102a43;
   color: #fff;
-  padding: 1rem 1.5rem;
-  border-radius: 0 0 10px 10px;
-  margin-bottom: 2rem;
+  padding: 16px 24px;
+  margin-bottom: 24px;
 }
-
-.bo-cuc-trang__main {
+.bo-cuc__giua {
   flex: 1;
 }
-
-.bo-cuc-trang__footer {
+.bo-cuc__chan {
+  border-top: 1px solid #cbd2d9;
+  padding: 16px;
   text-align: center;
-  padding: 1.25rem;
-  color: #a0aec0;
-  font-size: 0.85rem;
-  border-top: 1px solid #e2e8f0;
-  margin-top: 2.5rem;
+  color: #7b8794;
+  font-size: 13px;
+  margin-top: 24px;
 }

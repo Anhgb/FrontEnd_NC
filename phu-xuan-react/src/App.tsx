@@ -60,10 +60,11 @@
 // }
 
 // export default App;
-// import TrangThemDiaDiem from './pages/TrangThemDiaDiem'; // Bài 8
-import TrangDanhMuc from './pages/TrangDanhMuc';
+import "./App.css";
+import TrangDanhMuc from "./pages/TrangDanhMuc";
 
-// Bài 9 — Tái sử dụng thành phần: Props, Children, JSX Slots, Render Props, Composition
-export default function App() {
+function App() {
   return <TrangDanhMuc />;
 }
+
+export default App;

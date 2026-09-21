@@ -1,27 +1,27 @@
-// Lab 1 — Dữ liệu địa danh Huế dùng cho TheDiaDanh
 export const DANH_SACH_DIA_DANH = [
   {
     id: 1,
-    anh: 'https://picsum.photos/seed/dainoi/400/280',
-    ten: 'Đại Nội Huế',
-    moTa: 'Quần thể cung điện của triều Nguyễn bên bờ Bắc sông Hương.',
+    ten: "Đại Nội Huế",
+    anh: "https://picsum.photos/id/1015/400/250",
+    moTa: "Hoàng thành lịch sử với kiến trúc triều Nguyễn độc đáo.",
   },
   {
     id: 2,
-    anh: 'https://picsum.photos/seed/thienmu/400/280',
-    ten: 'Chùa Thiên Mụ',
-    moTa: 'Ngôi chùa cổ với tháp Phước Duyên nhìn ra sông Hương.',
+    ten: "Chùa Thiên Mụ",
+    anh: "https://picsum.photos/id/1040/400/250",
+    moTa: "Ngôi chùa cổ kính bên bờ sông Hương thơ mộng.",
   },
   {
     id: 3,
-    anh: 'https://picsum.photos/seed/langtuduc/400/280',
-    ten: 'Lăng Tự Đức',
-    moTa: 'Khu lăng giữa rừng thông và hồ sen yên tĩnh.',
+    ten: "Lăng Tự Đức",
+    anh: "https://picsum.photos/id/1039/400/250",
+    moTa: "Kiến trúc sơn thủy hữu tình, hòa mình với thiên nhiên.",
   },
   {
     id: 4,
-    anh: 'https://picsum.photos/seed/khaidinhtomb/400/280',
-    ten: 'Lăng Khải Định',
-    moTa: '', // Cố ý để trống → component sẽ dùng giá trị mặc định
+    ten: "Cầu Tràng Tiền",
+    anh: "https://picsum.photos/id/1043/400/250",
+    moTa: "", // Cố tình để trống để kiểm tra default prop
   },
 ];
+

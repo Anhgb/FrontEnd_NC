@@ -1,36 +1,31 @@
-import './HopThongBao.css';
-
-/**
- * Lab 4 — Thành phần thông báo tổng quát.
- * Props:
- *   children    — Nội dung thông báo
- *   mauNen      — Màu nền (mặc định: xanh dương nhạt)
- *   mauVienTren — Màu viền trên (mặc định: xanh dương)
- */
-export default function HopThongBao({
+function HopThongBao({
   children,
-  mauNen = '#ebf8ff',
-  mauVienTren = '#63b3ed',
+  mauNen = "#e6f0ef",
+  mauVienTren = "#2cb67d",
 }) {
   return (
     <div
-      className="hop-thong-bao"
-      style={{ backgroundColor: mauNen, borderTop: `4px solid ${mauVienTren}` }}
+      style={{
+        backgroundColor: mauNen,
+        borderTop: `4px solid ${mauVienTren}`,
+        borderRadius: "6px",
+        padding: "12px 16px",
+        marginBottom: "16px",
+      }}
     >
       {children}
     </div>
   );
 }
 
-/**
- * Lab 4 — Chuyên biệt hóa (Specialization) qua kết hợp (Composition).
- * HopThongBaoThanhCong dùng HopThongBao với màu xanh lá cố định.
- */
-export function HopThongBaoThanhCong({ children }) {
+function HopThongBaoThanhCong({ children }) {
   return (
-    <HopThongBao mauNen="#f0fff4" mauVienTren="#48bb78">
-      <span className="hop-thong-bao__bieu-tuong">✅ </span>
+    <HopThongBao mauNen="#e7f3ec" mauVienTren="#1e7a46">
+      <strong style={{ color: "#1e7a46" }}>Thành công! </strong>
       {children}
     </HopThongBao>
   );
 }
+
+export { HopThongBaoThanhCong };
+export default HopThongBao;
