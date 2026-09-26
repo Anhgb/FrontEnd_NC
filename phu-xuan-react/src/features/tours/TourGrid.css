@@ -1,0 +1,12 @@
+.tour-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.tour-grid__empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #7b8794;
+  font-size: 1rem;
+}

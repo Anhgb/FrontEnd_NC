@@ -1,0 +1,43 @@
+.page-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.page-layout__header {
+  background: #1b2a4a;
+  color: #fff;
+  padding: 1rem 1.5rem;
+}
+
+.page-layout__body {
+  display: flex;
+  flex: 1;
+  gap: 0;
+}
+
+.page-layout__sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: #f7f8fa;
+  border-right: 1px solid #e2e8f0;
+  padding: 1.25rem;
+}
+
+.page-layout__main {
+  flex: 1;
+  padding: 1.5rem;
+  overflow: auto;
+}
+
+@media (max-width: 700px) {
+  .page-layout__body {
+    flex-direction: column;
+  }
+  .page-layout__sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+}
