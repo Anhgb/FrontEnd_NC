@@ -10,7 +10,7 @@ type Props = {
  * Lab 4 — Presentational: Thẻ hiển thị di tích.
  * Đổi style khi đã tham quan (.ditich-card--visited).
  */
-export default function DiTichCard({ diTich, onToggleThamQuan }: Props) {
+export function DiTichCard({ diTich, onToggleThamQuan }: Props) {
   return (
     <div
       className={`ditich-card${diTich.daThamQuan ? ' ditich-card--visited' : ''}`}

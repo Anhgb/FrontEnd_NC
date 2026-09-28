@@ -1,7 +1,7 @@
-import PageLayout from '../../components/PageLayout';
-import SearchBox from '../tours/SearchBox';
-import DiTichCard from './DiTichCard';
-import DiTichFilterPanel from './DiTichFilter';
+import { PageLayout } from '../../components/PageLayout';
+import { SearchBox } from '../tours/SearchBox';
+import { DiTichCard } from './DiTichCard';
+import { DiTichFilterPanel } from './DiTichFilter';
 import { useDiTichList } from './useDiTichList';
 import './DiTichListView.css';
 
@@ -9,7 +9,7 @@ import './DiTichListView.css';
  * Lab 4 — View: Dùng trực tiếp custom hook useDiTichList.
  * Không cần Container riêng — hook đóng vai trò quản lý state.
  */
-export default function DiTichListView() {
+export function DiTichListView() {
   const {
     danhSachHienThi,
     totalCount,
@@ -30,8 +30,9 @@ export default function DiTichListView() {
             </span>
           </div>
           <SearchBox
-            query={boLoc.tuKhoa}
+            value={boLoc.tuKhoa}
             onChange={(v) => capNhatBoLoc({ tuKhoa: v })}
+            placeholder="Tìm tên di tích..."
           />
         </div>
       }

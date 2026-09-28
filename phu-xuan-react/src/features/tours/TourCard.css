@@ -12,42 +12,62 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
-.tour-card__img {
+.tour-card_img-wrap {
+  position: relative;
+}
+
+.tour-card_img {
   width: 100%;
-  height: 170px;
+  height: 160px;
   object-fit: cover;
+  display: block;
+  background: #dde3ec;
 }
 
-.tour-card__body {
-  padding: 0.9rem 1rem;
+.tour-card_badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: #e53e3e;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
 }
 
-.tour-card__name {
-  font-size: 1rem;
+.tour-card_body {
+  padding: 0.85rem 1rem;
+}
+
+.tour-card_category {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #7b8794;
+  font-weight: 600;
+}
+
+.tour-card_name {
+  font-size: 0.98rem;
   font-weight: 700;
   color: #1b2a4a;
-  margin: 0 0 0.4rem;
+  margin: 0.25rem 0 0.6rem;
 }
 
-.tour-card__desc {
-  font-size: 0.83rem;
-  color: #52606d;
-  margin: 0 0 0.75rem;
-  line-height: 1.5;
-}
-
-.tour-card__meta {
+.tour-card_meta {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 0.85rem;
 }
 
-.tour-card__price {
+.tour-card_price {
   font-weight: 700;
   color: #1e7a46;
 }
 
-.tour-card__duration {
+.tour-card_duration {
   color: #7b8794;
+  font-size: 0.8rem;
 }

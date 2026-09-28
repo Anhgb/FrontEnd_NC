@@ -1,38 +1,28 @@
-import { useState, useMemo } from 'react';
-import { TOURS } from '../../data/tours';
-import TourListView from './TourListView';
+import { useState } from 'react';
+import { tours } from '../../data/tours';
+import { TourListView } from './TourListView';
 
-const ABSOLUTE_MIN = 0;
-const ABSOLUTE_MAX = 1500000;
-
-/**
- * Lab 2+3 — Container: Quản lý toàn bộ state và logic lọc.
- * State lifted lên đây; chỉ truyền dữ liệu + callback xuống View.
- */
-export default function TourListContainer() {
-  const [minPrice, setMinPrice] = useState(ABSOLUTE_MIN);
-  const [maxPrice, setMaxPrice] = useState(ABSOLUTE_MAX);
+// Container chịu trách nhiệm state + logic; không dụng đến JSX của trang
+export function TourListContainer() {
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(1000000);
   const [query, setQuery] = useState('');
 
-  const filteredTours = useMemo(() => {
-    return TOURS.filter((tour) => {
-      const inRange = tour.price >= minPrice && tour.price <= maxPrice;
-      const matchQuery = tour.name
-        .toLowerCase()
-        .includes(query.trim().toLowerCase());
-      return inRange && matchQuery;
-    });
-  }, [minPrice, maxPrice, query]);
+  // Lọc kết hợp: theo giá VÀ theo từ khóa
+  const normalized = query.trim().toLowerCase();
+  const filteredTours = tours
+    .filter((t) => t.price >= minPrice && t.price <= maxPrice)
+    .filter((t) =>
+      normalized === '' ? true : t.name.toLowerCase().includes(normalized)
+    );
 
   return (
     <TourListView
       filteredTours={filteredTours}
-      totalCount={TOURS.length}
+      totalCount={tours.length}
       minPrice={minPrice}
       maxPrice={maxPrice}
       query={query}
-      absoluteMin={ABSOLUTE_MIN}
-      absoluteMax={ABSOLUTE_MAX}
       onMinChange={setMinPrice}
       onMaxChange={setMaxPrice}
       onQueryChange={setQuery}

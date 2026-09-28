@@ -1,63 +1,65 @@
-import PageLayout from '../../components/PageLayout';
-import PriceFilter from './PriceFilter';
-import SearchBox from './SearchBox';
-import TourGrid from './TourGrid';
 import type { Tour } from '../../data/tours';
-import './TourListView.css';
+import { PageLayout } from '../../components/PageLayout';
+import { PriceFilter } from './PriceFilter';
+import { SearchBox } from './SearchBox';
+import { TourGrid } from './TourGrid';
 
-type Props = {
+type TourListViewProps = {
+  // Dữ liệu đã lọc, sẵn sàng hiển thị
   filteredTours: Tour[];
   totalCount: number;
+  // Trạng thái bộ lọc
   minPrice: number;
   maxPrice: number;
   query: string;
-  absoluteMin: number;
-  absoluteMax: number;
-  onMinChange: (v: number) => void;
-  onMaxChange: (v: number) => void;
-  onQueryChange: (v: string) => void;
+  // Callback gửi ngược lên
+  onMinChange: (value: number) => void;
+  onMaxChange: (value: number) => void;
+  onQueryChange: (value: string) => void;
 };
 
-/**
- * Lab 3 — View: Lắp ghép PageLayout với 3 khe cho module Tours.
- * Không quản lý state — nhận tất cả từ Container qua props.
- */
-export default function TourListView({
-  filteredTours,
-  totalCount,
-  minPrice,
-  maxPrice,
-  query,
-  absoluteMin,
-  absoluteMax,
-  onMinChange,
-  onMaxChange,
-  onQueryChange,
-}: Props) {
+// View chỉ có props và JSX — không state, không effect, không fetch
+export function TourListView({
+  filteredTours, totalCount, minPrice, maxPrice, query,
+  onMinChange, onMaxChange, onQueryChange,
+}: TourListViewProps) {
   return (
     <PageLayout
       header={
-        <div className="tour-header">
-          <div className="tour-header__top">
-            <h1 className="tour-header__title">Danh sách Tour Huế</h1>
-            <span className="tour-header__count">
-              {filteredTours.length} / {totalCount} tour
-            </span>
-          </div>
-          <SearchBox query={query} onChange={onQueryChange} />
-        </div>
+        <>
+          <h1>Khám phá Huế qua {totalCount} hành trình</h1>
+          <SearchBox
+            value={query}
+            onChange={onQueryChange}
+            placeholder="Tìm tên tour (VD: Đại Nội)..."
+          />
+        </>
       }
       sidebar={
-        <PriceFilter
-          minPrice={minPrice}
-          maxPrice={maxPrice}
-          absoluteMin={absoluteMin}
-          absoluteMax={absoluteMax}
-          onMinChange={onMinChange}
-          onMaxChange={onMaxChange}
-        />
+        <>
+          <h2>Bộ lọc</h2>
+          <PriceFilter
+            minPrice={minPrice}
+            maxPrice={maxPrice}
+            onMinChange={onMinChange}
+            onMaxChange={onMaxChange}
+          />
+        </>
       }
-      main={<TourGrid tours={filteredTours} />}
+      main={
+        <>
+          <p className="filter-summary">
+            {filteredTours.length} / {totalCount} tour phù hợp
+          </p>
+          {filteredTours.length === 0 ? (
+            <p className="empty-state">
+              Không có tour nào phù hợp. Hãy nới bộ lọc hoặc thử từ khóa khác.
+            </p>
+          ) : (
+            <TourGrid tours={filteredTours} />
+          )}
+        </>
+      }
     />
   );
 }

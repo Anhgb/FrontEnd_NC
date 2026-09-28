@@ -1,59 +1,20 @@
+export type TourCategory = 'di-tich' | 'am-thuc' | 'thien-nhien' | 'lang-nghe';
+
 export type Tour = {
-  id: number;
+  id: string;
   name: string;
-  price: number; // VNĐ
-  duration: string;
+  category: TourCategory;
+  price: number;    // VND
+  duration: number; // giờ
   image: string;
-  description: string;
+  hot?: boolean;
 };
 
-export const TOURS: Tour[] = [
-  {
-    id: 1,
-    name: 'Tour Đại Nội',
-    price: 250000,
-    duration: '3 giờ',
-    image: 'https://picsum.photos/id/1015/400/250',
-    description: 'Khám phá quần thể cung điện triều Nguyễn.',
-  },
-  {
-    id: 2,
-    name: 'Tour Lăng Tự Đức',
-    price: 380000,
-    duration: '4 giờ',
-    image: 'https://picsum.photos/id/1039/400/250',
-    description: 'Viếng thăm lăng vua nổi tiếng nhất Huế.',
-  },
-  {
-    id: 3,
-    name: 'Tour Sông Hương',
-    price: 450000,
-    duration: '5 giờ',
-    image: 'https://picsum.photos/id/1043/400/250',
-    description: 'Du thuyền trên dòng sông Hương thơ mộng.',
-  },
-  {
-    id: 4,
-    name: 'Tour Ẩm Thực',
-    price: 550000,
-    duration: '4 giờ',
-    image: 'https://picsum.photos/id/1040/400/250',
-    description: 'Khám phá ẩm thực đặc sắc Huế cùng hướng dẫn viên.',
-  },
-  {
-    id: 5,
-    name: 'Tour Làng Nghề',
-    price: 850000,
-    duration: '6 giờ',
-    image: 'https://picsum.photos/id/1048/400/250',
-    description: 'Thăm làng nghề thủ công truyền thống quanh Huế.',
-  },
-  {
-    id: 6,
-    name: 'Tour VIP Hoàng Cung',
-    price: 1200000,
-    duration: '8 giờ',
-    image: 'https://picsum.photos/id/1050/400/250',
-    description: 'Trải nghiệm trọn vẹn di sản Huế theo phong cách VIP.',
-  },
+export const tours: Tour[] = [
+  { id: 't01', name: 'Đại Nội Huế',       category: 'di-tich',     price: 300000, duration: 3, image: '/images/dai-noi.jpg',     hot: true },
+  { id: 't02', name: 'Chợ Đông Ba',       category: 'am-thuc',     price: 150000, duration: 2, image: '/images/dong-ba.jpg' },
+  { id: 't03', name: 'Cầu Tràng Tiền',    category: 'di-tich',     price: 100000, duration: 1, image: '/images/trang-tien.jpg' },
+  { id: 't04', name: 'Lăng Tự Đức',       category: 'di-tich',     price: 400000, duration: 4, image: '/images/tu-duc.jpg',      hot: true },
+  { id: 't05', name: 'Đầm phá Tam Giang', category: 'thien-nhien', price: 600000, duration: 5, image: '/images/tam-giang.jpg' },
+  { id: 't06', name: 'Làng nón Phú Cam',  category: 'lang-nghe',   price: 200000, duration: 2, image: '/images/phu-cam.jpg' },
 ];

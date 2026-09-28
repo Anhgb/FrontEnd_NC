@@ -2,22 +2,20 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
 }
 
-.page-layout__header {
+.page-layout_header {
   background: #1b2a4a;
   color: #fff;
   padding: 1rem 1.5rem;
 }
 
-.page-layout__body {
+.page-layout_body {
   display: flex;
   flex: 1;
-  gap: 0;
 }
 
-.page-layout__sidebar {
+.page-layout_sidebar {
   width: 260px;
   flex-shrink: 0;
   background: #f7f8fa;
@@ -25,17 +23,17 @@
   padding: 1.25rem;
 }
 
-.page-layout__main {
+.page-layout_main {
   flex: 1;
   padding: 1.5rem;
   overflow: auto;
 }
 
 @media (max-width: 700px) {
-  .page-layout__body {
+  .page-layout_body {
     flex-direction: column;
   }
-  .page-layout__sidebar {
+  .page-layout_sidebar {
     width: 100%;
     border-right: none;
     border-bottom: 1px solid #e2e8f0;

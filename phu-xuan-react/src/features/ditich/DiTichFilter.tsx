@@ -18,7 +18,7 @@ const LOAI_OPTIONS: { value: LoaiDiTich; label: string }[] = [
 /**
  * Lab 4 — Presentational: Bộ lọc di tích (select loại + checkbox + reset).
  */
-export default function DiTichFilterPanel({ boLoc, onCapNhat, onReset }: Props) {
+export function DiTichFilterPanel({ boLoc, onCapNhat, onReset }: Props) {
   return (
     <div className="ditich-filter">
       <h4 className="ditich-filter__title">Bộ lọc</h4>

@@ -1,32 +1,29 @@
 import './SearchBox.css';
 
-type Props = {
-  query: string;
+type SearchBoxProps = {
+  value: string;
   onChange: (value: string) => void;
+  placeholder?: string;
 };
 
-/**
- * Lab 3 — Presentational: Ô tìm kiếm có nút X xoá nhanh.
- * Controlled component — không có useState bên trong.
- */
-export default function SearchBox({ query, onChange }: Props) {
+// Không có state riêng — luôn nhận value + onChange từ ngoài
+export function SearchBox({ value, onChange, placeholder }: SearchBoxProps) {
   return (
     <div className="search-box">
       <input
-        type="text"
-        value={query}
+        type="search"
+        value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Tìm kiếm..."
-        className="search-box__input"
-        aria-label="Tìm kiếm"
+        placeholder={placeholder ?? 'Tìm kiếm...'}
       />
-      {query && (
+      {value && (
         <button
-          className="search-box__clear"
+          type="button"
+          className="search-box_clear"
           onClick={() => onChange('')}
-          aria-label="Xoá tìm kiếm"
+          aria-label="Xóa từ khóa"
         >
-          ✕
+          X
         </button>
       )}
     </div>

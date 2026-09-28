@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import TourListContainer from './features/tours/TourListContainer';
-import DiTichListView from './features/ditich/DiTichListView';
+import { TourListContainer } from './features/tours/TourListContainer';
+import { DiTichListView } from './features/ditich/DiTichListView';
 import './App.css';
 
-// Bài 10 — Tab navigation chuyển giữa Tours và Di tích
+// Bài 10 — Tab navigation chuyển giữa Tours và Di tích (Lab 4)
 type Tab = 'tours' | 'ditich';
 
 function App() {
