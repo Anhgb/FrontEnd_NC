@@ -1,0 +1,68 @@
+import type { DiTich } from '../features/ditich/types';
+
+export const DANH_SACH_DI_TICH: DiTich[] = [
+  {
+    id: 1,
+    ten: 'Đại Nội Huế',
+    loai: 'cung-dien',
+    moTa: 'Quần thể cung điện của triều Nguyễn.',
+    anh: 'https://picsum.photos/id/1015/400/250',
+    daThamQuan: false,
+  },
+  {
+    id: 2,
+    ten: 'Lăng Tự Đức',
+    loai: 'lang-tam',
+    moTa: 'Lăng mộ vua Tự Đức giữa rừng thông yên tĩnh.',
+    anh: 'https://picsum.photos/id/1039/400/250',
+    daThamQuan: false,
+  },
+  {
+    id: 3,
+    ten: 'Lăng Khải Định',
+    loai: 'lang-tam',
+    moTa: 'Nổi tiếng với nghệ thuật khảm sành sứ và kiến trúc Á–Âu.',
+    anh: 'https://picsum.photos/id/1043/400/250',
+    daThamQuan: false,
+  },
+  {
+    id: 4,
+    ten: 'Lăng Minh Mạng',
+    loai: 'lang-tam',
+    moTa: 'Khu lăng sơn thủy hữu tình của vua Minh Mạng.',
+    anh: 'https://picsum.photos/id/1040/400/250',
+    daThamQuan: false,
+  },
+  {
+    id: 5,
+    ten: 'Chùa Thiên Mụ',
+    loai: 'chua',
+    moTa: 'Ngôi chùa cổ nhất Huế, nhìn ra sông Hương thơ mộng.',
+    anh: 'https://picsum.photos/id/1048/400/250',
+    daThamQuan: false,
+  },
+  {
+    id: 6,
+    ten: 'Cầu Tràng Tiền',
+    loai: 'cong-trinh',
+    moTa: 'Cây cầu thép lịch sử – biểu tượng của thành phố Huế.',
+    anh: 'https://picsum.photos/id/1050/400/250',
+    daThamQuan: false,
+  },
+  {
+    id: 7,
+    ten: 'Đàn Nam Giao',
+    loai: 'cung-dien',
+    moTa: 'Nơi các vua triều Nguyễn tế trời đất hàng năm.',
+    anh: 'https://picsum.photos/id/1055/400/250',
+    daThamQuan: false,
+  },
+  {
+    id: 8,
+    ten: 'Chùa Từ Đàm',
+    loai: 'chua',
+    moTa: 'Trung tâm Phật giáo lâu đời và quan trọng tại Huế.',
+    anh: 'https://picsum.photos/id/1060/400/250',
+    daThamQuan: false,
+  },
+];

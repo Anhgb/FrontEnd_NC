@@ -1,0 +1,19 @@
+.price-filter label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: #52606d;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.price-filter input[type='range'] {
+  width: 100%;
+  accent-color: #1b2a4a;
+}
+
+.price-filter span {
+  font-weight: 700;
+  color: #1b2a4a;
+}

@@ -1,0 +1,36 @@
+.ditich-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.ditich-grid__empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #7b8794;
+  font-size: 1rem;
+  grid-column: 1 / -1;
+}
+
+.ditich-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.ditich-header__top {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.ditich-header__title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.ditich-header__count {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}

@@ -1,0 +1,17 @@
+.the-khung {
+  border: 1px solid #7b8794;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: #fff;
+}
+.the-khung__tieu-de {
+  background: #102a43;
+  color: #fff;
+  padding: 10px 16px;
+  font-weight: 700;
+  font-size: 15px;
+}
+.the-khung__than {
+  padding: 16px;
+}

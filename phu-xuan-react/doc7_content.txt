@@ -1,0 +1,109 @@
+﻿─Éß║áI Hß╗îC PH├Ü XU├éN
+KHOA C├öNG NGHß╗å TH├öNG TIN
+H╞»ß╗ÜNG Dß║¬N THß╗░C H├ÇNH ┬╖ INT.7.18 ΓÇö WEB FRONTEND N├éNG CAO
+QUß║óN L├¥ Sß╗░ KIß╗åN TRONG REACT
+B├ái 7 ΓÇö Bß╗ÿ Xß╗¼ L├¥ Sß╗░ KIß╗åN, TRUYß╗ÇN THAM Sß╗É, LAN TRUYß╗ÇN & H├ÇNH VI Mß║╢C ─Éß╗èNH
+Dß╗▒ ├ín phu-xuan-react  ┬╖
+Mß╗ñC TI├èU THß╗░C H├ÇNH B├ái 7
+Bß║ún ─æß╗ô B├ái thß╗▒c h├ánh
+Y├èU Cß║ªU TR╞»ß╗ÜC KHI Bß║«T ─Éß║ªU
+Chuß║⌐n bß╗ï (5 ph├║t)
+B╞░ß╗¢c 1    Tß║ío nh├ính l├ám viß╗çc cß╗ºa B├ái
+B╞░ß╗¢c 2    Tß║ío th╞░ mß╗Ñc cho B├ái 7
+To├án bß╗Ö component cß╗ºa B├ái n├áy ─æß║╖t trong mß╗Öt th╞░ mß╗Ñc ri├¬ng ─æß╗â kh├┤ng lß║½n vß╗¢i c├íc B├ái tr╞░ß╗¢c.
+Ng╞░ß╗¥i d├╣ng Windows PowerShell c├│ thß╗â tß║ío tß╗½ng th╞░ mß╗Ñc bß║▒ng chuß╗Öt trong VS Code, hoß║╖c chß║íy mkdir src/components/B├ái7 (c├íc th╞░ mß╗Ñc ─æ├ú c├│ sß║╡n sß║╜ b├ío lß╗ùi "already exists" ΓÇö bß╗Å qua ─æ╞░ß╗úc).
+B╞░ß╗¢c 3    Tß║ío hai file dß╗» liß╗çu mß║½u
+B╞░ß╗¢c 4    Tß║ío file CSS cß╗ºa B├ái
+File n├áy ─æß╗ïnh ngh─⌐a sß║╡n c├íc class d├╣ng trong 5 lab, ─æß╗â sinh vi├¬n tß║¡p trung v├áo logic sß╗▒ kiß╗çn. Sao ch├⌐p nguy├¬n v─ân.
+B╞░ß╗¢c 5    Tß║ío trang B├ái 7 v├á hiß╗ân thß╗ï trong App
+Trang B├ái7Page l├á n╞íi gß║»n c├íc component cß╗ºa tß╗½ng lab. Ban ─æß║ºu trang chß╗ë c├│ ti├¬u ─æß╗ü; sau mß╗ùi lab ta th├¬m mß╗Öt d├▓ng import v├á mß╗Öt thß║╗ component.
+Thß╗¥i gian: 15 ph├║t   |   H├¼nh thß╗⌐c: Tß║íi lß╗¢p   |   Mß╗Ñc ti├¬u: viß║┐t handler ─æ├║ng c├ích v├á ─æß╗ìc ─æ╞░ß╗úc ─æß╗æi t╞░ß╗úng sß╗▒ kiß╗çn
+B╞░ß╗¢c 1    Viß║┐t n├║t bß║Ñm c├│ bß╗Ö ─æß║┐m
+Tß║ío file ThuSuKien.jsx vß╗¢i phi├¬n bß║ún tß╗æi giß║ún: mß╗Öt n├║t, mß╗Öt state ─æß║┐m, mß╗Öt h├ám xß╗¡ l├╜.
+Gß║»n v├áo trang: mß╗ƒ B├ái7Page.jsx, th├¬m d├▓ng import v├á thß║╗ component.
+B╞░ß╗¢c 2    Cß╗æ t├¼nh g├óy lß╗ùi: gß╗ìi h├ám thay v├¼ truyß╗ün h├ám
+Th├¬m cß║╖p ngoß║╖c tr├▓n sau t├¬n h├ám, l╞░u file v├á quan s├ít tr├¼nh duyß╗çt:
+B╞░ß╗¢c 3    Th├¬m thß║╗ ─æß╗ïa danh v├á nhß║¡t k├╜ sß╗▒ kiß╗çn
+Viß║┐t lß║íi to├án bß╗Ö file theo phi├¬n bß║ún ho├án chß╗ënh d╞░ß╗¢i ─æ├óy. Nhß║¡t k├╜ l╞░u tß╗æi ─æa 5 d├▓ng gß║ºn nhß║Ñt; mß╗ùi d├▓ng c├│ id ri├¬ng lß║Ñy tß╗½ useRef (─æ├ú hß╗ìc ß╗ƒ B├ái 6) ─æß╗â l├ám key ß╗òn ─æß╗ïnh, thay v├¼ d├╣ng chß╗ë sß╗æ mß║úng.
+B╞░ß╗¢c 4    Quan s├ít target v├á currentTarget
+Bß║Ñm lß║ºn l╞░ß╗út v├áo chß╗» "L─âng Tß╗▒ ─Éß╗⌐c", chß╗» "L─âng tß║⌐m", v├á khoß║úng trß╗æng giß╗»a hai chß╗» (b├¬n trong khung viß╗ün ─æß╗⌐t). ─Éß╗ìc nhß║¡t k├╜.
+Kß║┐t luß║¡n r├║t ra: currentTarget lu├┤n l├á DIV ΓÇö phß║ºn tß╗¡ gß║»n onClick; c├▓n target thay ─æß╗òi theo vß╗ï tr├¡ bß║Ñm. ─É├óy l├á l├╜ do ß╗ƒ Lab 2 ta ─æß╗ìc data-* qua currentTarget.
+Thß╗¥i gian: 20 ph├║t   |   H├¼nh thß╗⌐c: Tß║íi lß╗¢p   |   Mß╗Ñc ti├¬u: ─æß╗â component con b├ío sß╗▒ kiß╗çn l├¬n component cha giß╗» state
+B╞░ß╗¢c 1    Viß║┐t component con TheDiaDanh
+Component con kh├┤ng giß╗» state. N├│ nhß║¡n ba props: dß╗» liß╗çu diaDanh, cß╗¥ dangChon, v├á h├ám onChon. Khi ├┤ ─æ├ính dß║Ñu thay ─æß╗òi, n├│ gß╗ìi onChon(diaDanh.id) ─æß╗â b├ío l├¬n cha.
+B╞░ß╗¢c 2    Viß║┐t component cha ΓÇö phi├¬n bß║ún chß╗ë chß╗ìn/bß╗Å chß╗ìn
+Cha giß╗» state dsDaChon (mß║úng id) v├á ─æß╗ïnh ngh─⌐a handleChon. Ch├║ ├╜: truyß╗ün onChon={handleChon} ΓÇö truyß╗ün h├ám, kh├┤ng c├│ ngoß║╖c tr├▓n.
+Gß║»n <DanhSachDiaDanh /> v├áo B├ái7Page (th├¬m import t╞░╞íng tß╗▒ Lab 1), rß╗ôi bß║Ñm chß╗ìn v├ái ─æß╗ïa danh.
+B╞░ß╗¢c 3    Quan s├ít luß╗ông dß╗» liß╗çu bß║▒ng React DevTools
+Mß╗ƒ DevTools (F12) ΓåÆ tab Components ΓåÆ chß╗ìn DanhSachDiaDanh. ß╗₧ khung b├¬n phß║úi thß║Ñy mß╗Ñc hooks ΓåÆ State: [].
+Bß║Ñm chß╗ìn Ch├╣a Thi├¬n Mß╗Ñ. State ─æß╗òi th├ánh [2].
+Chß╗ìn mß╗Öt TheDiaDanh trong c├óy component. Khung props thß║Ñy dangChon: true v├á onChon: f handleChon() ΓÇö ─æ├óy ch├¡nh l├á h├ám cß╗ºa cha ─æ╞░ß╗úc truyß╗ün xuß╗æng.
+Nhß║¡n x├⌐t: component con kh├┤ng c├│ mß╗Ñc hooks n├áo ΓÇö n├│ ho├án to├án ─æ╞░ß╗úc ─æiß╗üu khiß╗ân bß╗ƒi cha.
+B╞░ß╗¢c 4    Th├¬m bß╗Ö lß╗ìc theo loß║íi bß║▒ng data-*, n├║t chß╗ìn tß║Ñt cß║ú v├á d├▓ng lß╗Ö tr├¼nh
+Cß║¡p nhß║¡t file th├ánh phi├¬n bß║ún ho├án chß╗ënh. Ba ─æiß╗âm mß╗¢i cß║ºn ch├║ ├╜ khi g├╡ lß║íi:
+C├ích 3 (thuß╗Öc t├¡nh data): mß╗ìi n├║t lß╗ìc d├╣ng chung mß╗Öt h├ám handleLocLoai, ─æß╗ìc loß║íi tß╗½ e.currentTarget.dataset.loai.
+Gi├í trß╗ï suy ra: dsHienThi ─æ╞░ß╗úc t├¡nh ngay khi render tß╗½ loaiDangLoc, kh├┤ng tß║ío th├¬m state.
+H├ám cß║¡p nhß║¡t khi th├¬m nhiß╗üu phß║ºn tß╗¡: handleChonTatCa chß╗ë th├¬m c├íc id ch╞░a c├│, giß╗» nguy├¬n thß╗⌐ tß╗▒ chß╗ìn tr╞░ß╗¢c ─æ├│.
+Thß╗¥i gian: 20 ph├║t   |   H├¼nh thß╗⌐c: Tß║íi lß╗¢p (ho├án th├ánh BTVN 1)   |   Mß╗Ñc ti├¬u: kiß╗âm so├ít lan truyß╗ün sß╗▒ kiß╗çn v├á cß║¡p nhß║¡t state an to├án
+Y├¬u cß║ºu nghiß╗çp vß╗Ñ: l╞░ß╗¢i thß║╗ ─æß╗ïa danh; bß║Ñm v├áo thß║╗ th├¼ mß╗ƒ/─æ├│ng phß║ºn m├┤ tß║ú; trong thß║╗ c├│ n├║t "Y├¬u th├¡ch" v├á "Chia sß║╗" ΓÇö bß║Ñm hai n├║t n├áy kh├┤ng ─æ╞░ß╗úc mß╗ƒ m├┤ tß║ú. Ph├¡a tr├¬n l╞░ß╗¢i c├│ d├▓ng thß╗æng k├¬ sß╗æ l╞░ß╗út t╞░╞íng t├íc trong khu vß╗▒c.
+B╞░ß╗¢c 1    Viß║┐t thß║╗ phi├¬n bß║ún ch╞░a chß║╖n lan truyß╗ün v├á quan s├ít lß╗ùi
+Viß║┐t tiß║┐p component cha KhamPhaDiaDanh (B╞░ß╗¢c 3 b├¬n d╞░ß╗¢i, sao ch├⌐p nguy├¬n v─ân), gß║»n v├áo B├ái7Page, rß╗ôi bß║Ñm n├║t "Y├¬u th├¡ch" tr├¬n thß║╗ Ch├╣a Thi├¬n Mß╗Ñ.
+Nguy├¬n nh├ón: sß╗▒ kiß╗çn click nß╗òi bß╗ìt tß╗½ <button> l├¬n <article>, n├¬n onXem c┼⌐ng chß║íy.
+B╞░ß╗¢c 2    Chß║╖n lan truyß╗ün v├á th├¬m n├║t Chia sß║╗
+Viß║┐t lß║íi thß║╗ theo phi├¬n bß║ún ho├án chß╗ënh. Mß╗ùi n├║t con gß╗ìi e.stopPropagation() ß╗ƒ d├▓ng ─æß║ºu h├ám xß╗¡ l├╜. N├║t "Chia sß║╗" d├╣ng navigator.clipboard ΓÇö mß╗Öt API bß║Ñt ─æß╗ông bß╗Ö, n├¬n h├ám xß╗¡ l├╜ khai b├ío async.
+B╞░ß╗¢c 3    Viß║┐t component cha c├│ pha bß║»t
+Cha giß╗» ba state: thß║╗ ─æang mß╗ƒ, danh s├ích y├¬u th├¡ch, sß╗æ l╞░ß╗út t╞░╞íng t├íc. Ch├║ ├╜ onClickCapture tr├¬n <section>: n├│ chß║íy ß╗ƒ pha bß║»t, tr╞░ß╗¢c mß╗ìi handler b├¬n trong, v├á kh├┤ng bß╗ï stopPropagation cß╗ºa thß║╗ con chß║╖n ΓÇö n├¬n ─æß║┐m ─æ╞░ß╗úc cß║ú c├║ bß║Ñm v├áo n├║t Y├¬u th├¡ch.
+B╞░ß╗¢c 4    Sß╗¡a lß╗ùi "+3 l╞░ß╗út th├¡ch chß╗ë t─âng 1"
+Tß║ío component ─æß║┐m l╞░ß╗út th├¡ch, cß╗æ t├¼nh viß║┐t theo c├ích sai tr╞░ß╗¢c:
+Tr╞░ß╗¢c khi sß╗¡a, trß║ú lß╗¥i bß║▒ng lß╗¥i: v├¼ sao Console in gi├í trß╗ï c┼⌐? (Gß╗úi ├╜: state l├á ß║únh chß╗Ñp cß╗ºa lß║ºn render; ba lß╗¥i gß╗ìi ─æß╗üu l├á setLuotThich(0 + 1).) Sau ─æ├│ viß║┐t lß║íi bß║▒ng h├ám cß║¡p nhß║¡t:
+Gß║»n cß║ú KhamPhaDiaDanh v├á LuotThichMonAn v├áo B├ái7Page.
+Thß╗¥i gian: 40 ph├║t   |   H├¼nh thß╗⌐c: ß╗₧ nh├á (BTVN 2)   |   Mß╗Ñc ti├¬u: x├óy dß╗▒ng ├┤ t├¼m kiß║┐m d├╣ng thoß║úi m├íi bß║▒ng b├án ph├¡m
+B╞░ß╗¢c 1    Quan s├ít h├ánh vi mß║╖c ─æß╗ïnh cß╗ºa biß╗âu mß║½u
+Tß║ío file tß║ím thß╗¥i vß╗¢i biß╗âu mß║½u ch╞░a chß║╖n h├ánh vi mß║╖c ─æß╗ïnh, gß║»n v├áo trang, g├╡ "b├║n" rß╗ôi nhß║Ñn Enter.
+Tr├¼nh duyß╗çt thß╗▒c hiß╗çn h├ánh vi mß║╖c ─æß╗ïnh cß╗ºa <form>: gß╗¡i dß╗» liß╗çu v├á tß║úi lß║íi trang. Trong ß╗⌐ng dß╗Ñng mß╗Öt trang, ta phß║úi chß║╖n h├ánh vi n├áy bß║▒ng e.preventDefault().
+B╞░ß╗¢c 2    Viß║┐t biß╗âu mß║½u ho├án chß╗ënh
+Phi├¬n bß║ún ho├án chß╗ënh bß╗ò sung bß╗æn kß╗╣ thuß║¡t, mß╗ùi kß╗╣ thuß║¡t ß╗⌐ng vß╗¢i mß╗Öt d├▓ng ch├║ th├¡ch trong m├ú:
+e.preventDefault() trong handleSubmit ΓÇö Enter trong ├┤ nhß║¡p tß╗▒ gß╗¡i biß╗âu mß║½u, kh├┤ng cß║ºn bß║»t ph├¡m Enter ri├¬ng.
+onKeyDown bß║»t ph├¡m Esc ─æß╗â xo├í tß╗½ kho├í, bß╗Å qua khi e.nativeEvent.isComposing (─æang g├╡ dß║Ñu bß║▒ng bß╗Ö g├╡ c├│ gß║ích ch├ón).
+onFocus/onBlur ─æß╗â hiß╗çn/ß║⌐n khung gß╗úi ├╜ tß╗½ kho├í; bß║Ñm gß╗úi ├╜ l├á truyß╗ün tham sß╗æ bß║▒ng h├ám m┼⌐i t├¬n.
+onMouseDown={(e) => e.preventDefault()} tr├¬n n├║t gß╗úi ├╜ ΓÇö chß║╖n viß╗çc ├┤ nhß║¡p mß║Ñt ti├¬u ─æiß╗âm, nß║┐u kh├┤ng onBlur sß║╜ ß║⌐n khung gß╗úi ├╜ tr╞░ß╗¢c khi onClick kß╗ïp chß║íy.
+B╞░ß╗¢c 3    Viß║┐t component cha hiß╗ân thß╗ï kß║┐t quß║ú
+Cha giß╗» tß╗½ kho├í ─æ├ú gß╗¡i (kh├┤ng phß║úi tß╗½ kho├í ─æang g├╡) v├á lß╗ìc danh s├ích ngay khi render. ─Éß╗â ├╜ onTimKiem={setTuKhoaDaTim}: c├│ thß╗â truyß╗ün thß║│ng h├ám set state xuß╗æng con khi con chß╗ë cß║ºn b├ío mß╗Öt gi├í trß╗ï.
+Gß║»n <TimMonAnHue /> v├áo B├ái7Page v├á chß║íy kß╗ïch bß║ún kiß╗âm tra:
+B╞░ß╗¢c 4    Kiß╗âm tra vß╗¢i bß╗Ö g├╡ tiß║┐ng Viß╗çt
+Bß║¡t bß╗Ö g├╡ tiß║┐ng Viß╗çt (Unikey/EVKey tr├¬n Windows, bß╗Ö g├╡ Telex c├│ sß║╡n tr├¬n macOS).
+G├╡ "ch├¿" bß║▒ng Telex (chef), nhß║Ñn Enter ngay khi chß╗» c├▓n ─æang ─æ╞░ß╗úc gß║ích ch├ón (nß║┐u bß╗Ö g├╡ c├│ gß║ích ch├ón).
+Kß╗│ vß╗ìng: lß║ºn Enter ─æß║ºu chß╗ë chß╗æt chß╗», lß║ºn Enter thß╗⌐ hai mß╗¢i gß╗¡i t├¼m kiß║┐m. T╞░╞íng tß╗▒, Esc khi ─æang gß║ích ch├ón chß╗ë huß╗╖ chß╗» ─æang g├╡, kh├┤ng xo├í cß║ú ├┤.
+Ghi kß║┐t quß║ú thß╗▒c tß║┐ v├áo bß║úng test case cuß╗æi t├ái liß╗çu. Nhiß╗üu bß╗Ö g├╡ tr├¬n Windows kh├┤ng d├╣ng gß║ích ch├ón ΓÇö khi ─æ├│ hai lß║ºn Enter kh├┤ng kh├íc nhau, ─æ├│ l├á h├ánh vi b├¼nh th╞░ß╗¥ng.
+Thß╗¥i gian: 45 ph├║t   |   H├¼nh thß╗⌐c: ß╗₧ nh├á (BONUS)   |   Mß╗Ñc ti├¬u: kß║┐t hß╗úp nhiß╗üu nh├│m sß╗▒ kiß╗çn trong mß╗Öt t├¡nh n─âng ho├án chß╗ënh
+B╞░ß╗¢c 1    Viß║┐t h├ám thuß║ºn di chuyß╗ân phß║ºn tß╗¡
+T├ích logic sß║»p xß║┐p th├ánh h├ám thuß║ºn ─æß║╖t ngo├ái component: kh├┤ng ─æß╗Ñng tß╗¢i state, lu├┤n trß║ú vß╗ü mß║úng mß╗¢i, dß╗à thß╗¡ nghiß╗çm ─æß╗Öc lß║¡p trong Console.
+B╞░ß╗¢c 2    Nß║»m bß╗æn sß╗▒ kiß╗çn k├⌐o thß║ú tr╞░ß╗¢c khi viß║┐t
+B╞░ß╗¢c 3    Viß║┐t component ho├án chß╗ënh
+Ngo├ái k├⌐o thß║ú, component c├│ th├¬m: ph├¡m tß║»t Alt + m┼⌐i t├¬n (mß╗ùi d├▓ng c├│ tabIndex={0} ─æß╗â nhß║¡n ti├¬u ─æiß╗âm), n├║t Xo├í tß╗½ng m├│n, v├á v├╣ng aria-live="polite" ─æß╗â tr├¼nh ─æß╗ìc m├án h├¼nh ─æß╗ìc th├┤ng b├ío sau mß╗ùi thay ─æß╗òi.
+B╞░ß╗¢c 4    Gß║»n v├áo trang v├á kiß╗âm tra
+Gß║»n <MonAnYeuThich /> v├áo B├ái7Page. L├║c n├áy trang c├│ ─æß╗º 6 component; so s├ính vß╗¢i file ho├án chß╗ënh:
+NHIß╗åM Vß╗ñ ─Éß╗Æ ├üN NH├ôM (BTVN 3)
+Mß╗ùi nh├│m chß╗ìn mß╗Öt m├án h├¼nh trong ─æß╗ü t├ái cß╗ºa m├¼nh c├│ nhiß╗üu t╞░╞íng t├íc nhß║Ñt, bß╗ò sung hoß║╖c chß╗ënh sß╗¡a ─æß╗â c├│ ├¡t nhß║Ñt ba nh├│m sß╗▒ kiß╗çn kh├íc nhau (v├¡ dß╗Ñ chuß╗Öt, b├án ph├¡m, biß╗âu mß║½u, k├⌐o thß║ú, ti├¬u ─æiß╗âm). Nhiß╗çm vß╗Ñ n├áy ─æo CLO3 ΓÇö lß╗▒a chß╗ìn mß║½u thiß║┐t kß║┐ ph├╣ hß╗úp ΓÇö n├¬n phß║ºn quan trß╗ìng nhß║Ñt l├á cß╗Öt l├╜ do.
+Mß║½u bß║úng sß╗▒ kiß╗çn ΓÇö d├ín v├áo m├┤ tß║ú Pull Request cß╗ºa nh├│m
+Nh├ính cß╗ºa nh├│m: feature/B├ái7-su-kien-<ma-nhom> tr├¬n kho ─æß╗ô ├ín; mß╗ùi th├ánh vi├¬n c├│ ├¡t nhß║Ñt mß╗Öt commit.
+K├¿m 1 ß║únh chß╗Ñp m├án h├¼nh hoß║╖c ß║únh ─æß╗Öng (GIF) minh hoß║í t╞░╞íng t├íc trong Pull Request.
+BONUS ΓÇö ─Éo hiß╗çu quß║ú cß╗ºa useCallback + React.memo bß║▒ng Profiler
+B├ái n├áy nß╗æi kiß║┐n thß╗⌐c B├ái 6 vß╗¢i Lab 2. Mß╗Ñc ti├¬u: chß╗⌐ng minh bß║▒ng sß╗æ liß╗çu rß║▒ng khi bß║Ñm chß╗ìn mß╗Öt ─æß╗ïa danh, chß╗ë thß║╗ bß╗ï ─æß╗òi mß╗¢i render lß║íi.
+DevTools ΓåÆ tab Profiler ΓåÆ biß╗âu t╞░ß╗úng b├ính r─âng ΓåÆ bß║¡t Highlight updates when components render.
+Bß║Ñm Ghi (chß║Ñm tr├▓n), chß╗ìn ─Éß║íi Nß╗Öi Huß║┐, dß╗½ng ghi. Ghi lß║íi sß╗æ TheDiaDanh ─æ╞░ß╗úc render trong lß║ºn commit.
+Lß║ºn l╞░ß╗út thß╗¡ ba cß║Ñu h├¼nh: kh├┤ng memo; c├│ memo nh╞░ng kh├┤ng useCallback; c├│ cß║ú hai. Chß╗Ñp ß║únh ba kß║┐t quß║ú v├áo Pull Request v├á giß║úi th├¡ch sß╗▒ kh├íc nhau.
+Kß║┐t quß║ú mong ─æß╗úi: chß╗ë cß║Ñu h├¼nh thß╗⌐ ba cho thß║Ñy duy nhß║Ñt mß╗Öt thß║╗ render lß║íi. ß╗₧ cß║Ñu h├¼nh thß╗⌐ hai, memo v├┤ t├íc dß╗Ñng v├¼ handleChon l├á h├ám mß╗¢i sau mß╗ùi lß║ºn render cß╗ºa cha.
+Bß║óNG TEST CASE Tß╗░ KIß╗éM TRA
+Thß╗▒c hiß╗çn tß╗½ng thao t├íc, ghi kß║┐t quß║ú thß╗▒c tß║┐. Mß╗ìi d├▓ng phß║úi "─Éß║ít" tr╞░ß╗¢c khi tß║ío Pull Request.
+Ghi ch├║ cho giß║úng vi├¬n: m├ú nguß╗ôn mß║½u k├¿m bß╗Ö kiß╗âm thß╗¡ tß╗▒ ─æß╗Öng (Vitest + Testing Library) cho c├íc test case 1ΓÇô10, 12ΓÇô13; c├│ thß╗â d├╣ng ─æß╗â chß║Ñm nhanh b├ái nß╗Öp sau khi hß╗ìc B├ái 19.
+Bß║óNG Tß╗░ ─É├üNH GI├ü B├ái 7
+H╞»ß╗ÜNG Dß║¬N Nß╗ÿP B├ÇI QUA GITHUB
+─Éß║úm bß║úo ─æang ß╗ƒ nh├ính feature/B├ái7-su-kien: git branch hiß╗ân thß╗ï dß║Ñu * tr╞░ß╗¢c t├¬n nh├ính n├áy.
+Chß║íy npm run dev, thß╗▒c hiß╗çn lß║íi bß║úng test case, Console kh├┤ng c├▓n lß╗ùi ─æß╗Å hay cß║únh b├ío vß╗ü key.
+Chß║íy npm run build ─æß╗â chß║»c chß║»n dß╗▒ ├ín build ─æ╞░ß╗úc ΓÇö giß║úng vi├¬n sß║╜ clone vß╗ü v├á build.
+Kiß╗âm tra lß╗ïch sß╗¡: git log --oneline c├│ tß╗æi thiß╗âu c├íc commit Lab 1, Lab 2, Lab 3 (v├á Lab 4, Lab 5 nß║┐u l├ám).
+─Éß║⌐y l├¬n kho: git push -u origin feature/B├ái7-su-kien.
+Tr├¬n GitHub, tß║ío Pull Request vß╗ü main, gß║»n nh├ún B├ái-7, ─æiß╗ün m├┤ tß║ú theo mß║½u d╞░ß╗¢i ─æ├óy.
+PREVIEW B├ái 8 ΓÇö BIß╗éU Mß║¬U C├ô KIß╗éM SO├üT
+ΓÇö Hß║┐t h╞░ß╗¢ng dß║½n thß╗▒c h├ánh B├ái 7 ΓÇö

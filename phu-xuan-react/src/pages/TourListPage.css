@@ -1,0 +1,25 @@
+.tour-list-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.tour-list-page h1 {
+  font-size: 1.6rem;
+  color: #1b2a4a;
+  margin-bottom: 1.25rem;
+}
+
+.filter-summary {
+  font-size: 0.88rem;
+  color: #52606d;
+  margin: 0.75rem 0 1.25rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2.5rem;
+  color: #7b8794;
+  font-style: italic;
+  font-size: 0.95rem;
+}

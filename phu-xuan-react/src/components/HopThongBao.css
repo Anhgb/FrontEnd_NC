@@ -1,0 +1,12 @@
+.hop-thong-bao {
+  border-radius: 8px;
+  padding: 0.9rem 1.2rem;
+  font-size: 0.95rem;
+  color: #2d3748;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.hop-thong-bao__bieu-tuong {
+  margin-right: 0.3rem;
+}

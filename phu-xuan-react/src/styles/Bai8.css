@@ -1,0 +1,228 @@
+/* ================================================================
+   Bài 8 — Biểu mẫu có kiểm soát
+   ================================================================ */
+
+/* Trang chứa */
+.trang-them-dia-diem {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.trang-them-dia-diem h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  color: #1a202c;
+}
+
+/* Layout hai cột */
+.bo-cuc-hai-cot {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 700px) {
+  .bo-cuc-hai-cot {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Cột form */
+.cot-form {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Trường nhập */
+.truong {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.truong label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #4a5568;
+}
+
+.truong input[type='text'],
+.truong input[type='number'],
+.truong textarea,
+.truong select {
+  border: 1.5px solid #cbd5e0;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.truong input:focus,
+.truong textarea:focus,
+.truong select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.18);
+}
+
+.truong input[aria-invalid='true'],
+.truong textarea[aria-invalid='true'],
+.truong select[aria-invalid='true'] {
+  border-color: #e53e3e;
+}
+
+/* Thông báo lỗi inline */
+.thong-bao-loi {
+  color: #c53030;
+  font-size: 0.82rem;
+  margin: 0;
+}
+
+/* Fieldset radio / checkbox */
+form fieldset {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+form fieldset legend {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #4a5568;
+  padding: 0 0.4rem;
+}
+
+form fieldset label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+/* Checkbox xác nhận */
+form > label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-bottom: 0.4rem;
+}
+
+/* Nút */
+form button[type='submit'] {
+  background: #667eea;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 0.6rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+  margin-right: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+form button[type='submit']:hover:not(:disabled) {
+  background: #5a67d8;
+}
+
+form button[type='submit']:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+form button[type='button'] {
+  background: transparent;
+  border: 1.5px solid #cbd5e0;
+  border-radius: 7px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  color: #4a5568;
+  transition: background 0.2s;
+}
+
+form button[type='button']:hover {
+  background: #f7fafc;
+}
+
+/* Thông báo thành công */
+.thong-bao-thanh-cong {
+  color: #276749;
+  background: #c6f6d5;
+  border: 1px solid #9ae6b4;
+  border-radius: 6px;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+/* ---- Cột xem trước ---- */
+.cot-xem-truoc {
+  background: #f7fafc;
+  border: 1px dashed #cbd5e0;
+  border-radius: 10px;
+  padding: 1.5rem;
+  position: sticky;
+  top: 1.5rem;
+}
+
+.cot-xem-truoc h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.xem-truoc-trong {
+  color: #a0aec0;
+  font-style: italic;
+  font-size: 0.92rem;
+}
+
+.the-dia-diem {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.the-dia-diem h3 {
+  font-size: 1.2rem;
+  color: #2d3748;
+  margin: 0 0 0.5rem;
+}
+
+.the-dia-diem p {
+  color: #718096;
+  font-size: 0.9rem;
+  margin: 0 0 0.75rem;
+}
+
+.chi-tiet {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.88rem;
+  color: #4a5568;
+}
+
+.chi-tiet li + li {
+  margin-top: 0.3rem;
+}

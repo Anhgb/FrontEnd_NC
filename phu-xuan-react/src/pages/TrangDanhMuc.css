@@ -1,0 +1,60 @@
+/* TrangDanhMuc — trang danh mục Buổi 9 */
+
+/* Thanh điều hướng */
+.thanh-dieu-huong {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.thanh-dieu-huong__logo {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.thanh-dieu-huong__lien-ket {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.thanh-dieu-huong__lien-ket a {
+  color: #e2e8f0;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.15s;
+}
+
+.thanh-dieu-huong__lien-ket a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Lưới địa danh — 4 cột trên máy tính bàn */
+.luoi-dia-danh {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+/* Nút đặt món */
+.nut-dat-mon {
+  background: #667eea;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.nut-dat-mon:hover {
+  background: #5a67d8;
+}

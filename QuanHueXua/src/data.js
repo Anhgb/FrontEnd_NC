@@ -1,0 +1,58 @@
+export const dsMon = [
+    {
+        id: 1,
+        ten: "Bún bò Huế",
+        moTa: "Bún bò Huế truyền thống với nước dùng đậm đà, thịt bò và chả.",
+        gia: 55000,
+        daHet: false,
+    },
+    {
+        id: 2,
+        ten: "Cơm hến",
+        moTa: "Cơm trộn hến, rau sống và các loại gia vị đặc trưng xứ Huế.",
+        gia: 40000,
+        daHet: false,
+    },
+    {
+        id: 3,
+        ten: "Bánh bèo",
+        moTa: "Bánh bèo thơm ngon với tôm chấy và nước mắm pha đậm đà.",
+        gia: 35000,
+        daHet: false,
+    },
+    {
+        id: 4,
+        ten: "Bánh nậm",
+        moTa: "Bánh nậm gói lá chuối, nhân tôm thịt hấp chín mềm.",
+        gia: 30000,
+        daHet: false,
+    },
+    {
+        id: 5,
+        ten: "Bánh canh Nam Phổ",
+        moTa: "Bánh canh bột lọc với tôm cua béo ngậy, nước dùng ngọt thanh.",
+        gia: 50000,
+        daHet: true,
+    },
+    {
+        id: 6,
+        ten: "Bánh khoái",
+        moTa: "Bánh giòn rụm chiên với tôm, thịt heo và giá đỗ, chấm cùng nước lèo đặc trưng xứ Huế.",
+        gia: 45000,
+        daHet: false,
+    },
+    {
+        id: 7,
+        ten: "Chè Huế thập cẩm",
+        moTa: "Chè ngọt mát với đậu xanh, hạt sen, long nhãn, thạch và nước đường thơm lá dứa.",
+        gia: 25000,
+        daHet: false,
+    },
+    {
+        id: 8,
+        ten: "Nem lụi Huế",
+        moTa: "Nem thịt nướng xiên sả thơm lừng, ăn kèm bánh tráng, rau sống và nước chấm đặc biệt.",
+        gia: 60000,
+        daHet: false,
+    },
+];

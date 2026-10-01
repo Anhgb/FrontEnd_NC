@@ -1,0 +1,22 @@
+.tour-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.tour-header__top {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.tour-header__title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.tour-header__count {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}

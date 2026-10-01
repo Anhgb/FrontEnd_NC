@@ -1,0 +1,41 @@
+.page-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-layout_header {
+  background: #1b2a4a;
+  color: #fff;
+  padding: 1rem 1.5rem;
+}
+
+.page-layout_body {
+  display: flex;
+  flex: 1;
+}
+
+.page-layout_sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: #f7f8fa;
+  border-right: 1px solid #e2e8f0;
+  padding: 1.25rem;
+}
+
+.page-layout_main {
+  flex: 1;
+  padding: 1.5rem;
+  overflow: auto;
+}
+
+@media (max-width: 700px) {
+  .page-layout_body {
+    flex-direction: column;
+  }
+  .page-layout_sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+}

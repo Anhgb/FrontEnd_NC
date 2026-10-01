@@ -1,0 +1,53 @@
+.ditich-filter__title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1b2a4a;
+  margin: 0 0 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ditich-filter__label {
+  display: block;
+  font-size: 0.82rem;
+  color: #52606d;
+  margin-bottom: 0.35rem;
+}
+
+.ditich-filter__select {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid #cbd2d9;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+.ditich-filter__checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.83rem;
+  color: #52606d;
+  cursor: pointer;
+  margin-bottom: 1.25rem;
+}
+
+.ditich-filter__reset {
+  width: 100%;
+  padding: 0.5rem;
+  background: #1b2a4a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.ditich-filter__reset:hover {
+  background: #273f6e;
+}
